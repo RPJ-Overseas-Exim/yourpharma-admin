@@ -1,0 +1,8 @@
+package ui
+
+templ FormField(fieldTitle string, fieldName string, fieldType string, fieldPlaceholder string){
+    <div class="w-full flex flex-col gap-y-1">
+        <label for={fieldName} class="font-semibold text-lg">{fieldTitle}</label>
+        <input class="py-2 px-4 bg-transparent border-b border-b-2 outline-none active:outline-none" type={fieldType} id={fieldName} name={fieldName} placeholder={fieldPlaceholder} />
+    </div>
+}

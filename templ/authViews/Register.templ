@@ -1,0 +1,15 @@
+package authViews
+
+import "RPJ-Overseas-Exim/yourpharma-admin/templ/layout"
+
+templ Register(){
+    <section>
+        <h2>Register Page</h2>
+    </section>
+}
+
+templ RegisterIndex(title string, cmp templ.Component){
+    @layout.Layout(title){
+        @cmp
+    }
+}

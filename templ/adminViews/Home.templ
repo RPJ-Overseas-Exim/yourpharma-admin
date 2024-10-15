@@ -1,0 +1,15 @@
+package adminViews
+
+import "RPJ-Overseas-Exim/yourpharma-admin/templ/layout"
+
+templ Home(){
+    <section>
+        Home
+    </section>
+}
+
+templ HomeIndex(title string, cmp templ.Component){
+    @layout.AdminLayout(title){
+        @cmp
+    }
+}

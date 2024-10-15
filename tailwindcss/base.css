@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.light{
+ --background: 255, 255, 255;
+ --foreground: 0, 0, 0;
+ --border: 0, 0, 0;
+}
+
+.dark{
+ --background: #2B2738;
+ --foreground: #fcfcfc;
+ --border: #fcfcfc;
+ --button: #6e54b5;
+}
