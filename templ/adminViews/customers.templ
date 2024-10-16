@@ -11,15 +11,20 @@ templ Customers(){
         <h2 class="text-xl font-bold">Customers</h2>
       </div>
 
+      <div class="w-full my-2">
+        <h2>create buttons for filters and import csv and export csv buttons</h2>  
+      </div>
+
       <div class="w-full h-full">
-        <table class="w-full bg-background-muted rounded-xl py-4 px-2">
-            <tr class="">
-                <th class="text-xl font-semibold">Name</th>
-                <th class="text-xl font-semibold">Email</th>
-                <th class="text-xl font-semibold">Product</th>
-            </tr>
+        <div class="w-full bg-background-muted rounded-xl py-4 px-2">
+            <div class="grid grid-cols-3 mb-3">
+                <div class="text-xl font-semibold text-center">Name</div>
+                <div class="text-xl font-semibold text-center">Email</div>
+                <div class="text-xl font-semibold text-center">Product</div>
+            </div>
+            <hr class="w-full border border-border"/>
             {children...}
-        </table>
+        </div>
       </div>
     </div>
 }
@@ -34,10 +39,10 @@ templ CustomersIndex(title string, cmp templ.Component){
 
 templ CustomersData(data []types.Customer){
        for _, customer := range data{
-            <tr class="text-md border-b-2 border-border mb-2">
-                <td class="text-center">{customer.Name}</td>
-                <td class="text-center">{customer.Email}</td>
-                <td class="text-center">{customer.Product}</td>
-            </tr>
+            <div class="text-md border-b-2 border-border py-2 grid grid-cols-3">
+                <div class="text-center">{customer.Name}</div>
+                <div class="text-center">{customer.Email}</div>
+                <div class="text-center">{customer.Product}</div>
+            </div>
        }
 }

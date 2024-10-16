@@ -144,7 +144,7 @@ func CustomersData(data []types.Customer) templ.Component {
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(customer.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/adminViews/customers.templ`, Line: 38, Col: 54}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/adminViews/customers.templ`, Line: 43, Col: 55}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
@@ -157,7 +157,7 @@ func CustomersData(data []types.Customer) templ.Component {
 			var templ_7745c5c3_Var7 string
 			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(customer.Email)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/adminViews/customers.templ`, Line: 39, Col: 55}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/adminViews/customers.templ`, Line: 44, Col: 56}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 			if templ_7745c5c3_Err != nil {
@@ -170,7 +170,7 @@ func CustomersData(data []types.Customer) templ.Component {
 			var templ_7745c5c3_Var8 string
 			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(customer.Product)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/adminViews/customers.templ`, Line: 40, Col: 57}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/adminViews/customers.templ`, Line: 45, Col: 58}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 			if templ_7745c5c3_Err != nil {
