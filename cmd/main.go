@@ -2,8 +2,8 @@ package main
 
 import (
 	// "RPJ-Overseas-Exim/yourpharma-admin/pkg/middleware"
-	"RPJ-Overseas-Exim/yourpharma-admin/templ/authViews"
-	"RPJ-Overseas-Exim/yourpharma-admin/templ/adminViews"
+	"RPJ-Overseas-Exim/yourpharma-admin/handlers/adminHandlers"
+	"RPJ-Overseas-Exim/yourpharma-admin/handlers/authHandlers"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -24,20 +24,10 @@ func main(){
     //     return comp.Render(c.Request().Context(), c.Response().Writer)
     // }, authMiddleware.AuthMiddleware)
 
-    e.GET("/", func(c echo.Context) error {
-        comp := authViews.LoginIndex("Login", authViews.Login())
-        return comp.Render(c.Request().Context(), c.Response().Writer)
-    })
-
-    e.GET("/register", func(c echo.Context) error {
-        comp := authViews.RegisterIndex("Register", authViews.Register())
-        return comp.Render(c.Request().Context(), c.Response().Writer)
-    })
-
-    e.GET("/home", func(c echo.Context) error {
-        comp := adminViews.HomeIndex("Home", adminViews.Home())
-        return comp.Render(c.Request().Context(), c.Response().Writer)
-    })
+    e.GET("/", authHandlers.Login)
+    e.GET("/register", authHandlers.Register)
+    e.GET("/home", adminHandlers.Home)
+    e.GET("/customers", adminHandlers.Customers)
 
     e.Logger.Fatal(e.Start(":7000"))
 }

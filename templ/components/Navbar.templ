@@ -1,0 +1,45 @@
+package components
+
+import (
+    "RPJ-Overseas-Exim/yourpharma-admin/templ/ui"
+    "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
+)
+
+templ Navbar(){
+    <div class="w-full h-full md:py-2 flex flex-col gap-y-2 border-r-2 border-zinc-700">
+        <div class="w-full flex items-center justify-around">
+            <h2 class="hidden md:block text-xl font-bold text-green-600">YourPharma</h2>
+            <button type="button" class="md:block absolute md:relative top-[10px] right-[10px] md:top-0 md:right-0 hover:bg-background-muted rounded p-2">
+                @icons.Sun()
+            </button>
+        </div>
+
+        <ul class="flex h-full md:flex-col px-2 gap-y-1">
+            @link("/home"){
+                <div class="w-[30%] flex items-center justify-center">
+                    @icons.Dashboard()
+                </div>
+                @ui.ListElement("Dashboard")
+            }
+            @link("/customers"){
+                <div class="w-[30%] flex items-center justify-center">
+                    @icons.Customers()
+                </div>
+                @ui.ListElement("Customers")
+            }
+            @link("/orders"){
+                <div class="w-[30%] flex items-center justify-center">
+                    @icons.Orders()
+                </div>
+                @ui.ListElement("Orders")
+            }
+        </ul>
+    </div>
+}
+
+templ link(linkUrl string){
+        <a href={templ.URL(linkUrl)}
+        class="w-full rounded-xl md:h-[50px] flex flex-col gap-y-2 md:gap-y-0 md:flex-row items-center justify-center hover:bg-background-muted">
+            {children...}
+        </a>
+}

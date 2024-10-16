@@ -6,6 +6,7 @@ module.exports = {
         colors:{
             background: {
                 DEFAULT: "var(--background)",
+                muted: "var(--background-muted)"
             },
             foreground: "var(--foreground)",
             border: "var(--border)",

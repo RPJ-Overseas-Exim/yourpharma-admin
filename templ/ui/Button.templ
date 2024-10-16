@@ -1,8 +1,7 @@
 package ui
 
-templ Button(buttonText, buttonType string){
-    <button type={buttonType}
-    class="bg-button text-lg uppercase font-semibold text-foreground w-full py-2 rounded-xl">
-        {buttonText}
-    </button>
+templ ButtonClassDiv(){
+    <div class="h-full bg-button text-foreground w-full rounded-md">
+        {children...}
+    </div>
 }

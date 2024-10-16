@@ -1,0 +1,6 @@
+<div class=\"w-full h-full p-2 flex flex-col\"><div class=\"w-full flex items-center\"><h2 class=\"text-xl font-bold\">Customers</h2></div><div class=\"w-full h-full\"><table class=\"w-full bg-background-muted rounded-xl py-4 px-2\"><tr class=\"\"><th class=\"text-xl font-semibold\">Name</th><th class=\"text-xl font-semibold\">Email</th><th class=\"text-xl font-semibold\">Product</th></tr>
+</table></div></div>
+<tr class=\"text-md border-b-2 border-border mb-2\"><td class=\"text-center\">
+</td><td class=\"text-center\">
+</td><td class=\"text-center\">
+</td></tr>

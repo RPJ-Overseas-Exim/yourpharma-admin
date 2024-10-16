@@ -2,15 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{
+    --button: #6e54b5;
+}
+
 .light{
- --background: 255, 255, 255;
- --foreground: 0, 0, 0;
- --border: 0, 0, 0;
+     --background: #fcfcfc;
+     --background-muted: #FEFCF9;
+     --foreground: #2B2738;
+     --border: #2B2738;
 }
 
 .dark{
- --background: #2B2738;
- --foreground: #fcfcfc;
- --border: #fcfcfc;
- --button: #6e54b5;
+     --background: #2B2738;
+     --background-muted: #2B3340;
+     --foreground: #fcfcfc;
+     --border: #fcfcfc;
 }
