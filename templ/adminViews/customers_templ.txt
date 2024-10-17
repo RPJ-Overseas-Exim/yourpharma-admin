@@ -1,6 +1,0 @@
-<div class=\"w-full h-full p-2 flex flex-col\"><div class=\"w-full flex items-center\"><h2 class=\"text-xl font-bold\">Customers</h2></div><div class=\"w-full my-2\"><h2>create buttons for filters and import csv and export csv buttons</h2></div><div class=\"w-full h-full\"><div class=\"w-full bg-background-muted rounded-xl py-4 px-2\"><div class=\"grid grid-cols-3 mb-3\"><div class=\"text-xl font-semibold text-center\">Name</div><div class=\"text-xl font-semibold text-center\">Email</div><div class=\"text-xl font-semibold text-center\">Product</div></div><hr class=\"w-full border border-border\">
-</div></div></div>
-<div class=\"text-md border-b-2 border-border py-2 grid grid-cols-3\"><div class=\"text-center\">
-</div><div class=\"text-center\">
-</div><div class=\"text-center\">
-</div></div>

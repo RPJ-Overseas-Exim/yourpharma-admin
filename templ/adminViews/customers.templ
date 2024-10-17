@@ -3,26 +3,75 @@ package adminViews
 import (
     "RPJ-Overseas-Exim/yourpharma-admin/templ/layout"
     "RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
+	"RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
+	"strconv"
 )
+
+script showCustomerInfo(OrderId string){
+    const customerInfo = document.querySelectorAll(`div[data-customer-info-id=${OrderId}]`) 
+    for(customer of customerInfo){
+        customer.classList.remove("hidden")
+    }
+}
+script hideCustomerInfo(OrderId string){
+    const customerInfo = document.querySelector(`div[data-customer-info-id=${OrderId}]`) 
+    customerInfo.classList.add("hidden")
+}
+script DeleteCustomer(OrderId string){
+    console.log("Delete customer with orderId: ", OrderId)
+}
+script EditCustomer(OrderId string){
+    console.log("Edit customer with orderId: ", OrderId)
+}
+script UpdateStatus(OrderId string){
+    console.log("Update order status of customer with orderId: ", OrderId)
+}
+script hello(){
+    console.log("hello")
+}
+
+templ CustomersData(data []types.Customer){
+    <div class="text-foreground-muted">
+        @ColClass(){
+            <div class="text-sm text-center">Order Id</div>
+                <div class="text-sm text-center">Name</div>
+                <div class="text-sm text-center">Product</div>
+                <div class="text-sm text-center">Actions</div>
+        }
+    </div>
+    <hr class="w-full border-t border-border-muted"/>
+    for _, customer := range data{
+        <div class="text-md border-b border-border-muted">
+            @ColClass(){
+                <div class="text-center">{customer.OrderId}</div>
+                <div class="text-center">{customer.Name}</div>
+                <div class="text-center">{customer.Product}</div>
+                <div class="flex items-center justify-center">
+                    <button class="text-foreground-muted" onClick={showCustomerInfo(customer.OrderId)}>
+                        @icons.Menu()
+                    </button>
+                    @CustomerInfo(customer)
+                </div>
+            }
+        </div>
+    }
+}
 
 templ Customers(){
     <div class="w-full h-full p-2 flex flex-col">
-      <div class="w-full flex items-center">
-        <h2 class="text-xl font-bold">Customers</h2>
+      <div class="flex items-center justify-between">
+        <h2 class="text-xl font-bold">
+            Customers
+        </h2>
+        @ExportImportFeature()
       </div>
 
       <div class="w-full my-2">
-        <h2>create buttons for filters and import csv and export csv buttons</h2>  
+        @CustomersFilters()
       </div>
 
       <div class="w-full h-full">
-        <div class="w-full bg-background-muted rounded-xl py-4 px-2">
-            <div class="grid grid-cols-3 mb-3">
-                <div class="text-xl font-semibold text-center">Name</div>
-                <div class="text-xl font-semibold text-center">Email</div>
-                <div class="text-xl font-semibold text-center">Product</div>
-            </div>
-            <hr class="w-full border border-border"/>
+        <div class="w-full rounded-md border border-border-muted border-b-0">
             {children...}
         </div>
       </div>
@@ -37,12 +86,82 @@ templ CustomersIndex(title string, cmp templ.Component){
     }
 }
 
-templ CustomersData(data []types.Customer){
-       for _, customer := range data{
-            <div class="text-md border-b-2 border-border py-2 grid grid-cols-3">
-                <div class="text-center">{customer.Name}</div>
-                <div class="text-center">{customer.Email}</div>
-                <div class="text-center">{customer.Product}</div>
+templ ColClass(){
+    <div class="grid grid-cols-4 hover:bg-background-muted py-2">
+    {children...}
+    </div>
+}
+
+templ CustomersFilters(){
+    <div class="flex items-center gap-x-2">
+    <h2>filters for customers</h2>
+    </div>
+}
+
+templ ExportImportFeature(){
+    <div class="w-[max-content] flex items-center gap-x-4">
+        @ActionButton(hello()){
+            <div class="flex gap-x-2 px-2 py-2">
+                @icons.Import()
+                <span>Download</span>
             </div>
-       }
+        }
+        @ActionButton(hello()){
+           <div class="flex gap-x-2 px-2 py-2">
+                @icons.Upload()
+                <span>Upload</span>
+            </div>
+        }
+    </div>
+}
+
+templ CustomerInfo(customer types.Customer){
+        <div data-customer-info-id={customer.OrderId} class="hidden">
+            <div class="w-full h-full absolute top-0 left-0 bg-form-muted" onClick={hideCustomerInfo(customer.OrderId)}></div>
+            <div data-customer-info-id={customer.OrderId} class="hidden customer-info absolute h-full top-0 right-0 p-4 rounded-tl-lg rounded-bl-lg border border-border-muted bg-form">
+                <div class="flex gap-x-2 items-center mb-5 text-green-600">
+                    <button onClick={hideCustomerInfo(customer.OrderId)} class="font-bold">
+                        @icons.Back()
+                    </button>
+                    <h2 class="text-lg font-semibold">Customer Info</h2>
+                </div>
+
+                <div class="flex flex-col gap-y-2 mb-5">
+                    @CustomerLabel("Order ID", customer.OrderId)
+                    @CustomerLabel("Name", customer.Name)
+                    @CustomerLabel("Email", customer.Email)
+                    @CustomerLabel("Product", customer.Product)
+                    @CustomerLabel("Quantity", strconv.Itoa(customer.Quantity) + " pills")
+                    @CustomerLabel("Price", "$ " + strconv.Itoa(customer.Price))
+                </div>
+
+                <div class="flex flex-col gap-y-2">
+                    <div class="text-green-600 text-lg">Actions</div>
+                    @ActionButton(EditCustomer(customer.OrderId)){
+                        <h2 class="px-4 py-2">Edit Customer</h2>
+                    }
+                    @ActionButton(UpdateStatus(customer.OrderId)){
+                        <h2 class="px-4 py-2">Update Status</h2>
+                    }
+                    @ActionButton(DeleteCustomer(customer.OrderId)){
+                        <div class="bg-red-600 hover:bg-red-700 px-4 py-2 text-white font-semibold rounded-md">Delete Customer</div>
+                    }
+                </div>
+            </div>
+        </div>
+}
+
+templ CustomerLabel(label, value string){
+    <div class="flex gap-x-4">
+        <div class="text-lg text-foreground-muted font-semibold">{label} :</div>        
+        <div class="text-md">{value}</div>
+    </div>
+}
+
+templ ActionButton(scriptAction templ.ComponentScript){
+    <button
+    onClick={scriptAction}
+    class="w-full border border-border-muted rounded-md hover:bg-background-muted">
+       {children...} 
+    </button>
 }

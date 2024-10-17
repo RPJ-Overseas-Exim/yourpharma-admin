@@ -9,7 +9,7 @@ templ AdminLayout(title string){
                     <nav class="w-full md:w-[30%] lg:w-[20%] h-[80px] md:h-full order-last md:order-first">
                         @components.Navbar()
                     </nav>
-                    <main id="admin-content" class="w-full h-full overflow-auto">
+                    <main id="admin-content" class="w-full h-full overflow-x-hidden">
                         {children...}
                     </main>
                 </div>

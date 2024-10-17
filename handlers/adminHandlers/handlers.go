@@ -15,24 +15,36 @@ func Home(c echo.Context) error {
 func Customers(c echo.Context) error {
     data := []types.Customer{
         {
+            OrderId: "ordahfs",
             Name: "Muzammil",
             Email: "email@gmail.com",
             Product: "product1",
+            Quantity: 180,
+            Price: 480,
         },
         {
+            OrderId: "orsddahfs",
             Name: "Muzammil2",
             Email: "email@gmail.com",
             Product: "product1",
+            Quantity: 90,
+            Price: 280,
         },
-{
+        {
+            OrderId: "ordsdaahfs",
             Name: "Muzammil3",
             Email: "email@gmail.com",
             Product: "product1",
+            Quantity: 180,
+            Price: 480,
         },
         {
+            OrderId: "osdfsaordahfs",
             Name: "Muzammil4",
             Email: "email@gmail.com",
             Product: "product1",
+            Quantity: 90,
+            Price: 280,
         },
     }
 

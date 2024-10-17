@@ -8,9 +8,22 @@ module.exports = {
                 DEFAULT: "var(--background)",
                 muted: "var(--background-muted)"
             },
-            foreground: "var(--foreground)",
-            border: "var(--border)",
-            button: "var(--button)"
+            foreground: {
+                DEFAULT: "var(--foreground)",
+                muted: "var(--foreground-muted)"
+            },
+            border: {
+                DEFAULT: "var(--border)",
+                muted: "var(--border-muted)"
+            },
+            button: {
+                DEFAULT: "var(--button)",
+                muted: "var(--button-muted)"
+            },
+            form: {
+                DEFAULT: "var(--form)",
+                muted: "var(--form-muted)"
+            }
        }
     },
   },

@@ -4,18 +4,41 @@
 
 :root{
     --button: #6e54b5;
+    --button-primary: #aabbcc;
+    --button-muted: #646464;
 }
 
 .light{
      --background: #fcfcfc;
-     --background-muted: #FEFCF9;
-     --foreground: #2B2738;
-     --border: #2B2738;
+     --background-muted: #F4F4F4;
+     --foreground: #151515;
+     --foreground-muted: #666;
+     --border: #151515;
+     --border-muted: #EAEAEA;
+     --form: #fff;
+    --form-muted: #3B3C3E4F;
 }
 
 .dark{
-     --background: #2B2738;
-     --background-muted: #2B3340;
-     --foreground: #fcfcfc;
-     --border: #fcfcfc;
+    --background: #2B2738;
+    --background-muted: #484D57;
+    --foreground: #fcfcfc;
+    --foreground-muted: #cec9c9;
+    --border: #fcfcfc;
+    --border-muted: #848383;
+    --form: #373440;
+    --form-muted: #3B3C3E4F;
+}
+
+.customer-info{
+    animate: slideFromRight 1.3s ease-in-out;
+}
+
+@keyframes slideFromRight {
+   0%{
+       transform: translateX(100%);
+    }
+   100%{
+       transform: translateX(0%);
+   }
 }
