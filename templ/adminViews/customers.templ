@@ -7,16 +7,6 @@ import (
 	"strconv"
 )
 
-script showCustomerInfo(OrderId string){
-    const customerInfo = document.querySelectorAll(`div[data-customer-info-id=${OrderId}]`) 
-    for(customer of customerInfo){
-        customer.classList.remove("hidden")
-    }
-}
-script hideCustomerInfo(OrderId string){
-    const customerInfo = document.querySelector(`div[data-customer-info-id=${OrderId}]`) 
-    customerInfo.classList.add("hidden")
-}
 script DeleteCustomer(OrderId string){
     console.log("Delete customer with orderId: ", OrderId)
 }
@@ -47,10 +37,12 @@ templ CustomersData(data []types.Customer){
                 <div class="text-center">{customer.Name}</div>
                 <div class="text-center">{customer.Product}</div>
                 <div class="flex items-center justify-center">
-                    <button class="text-foreground-muted" onClick={showCustomerInfo(customer.OrderId)}>
+                    <button
+                    class="hover:text-foreground-muted text-foreground"
+                    onClick="showMenu(this)">
                         @icons.Menu()
                     </button>
-                    @CustomerInfo(customer)
+                    @CustomerInfoContainer(customer)
                 </div>
             }
         </div>
@@ -115,40 +107,78 @@ templ ExportImportFeature(){
     </div>
 }
 
-templ CustomerInfo(customer types.Customer){
-        <div data-customer-info-id={customer.OrderId} class="hidden">
-            <div class="w-full h-full absolute top-0 left-0 bg-form-muted" onClick={hideCustomerInfo(customer.OrderId)}></div>
-            <div data-customer-info-id={customer.OrderId} class="hidden customer-info absolute h-full top-0 right-0 p-4 rounded-tl-lg rounded-bl-lg border border-border-muted bg-form">
-                <div class="flex gap-x-2 items-center mb-5 text-green-600">
-                    <button onClick={hideCustomerInfo(customer.OrderId)} class="font-bold">
-                        @icons.Back()
-                    </button>
-                    <h2 class="text-lg font-semibold">Customer Info</h2>
-                </div>
-
-                <div class="flex flex-col gap-y-2 mb-5">
-                    @CustomerLabel("Order ID", customer.OrderId)
-                    @CustomerLabel("Name", customer.Name)
-                    @CustomerLabel("Email", customer.Email)
-                    @CustomerLabel("Product", customer.Product)
-                    @CustomerLabel("Quantity", strconv.Itoa(customer.Quantity) + " pills")
-                    @CustomerLabel("Price", "$ " + strconv.Itoa(customer.Price))
-                </div>
-
-                <div class="flex flex-col gap-y-2">
-                    <div class="text-green-600 text-lg">Actions</div>
-                    @ActionButton(EditCustomer(customer.OrderId)){
-                        <h2 class="px-4 py-2">Edit Customer</h2>
-                    }
-                    @ActionButton(UpdateStatus(customer.OrderId)){
-                        <h2 class="px-4 py-2">Update Status</h2>
-                    }
-                    @ActionButton(DeleteCustomer(customer.OrderId)){
-                        <div class="bg-red-600 hover:bg-red-700 px-4 py-2 text-white font-semibold rounded-md">Delete Customer</div>
-                    }
-                </div>
-            </div>
+templ CustomerInfoContainer(customer types.Customer){
+        <div class="customer-info-container hidden overflow-hidden">
+            <div class="background-fill w-full h-full absolute top-0 left-0 bg-form-muted"></div>
+            @CustomerInfo(customer) 
+            @EditCustomerContainer(customer)
         </div>
+}
+
+templ CustomerInfo(customer types.Customer){
+    <div class="customer-info absolute top-0 -right-[100%] h-full p-4 rounded-tl-lg rounded-bl-lg border border-border-muted bg-form">
+        <div class="close-customer-info cursor-pointer flex gap-x-2 items-center mb-5 text-green-600">
+            <div
+            class="font-bold">
+                @icons.Back()
+            </div>
+            <h2 class="text-lg font-semibold">Customer Info</h2>
+        </div>
+
+        <div class="flex flex-col gap-y-2 mb-5">
+            @CustomerLabel("Order ID", customer.OrderId)
+            @CustomerLabel("Name", customer.Name)
+            @CustomerLabel("Email", customer.Email)
+            @CustomerLabel("Product", customer.Product)
+            @CustomerLabel("Quantity", strconv.Itoa(customer.Quantity) + " pills")
+            @CustomerLabel("Price", "$ " + strconv.Itoa(customer.Price))
+        </div>
+
+        <div class="flex flex-col gap-y-2">
+            <div class="text-green-600 text-lg">Actions</div>
+            @ActionButton(EditCustomer(customer.OrderId)){
+                <h2 class="px-4 py-2">Edit Customer</h2>
+            }
+            @ActionButton(UpdateStatus(customer.OrderId)){
+                <h2 class="px-4 py-2">Update Status</h2>
+            }
+            @ActionButton(DeleteCustomer(customer.OrderId)){
+                <div class="bg-red-600 hover:bg-red-700 px-4 py-2 text-white font-semibold rounded-md">Delete Customer</div>
+            }
+        </div>
+    </div>
+}
+
+templ EditCustomerContainer(customer types.Customer){
+    <div class="edit-customer-container absolute top-0 -right-[100%] h-full p-4 rounded-tl-lg rounded-bl-lg border border-border-muted bg-form">
+        <div class="close-customer-info cursor-pointer flex gap-x-2 items-center mb-5 text-green-600">
+            <div
+            class="font-bold">
+                @icons.Back()
+            </div>
+            <h2 class="text-lg font-semibold">Edit Customer</h2>
+        </div>
+
+        <form class="flex flex-col gap-y-2">
+            @CustomerInputLabel("Order Id", "orderId", "text", customer.OrderId)
+            @CustomerInputLabel("Name", "name", "text", customer.Name)
+            @CustomerInputLabel("Email", "email", "email", customer.Email)
+            @CustomerInputLabel("Product", "product", "text", customer.Product)
+            @CustomerInputLabel("Price", "price", "number", strconv.Itoa(customer.Price))
+            @CustomerInputLabel("Quantity", "quantity", "number", strconv.Itoa(customer.Quantity))
+
+            <div class="mt-5 flex flex-col gap-y-2">
+                @ActionButton(hello()){
+                    <div class=" flex items-center justify-center px-4 py-2">Submit</div>
+                }
+                @ActionButton(hello()){
+                    <div class=" flex items-center justify-center px-4 py-2 rounded-lg text-white font-semibold bg-red-600 hover:bg-red-700">
+                        Cancel
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
 }
 
 templ CustomerLabel(label, value string){
@@ -160,8 +190,23 @@ templ CustomerLabel(label, value string){
 
 templ ActionButton(scriptAction templ.ComponentScript){
     <button
+    type="button"
     onClick={scriptAction}
     class="w-full border border-border-muted rounded-md hover:bg-background-muted">
        {children...} 
     </button>
+}
+
+templ CustomerInputLabel(label, name, inputType, value string){
+    <div class="flex items-center gap-x-4">
+        <label class="text-lg text-foreground-muted font-semibold">{label} :</label>        
+        <input
+            type={inputType}
+            value={value}
+            name={name}
+            id={name}
+            placeholder={label}
+            class="bg-background rounded text-lg border border-border-muted px-4 py-2"
+        />
+    </div>
 }

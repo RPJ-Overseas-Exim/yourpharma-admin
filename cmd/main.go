@@ -1,33 +1,29 @@
 package main
 
 import (
-	// "RPJ-Overseas-Exim/yourpharma-admin/pkg/middleware"
-	"RPJ-Overseas-Exim/yourpharma-admin/handlers/adminHandlers"
-	"RPJ-Overseas-Exim/yourpharma-admin/handlers/authHandlers"
+	"RPJ-Overseas-Exim/yourpharma-admin/handler"
+	"log"
 
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
-type Data struct{
-    Url string
-}
+func main() {
+    err := godotenv.Load()
+    if err != nil {
+        log.Printf("Error in loading .env files %v", err)
+        return 
+    }
+    log.Print("Env loaded successfully!")
 
-func main(){
-    e := echo.New()
-    e.Use(middleware.Logger())
-    e.Static("/static", "static")
+	e := echo.New()
 
-    // middleware example
-    // e.GET("/", func(c echo.Context) error {
-    //     comp := authViews.LoginIndex("Login", authViews.Login())
-    //     return comp.Render(c.Request().Context(), c.Response().Writer)
-    // }, authMiddleware.AuthMiddleware)
+	e.Use(middleware.Logger())
+	e.Static("/static", "static")
 
-    e.GET("/", authHandlers.Login)
-    e.GET("/register", authHandlers.Register)
-    e.GET("/home", adminHandlers.Home)
-    e.GET("/customers", adminHandlers.Customers)
+	handler.SetupAuthRoutes(e)
+	handler.SetupAdminRoutes(e)
 
-    e.Logger.Fatal(e.Start(":7000"))
+	e.Logger.Fatal(e.Start(":7000"))
 }

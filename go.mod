@@ -1,9 +1,10 @@
 module RPJ-Overseas-Exim/yourpharma-admin
 
-go 1.23.1
+go 1.23.2
 
 require (
 	github.com/a-h/templ v0.2.778
+	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo/v4 v4.12.0
 )
 

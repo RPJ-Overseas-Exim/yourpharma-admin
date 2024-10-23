@@ -1,0 +1,47 @@
+package partials
+
+import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
+import "strings"
+
+templ Navbar(){
+    <nav class="w-full h-full flex md:flex-col gap-x-2 md:gap-x-0 md:gap-y-2 md:py-2 border-t md:border-t-0 md:border-r border-border-muted">
+        <div class="hidden md:flex items-center gap-x-2 justify-center">
+            <h2 class="text-lg text-green-600 font-semibold">Your Pharma</h2>
+            @Button("button", "p-[3px] rounded hover:bg-background-muted"){
+                <div onclick="LightTheme()" class="hidden " id="sun">
+                    @icons.Sun()
+                </div>
+                <div onclick="DarkTheme()" class="" id="moon">
+                    @icons.Moon()
+                </div>
+            }
+        </div>
+
+        <div
+            class="w-full h-full md:h-[max-content] flex md:flex-col justify-around md:justify-start md:gap-y-2 md:px-2"
+        >
+            @NavbarOption("/home", "Dashboard"){
+                @icons.Chart()
+            }
+            @NavbarOption("/customers", "Customers"){
+                @icons.Customers()
+            }
+            @NavbarOption("/orders", "Orders"){
+                @icons.Orders()
+            }
+        </div>
+    </nav>
+}
+
+templ NavbarOption(linkTo, label string){
+    <a
+        id={strings.ReplaceAll(linkTo, "/", "")}
+        href={templ.URL(linkTo)}
+        class="text-foreground text-lg w-full h-full flex items-center justify-center md:justify-start md:p-2 rounded hover:bg-background-muted"
+    >
+        <div class="flex flex-col md:flex-row md:gap-y-2 md:gap-y md:gap-x-2 items-center">
+            {children...}
+            <div>{label}</div>
+        </div>
+    </a>
+}

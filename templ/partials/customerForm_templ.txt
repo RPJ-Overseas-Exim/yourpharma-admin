@@ -1,0 +1,10 @@
+<div onclick=\"hideFormFromFilter(this)\" id=\"
+\" class=\"hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10\"></div><div id=\"
+\" class=\"hidden absolute h-full top-0 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border\"><button type=\"button\" onclick=\"hideFormFromContainer(this)\" class=\"text-green-600 font-semibold text-xl\">Customer Details</button><div class=\"w-full flex flex-col gap-y-2 mt-3\"><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Name :</div><div class=\"text-foreground-muted text-lg\">
+</div></div><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Email :</div><div class=\"text-lg text-foreground-muted\">
+</div></div><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Address :</div><div class=\"text-foreground-muted text-lg\">
+</div></div><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Phone No. :</div><div class=\"text-foreground-muted text-lg\">
+</div></div><div class=\"w-full space-y-2\">
+Edit Customer 
+Delete Customer 
+</div></div></div>

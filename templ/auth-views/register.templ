@@ -1,0 +1,35 @@
+package authView
+
+import (
+   "RPJ-Overseas-Exim/yourpharma-admin/templ/layout"
+   "RPJ-Overseas-Exim/yourpharma-admin/templ/partials"
+)
+
+templ Register(){
+    <section class="flex items-center justify-center w-full h-full bg-gradient-to-b from-blue-800 to-black">
+        <div class="flex items-center flex-col gap-y-4 bg-background py-2 rounded-lg border border-border">
+            <h2 class="text-foreground text-xl font-bold">Register</h2>
+
+            <hr class="w-full border-t border-border"/>
+
+            <form
+            class="flex flex-col gap-y-2 px-4">
+                @partials.FormField("Email", "email", "email", "Enter your email", "", "", "")
+                @partials.FormField("Password", "password", "password", "Enter your password", "", "", "")
+                @partials.FormField("Confirm Password", "cpassword", "password", "Enter your password again", "", "", "")
+
+                @partials.Button("submit", ""){
+                    <span>Register</span>
+                }
+
+                <a href="/" class="w-full text-center text-base text-foreground-muted">Already have a account? <span class="text-blue-600 font-semibold">Login</span></a>
+            </form>
+        </div>
+    </section>
+}
+
+templ RegisterIndex(title string, isLoggedIn bool, errMsgs, sucMsgs []string, cmp templ.Component){
+    @layout.Base(title, isLoggedIn, errMsgs, sucMsgs){
+        @cmp
+    }
+}

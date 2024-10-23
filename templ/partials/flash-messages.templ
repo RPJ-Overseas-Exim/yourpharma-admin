@@ -1,0 +1,21 @@
+package partials
+
+templ FlashMessages(errMsgs, sucMsgs []string){
+    <div>
+        if len(errMsgs) != 0 {
+            <div>
+                for _, msg := range(errMsgs) {
+                    <span>{msg}</span>
+                }
+            </div>
+        }
+
+        if len(sucMsgs) != 0 {
+            <div>
+                for _, msg := range(sucMsgs) {
+                    <span>{msg}</span>
+                }
+            </div>
+        }
+    </div>
+}

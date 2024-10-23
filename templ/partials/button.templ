@@ -1,0 +1,13 @@
+package partials
+
+templ Button(buttonType, buttonStyle string){
+    <button
+    if len(buttonStyle) == 0{
+        class="hover:opacity-80 mt-3 bg-button text-white py-2 px-4 rounded text-lg font-semibold"
+    }else{
+        class={buttonStyle}
+    }
+    type={buttonType}>
+       {children...} 
+    </button>
+}
