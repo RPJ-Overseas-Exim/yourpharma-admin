@@ -51,3 +51,21 @@ templ CustomerForm(customer dataset.Customer){
     </div>
 }
 
+templ AddCustomerForm(){
+    <div
+        onclick="hideFormFromFilter(this)"
+        id={"add-form-filter"}
+        class="hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10"></div>
+    <form
+        class="hidden absolute md:w-1/2 h-full top-0 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border"
+    >
+        <button
+            type="button"
+            onclick="hideFormFromContainer(this)"
+            class="text-green-600 font-semibold text-xl"
+        >Add Customer Details</button>
+        <div>
+            Customer form
+        </div>
+    </form>
+}

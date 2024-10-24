@@ -1,2 +1,0 @@
-<li class=\"w-full font-semibold text-center text-xs md:text-base md:text-left\">
-</li>

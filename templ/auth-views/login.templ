@@ -16,6 +16,7 @@ templ Login(){
                 method="POST"
                 action="/"
                 class="flex flex-col gap-y-2 px-4"
+                form
             >
                 @partials.FormField("Email", "email", "email", "Enter your email", "", "", "")
                 @partials.FormField("Password", "password", "password", "Enter your password", "", "", "")

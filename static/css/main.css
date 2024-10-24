@@ -643,6 +643,10 @@ video {
   height: 100vh;
 }
 
+.h-\[30px\] {
+  height: 30px;
+}
+
 .w-11\/12 {
   width: 91.666667%;
 }
@@ -658,6 +662,14 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.w-\[30px\] {
+  width: 30px;
+}
+
+.w-1\/2 {
+  width: 50%;
 }
 
 .max-w-\[400px\] {
@@ -1144,6 +1156,10 @@ video {
 
   .md\:w-\[30\%\] {
     width: 30%;
+  }
+
+  .md\:w-1\/2 {
+    width: 50%;
   }
 
   .md\:flex-row {

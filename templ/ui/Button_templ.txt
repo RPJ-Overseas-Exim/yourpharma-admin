@@ -1,2 +1,0 @@
-<div class=\"h-full bg-button text-foreground w-full rounded-md\">
-</div>
