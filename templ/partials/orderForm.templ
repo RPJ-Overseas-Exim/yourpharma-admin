@@ -1,9 +1,9 @@
 package partials
 
-import "RPJ-Overseas-Exim/yourpharma-admin/dataset"
 import "strconv"
+import "RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 
-templ OrderForm(customer dataset.Customer){
+templ OrderForm(customer types.Order){
     <div
         onclick="hideFormFromFilter(this)"
         id={"form-filter-" + strconv.Itoa(customer.OrderId)}

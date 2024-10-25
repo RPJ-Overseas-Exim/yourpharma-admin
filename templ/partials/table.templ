@@ -2,8 +2,8 @@ package partials
 
 import (
     "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
-    "RPJ-Overseas-Exim/yourpharma-admin/dataset"
     "strconv"
+	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 )
 
 templ Table(tableStyle string){
@@ -40,13 +40,13 @@ templ OrderTableHeader(){
     </tr>
 }
 
-templ CustomerTableRows(customers []dataset.Customer){
+templ CustomerTableRows(customers []types.Customer){
     for _, customer := range(customers){
         <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
             @TableBodyCell(){{ customer.Name }}
             @TableBodyCell(){{ customer.Email }}
             @TableBodyCell(){{ customer.Address }}
-            @TableBodyCell(){{ customer.PhoneNo }}
+            @TableBodyCell(){{ customer.Number }}
             @TableBodyCell(){
                 <div
                 onclick="showForm(this)"
@@ -61,7 +61,7 @@ templ CustomerTableRows(customers []dataset.Customer){
     }
 }
 
-templ OrderTableRows(customers []dataset.Customer){
+templ OrderTableRows(customers []types.Order){
     for _, customer := range(customers){
         <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
             @TableBodyCell(){{ strconv.Itoa(customer.OrderId) }}
@@ -87,7 +87,6 @@ templ OrderTableRows(customers []dataset.Customer){
         </tr>
     }
 }
-
 templ TableHeadCell(){
     <td class="text-center px-4 py-2 whitespace-nowrap">
         {children...}

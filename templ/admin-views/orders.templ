@@ -2,10 +2,10 @@ package adminView
 
 import (
     "RPJ-Overseas-Exim/yourpharma-admin/templ/partials"
-    "RPJ-Overseas-Exim/yourpharma-admin/dataset"
+	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 )
 
-templ Orders(){
+templ Orders(customersData []types.Order){
     <section class="w-full h-full p-2">
         <div class="flex items-center justify-between px-4 py-2">
             <div class="font-semibold text-xl">Orders</div>
@@ -32,7 +32,7 @@ templ Orders(){
         <div class="mt-3 w-full border border-border-muted border-b-0 rounded overflow-auto">
             @partials.Table(""){
                 @partials.OrderTableHeader()
-                @partials.OrderTableRows(dataset.Customers)
+                @partials.OrderTableRows(customersData)
             }
         </div>
     </section>

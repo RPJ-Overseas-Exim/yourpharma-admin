@@ -1,32 +1,42 @@
 package types
 
 type Customer struct{
-    OrderId string
-    Name, Email, Product string
-    Quantity, Price int
+    Id int
+    Name, 
+    Email,
+    Number,
+    Address string
 }
 
 type Order struct{
-    Id, Name, Email, Product string
-    Quantity, Price int
+    OrderId int
+    Name, 
+    Email,
+    Number,
+    Product string
     Status StatusType
+    Quantity,
+    Price int
+    Origin, 
+    CreatedAt,
+    Address string
 }
 
 // enum creation for status type
 type StatusType int
 
 const (
-    newOrder StatusType=iota
-    paymentDone
-    delievered
+    NewOrder StatusType=iota
+    PaymentDone
+    Delievered
 )
 
 func (s StatusType) String() string{
-    if(s == newOrder){
+    if(s == NewOrder){
         return "newOrder"
-    }else if(s == paymentDone){
+    }else if(s == PaymentDone){
         return "paymentDone"
-    }else if(s == delievered){
+    }else if(s == Delievered){
         return "delievered"
     }
 

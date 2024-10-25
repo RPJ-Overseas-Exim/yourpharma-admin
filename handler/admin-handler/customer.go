@@ -2,8 +2,9 @@ package adminHandler
 
 import (
 	authHandler "RPJ-Overseas-Exim/yourpharma-admin/handler/auth-handler"
-	handlerUtils "RPJ-Overseas-Exim/yourpharma-admin/handler/utils"
+	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 	adminView "RPJ-Overseas-Exim/yourpharma-admin/templ/admin-views"
+	"log"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
@@ -25,7 +26,15 @@ func NewCustomerService(db *gorm.DB) *customerService {
 }
 
 func (cs *customerService) Customers(c echo.Context) error {
-	customersView := adminView.Customers()
+    var customerData []types.Customer
+    result := cs.DB.Find(&customerData)
+
+    if result.Error != nil {
+        log.Printf("Error in customers Data: %v", result.Error)
+        return c.JSON(400, &echo.Map{"message":"Customers not present"})
+    }
+
+	customersView := adminView.Customers(customerData)
 	var msgs []string
 
 	return authHandler.RenderView(c, adminView.AdminIndex(
@@ -38,26 +47,25 @@ func (cs *customerService) Customers(c echo.Context) error {
 }
 
 func (cs *customerService) CreateCustomer(c echo.Context) error {
-    var err error
-    var data map[string]interface{}
+    var customer types.Customer
+    var result *gorm.DB
 
-    data, err = handlerUtils.ResponseBody(c)
-
-    if err != nil {
-        return c.JSON(400, &echo.Map{"message":"Data is not provided"})
+    customer = types.Customer{
+        Name: c.FormValue("name"),
+        Email: c.FormValue("email"),
+        Number: c.FormValue("number"),
+        Address: c.FormValue("address"),
     }
 
-    customer := Customer{
-        Name: data["name"].(string),
-        Email: data["email"].(string),
-        Number: data["number"].(string),
-        Address: data["address"].(string),
-    }
+    result = cs.DB.Create(&customer)
 
-    result := cs.DB.Create(&customer)
+    var customersData []types.Customer
+    result = cs.DB.Find(&customersData) 
+
     if result.Error != nil {
-        return c.JSON(401, &echo.Map{"message":"failed to create customer or customer is already present"})
+        log.Printf("Customers data is not fetched: %v", result.Error)
     }
 
-    return c.JSON(200, &echo.Map{"message": "Customer created"})
+    customersView := adminView.Customers(customersData)
+    return authHandler.RenderView(c, customersView)
 }

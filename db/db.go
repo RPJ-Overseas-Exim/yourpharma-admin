@@ -35,7 +35,7 @@ func ConnectDB() *gorm.DB {
         return nil
     }
 
-    db.AutoMigrate(&models.Customer{})
+    db.AutoMigrate(&models.Customer{}, &models.Products{}, &models.Price{}, &models.Orders{})
 
     return db
 }
