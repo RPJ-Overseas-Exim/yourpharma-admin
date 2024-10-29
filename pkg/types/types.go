@@ -1,43 +1,56 @@
 package types
 
+import "time"
+
+type Product struct {
+    Id      string
+    Name    string
+    Qty     int
+    Price   int
+}
+
 type Customer struct{
-    Id int
+    Id,
     Name, 
     Email,
-    Number,
     Address string
+    Number  *int
 }
 
 type Order struct{
-    OrderId int
+    Id string
     Name, 
     Email,
-    Number,
-    Product string
-    Status StatusType
+    Product     string
+    Number      *int
+    Status      StatusType
     Quantity,
-    Price int
+    Price       int
     Origin, 
-    CreatedAt,
-    Address string
+    Address     string
+    CreatedAt,   
+    UpdatedAt   time.Time
 }
 
 // enum creation for status type
 type StatusType int
 
 const (
-    NewOrder StatusType=iota
-    PaymentDone
-    Delievered
+    Active StatusType=iota
+    Paid
+    Shipped
+    Delivered
 )
 
 func (s StatusType) String() string{
-    if(s == NewOrder){
-        return "newOrder"
-    }else if(s == PaymentDone){
-        return "paymentDone"
-    }else if(s == Delievered){
-        return "delievered"
+    if(s == Active){
+        return "active"
+    }else if(s == Paid){
+        return "paid"
+    }else if(s == Shipped){
+        return "shipped"
+    }else if(s == Delivered){
+        return "delivered"
     }
 
     return "not a valid type"

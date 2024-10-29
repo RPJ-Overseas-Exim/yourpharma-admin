@@ -1,0 +1,202 @@
+package partials
+
+import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
+import "RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
+import "strconv"
+
+templ AddProductForm(){
+    <div
+        onclick="hideFormFromFilter(this)"
+        id={"add-form-filter"}
+        class="hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10"></div>
+
+    <form
+        hx-post="/products"
+        hx-target="#product-page"
+        hx-swap="outerHTML"
+        class="hidden absolute md:w-1/3 h-full top-0 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border"
+    >
+        <button
+            type="button"
+            onclick="hideFormFromContainer(this)"
+            class="text-green-600 font-semibold text-xl flex gap-x-2 items-center mb-3"
+        >
+            @icons.Back()
+            <span class="whitespace-nowrap">Add Product Details</span>
+        </button>
+
+        <div class="space-y-3">
+            @FormField(
+                "Product Name",
+                "name",
+                "text",
+                "Enter product name",
+                "",
+                "",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+            @FormField(
+                "Product Quantity",
+                "quantity",
+                "number",
+                "Enter product quantity",
+                "",
+                "",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+            @FormField(
+                "Product Price",
+                "price",
+                "number",
+                "Enter product price",
+                "",
+                "",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+        </div>
+        <div class="w-full space-y-2 mt-5">
+                @Button(
+                    "submit",
+                    "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-background-muted text-lg font-semibold",
+                ){
+                   Add Product 
+                }
+                @Button(
+                    "reset",
+                    "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-red-600 hover:text-white text-lg font-semibold",
+                ){
+                   Reset
+                }
+            </div>
+
+    </form>
+}
+
+templ ProductForm(product types.Product){
+    <div
+        onclick="hideFormFromFilter(this)"
+        id={"form-filter-"+ product.Id}
+        class="hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10"></div>
+    <div
+        id={"form-container-"+ product.Id}
+        class="hidden absolute md:w-1/3 h-full top-0 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border"
+    >
+        <button
+            type="button"
+            onclick="hideFormFromContainer(this)"
+            class="text-green-600 font-semibold text-xl flex gap-x-2 items-center"
+        >
+            @icons.Back()
+            <span class="whitespace-nowrap">Product Details</span>
+        </button>
+
+        <div class="w-full flex flex-col gap-y-2 mt-3">
+            <div class="flex gap-x-2 items-center">
+                <div class="text-foreground text-lg font-semibold">Name :</div>
+                <div class="text-foreground-muted text-lg">{product.Name}</div>
+            </div>
+
+            <div class="flex gap-x-2 items-center">
+                <div class="text-foreground text-lg font-semibold">Price :</div>
+                <div class="text-lg text-foreground-muted">{strconv.Itoa(product.Price)}</div>
+            </div>
+
+            <div class="flex gap-x-2 items-center">
+                <div class="text-foreground text-lg font-semibold">Quantity :</div>
+                <div class="text-foreground-muted text-lg">{strconv.Itoa(product.Qty)}</div>
+            </div>
+
+            <div class="w-full space-y-2">
+                <div
+                onclick="showForm(this)"
+                class="">
+                    @Button("button", "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-background-muted text-lg font-semibold"){
+                       Edit Product 
+                    }
+                </div>
+                @EditProductForm(product)
+
+                <div
+                    hx-delete={"/product/"+product.Id}
+                    hx-trigger="click"
+                    hx-target="#product-page"
+                    hx-swap="outerHTML"
+                    class=""
+                >
+                    @Button("button", "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-red-600 hover:text-white text-lg font-semibold"){
+                        Delete Customer 
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>   
+}
+
+templ EditProductForm(product types.Product){
+    <div
+        onclick="hideFormFromFilter(this)"
+        id={"add-form-filter"}
+        class="hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10"></div>
+    <form
+        hx-put={"/products/"+product.Id}
+        hx-target="#product-page"
+        hx-swap="outerHTML"
+        class="hidden absolute w-full h-full -top-2 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border"
+    >
+        <button
+            type="button"
+            onclick="hideFormFromContainer(this)"
+            class="text-green-600 font-semibold text-xl flex gap-x-2 items-center mb-3"
+        >
+            @icons.Back()
+            <span class="whitespace-nowrap">Edit Product Details</span>
+        </button>
+
+        <div class="space-y-3">
+            @FormField(
+                "Product Name",
+                "name",
+                "text",
+                "Enter product name",
+                "",
+                "text-left text-semibold text-lg",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+            @FormField(
+                "Product Price",
+                "price",
+                "number",
+                "Enter product price",
+                "",
+                "text-left text-semibold text-lg",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+            @FormField(
+                "Product Quantity",
+                "quantity",
+                "number",
+                "Enter product quantity",
+                "",
+                "text-left text-semibold text-lg",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+        </div>
+        
+        <div class="w-full space-y-2 mt-5">
+            @Button(
+                "submit",
+                "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-background-muted text-lg font-semibold",
+            ){
+               Edit 
+            }
+            @Button(
+                "reset",
+                "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-red-600 hover:text-white text-lg font-semibold",
+            ){
+               Reset
+            }
+        </div>
+
+    </form>
+}

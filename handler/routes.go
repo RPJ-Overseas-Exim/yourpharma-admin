@@ -16,6 +16,14 @@ func New(db *gorm.DB) handler {
     return handler{db}
 }
 
+func (h *handler) SetupCustomerRoutes(e *echo.Echo) {
+    cs := adminHandler.NewCustomerService(h.DB)
+	e.GET("/customers", cs.Customers)
+	e.POST("/customers", cs.CreateCustomer)
+	e.PUT("/customers", cs.UpdateCustomer)
+    e.DELETE("/customers/:id", cs.DeleteCustomer)
+}
+
 func (h *handler) SetupAuthRoutes(e *echo.Echo) {
     as := authHandler.NewAuthService(h.DB)
 	e.GET("/", as.LoginHandler)
@@ -30,13 +38,13 @@ func (h *handler) SetupHomeRoutes(e *echo.Echo) {
 	e.POST("/home", hs.Home)
 }
 
-func (h *handler) SetupCustomerRoutes(e *echo.Echo) {
-    cs := adminHandler.NewCustomerService(h.DB)
-	e.GET("/customers", cs.Customers)
-	e.POST("/customers", cs.CreateCustomer)
-}
-
 func (h *handler) SetupOrderRoutes(e *echo.Echo) {
     ords := adminHandler.NewOrderService(h.DB)
 	e.GET("/orders", ords.Orders)
+}
+
+func (h *handler) SetupProductRoutes(e *echo.Echo){
+    ps := adminHandler.NewProductService(h.DB)
+    e.GET("/products", ps.Products)
+    e.POST("/products", ps.CreateProduct)
 }

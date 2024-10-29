@@ -35,6 +35,7 @@ func main() {
 	h.SetupHomeRoutes(e)
 	h.SetupCustomerRoutes(e)
 	h.SetupOrderRoutes(e)
+	h.SetupProductRoutes(e)
 
 	e.Logger.Fatal(e.Start(":7000"))
 }

@@ -2,57 +2,7 @@ package partials
 
 import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
 import "RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
-
-templ CustomerForm(customer types.Customer){
-    <div
-        onclick="hideFormFromFilter(this)"
-        id={"form-filter-"+customer.Email}
-        class="hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10"></div>
-    <div
-        id={"form-container-"+customer.Email}
-        class="hidden absolute md:w-1/3 h-full top-0 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border"
-    >
-        <button
-            type="button"
-            onclick="hideFormFromContainer(this)"
-            class="text-green-600 font-semibold text-xl flex gap-x-2 items-center"
-        >
-            @icons.Back()
-            <span class="whitespace-nowrap">Customer Details</span>
-        </button>
-
-        <div class="w-full flex flex-col gap-y-2 mt-3">
-            <div class="flex gap-x-2 items-center">
-                <div class="text-foreground text-lg font-semibold">Name :</div>
-                <div class="text-foreground-muted text-lg">{customer.Name}</div>
-            </div>
-
-            <div class="flex gap-x-2 items-center">
-                <div class="text-foreground text-lg font-semibold">Email :</div>
-                <div class="text-lg text-foreground-muted">{customer.Email}</div>
-            </div>
-
-            <div class="flex gap-x-2 items-center">
-                <div class="text-foreground text-lg font-semibold">Address :</div>
-                <div class="text-foreground-muted text-lg">{customer.Address}</div>
-            </div>
-
-            <div class="flex gap-x-2 items-center">
-                <div class="text-foreground text-lg font-semibold">Phone No. :</div>
-                <div class="text-foreground-muted text-lg">{customer.Number}</div>
-            </div>
-
-            <div class="w-full space-y-2">
-                @Button("submit", "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-background-muted text-lg font-semibold"){
-                   Edit Customer 
-                }
-                @Button("button", "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-red-600 hover:text-white text-lg font-semibold"){
-                   Delete Customer 
-                }
-            </div>
-        </div>
-    </div>
-}
+import "strconv"
 
 templ AddCustomerForm(){
     <div
@@ -130,3 +80,148 @@ templ AddCustomerForm(){
     </form>
 }
 
+
+
+templ CustomerForm(customer types.Customer){
+    <div
+        onclick="hideFormFromFilter(this)"
+        id={"form-filter-"+ customer.Email}
+        class="hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10"></div>
+    <div
+        id={"form-container-"+ customer.Email}
+        class="hidden absolute md:w-1/3 h-full top-0 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border"
+    >
+        <button
+            type="button"
+            onclick="hideFormFromContainer(this)"
+            class="text-green-600 font-semibold text-xl flex gap-x-2 items-center"
+        >
+            @icons.Back()
+            <span class="whitespace-nowrap">Customer Details</span>
+        </button>
+
+        <div class="w-full flex flex-col gap-y-2 mt-3">
+            <div class="flex gap-x-2 items-center">
+                <div class="text-foreground text-lg font-semibold">Name :</div>
+                <div class="text-foreground-muted text-lg">{customer.Name}</div>
+            </div>
+
+            <div class="flex gap-x-2 items-center">
+                <div class="text-foreground text-lg font-semibold">Email :</div>
+                <div class="text-lg text-foreground-muted">{customer.Email}</div>
+            </div>
+
+            <div class="flex gap-x-2 items-center">
+                <div class="text-foreground text-lg font-semibold">Address :</div>
+                <div class="text-foreground-muted text-lg">{customer.Address}</div>
+            </div>
+
+            <div class="flex gap-x-2 items-center">
+                <div class="text-foreground text-lg font-semibold">Phone No. :</div>
+                <div class="text-foreground-muted text-lg">{strconv.Itoa(*customer.Number)}</div>
+            </div>
+
+            <div class="w-full space-y-2">
+                <div
+                onclick="showForm(this)"
+                class="">
+                    @Button("button", "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-background-muted text-lg font-semibold"){
+                       Edit Customer 
+                    }
+                </div>
+                @EditCustomerForm(customer)
+
+                <div
+                    hx-delete={"/customers/"+customer.Id}
+                    hx-trigger="click"
+                    hx-target="#customer-page"
+                    hx-swap="outerHTML"
+                    class=""
+                >
+                    @Button("button", "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-red-600 hover:text-white text-lg font-semibold"){
+                        Delete Customer 
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+templ EditCustomerForm(customer types.Customer){
+    <div
+        onclick="hideFormFromFilter(this)"
+        id={"add-form-filter"}
+        class="hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10"></div>
+    <form
+        hx-put="/customers"
+        hx-target="#customer-page"
+        hx-swap="outerHTML"
+        class="hidden absolute w-full h-full -top-2 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border"
+    >
+        <button
+            type="button"
+            onclick="hideFormFromContainer(this)"
+            class="text-green-600 font-semibold text-xl flex gap-x-2 items-center mb-3"
+        >
+            @icons.Back()
+            <span class="whitespace-nowrap">Edit Customer Details</span>
+        </button>
+
+        <div class="space-y-3">
+            <input type="text" id="id" name="id" value={customer.Id} class="hidden" />
+            
+            @FormField(
+                "Customer Name",
+                "name",
+                "text",
+                "Enter customer name",
+                "",
+                "text-left text-semibold text-lg",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+            @FormField(
+                "Customer Email",
+                "email",
+                "email",
+                "Enter customer email",
+                "",
+                "text-left text-semibold text-lg",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+            @FormField(
+                "Customer Number",
+                "number",
+                "number",
+                "Enter customer number",
+                "",
+                "text-left text-semibold text-lg",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+            @FormField(
+                "Customer Address",
+                "address",
+                "text",
+                "Enter customer address",
+                "",
+                "text-left text-semibold text-lg",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+        </div>
+        <div class="w-full space-y-2 mt-5">
+                @Button(
+                    "submit",
+                    "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-background-muted text-lg font-semibold",
+                ){
+                   Edit 
+                }
+                @Button(
+                    "reset",
+                    "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-red-600 hover:text-white text-lg font-semibold",
+                ){
+                   Reset
+                }
+            </div>
+
+    </form>
+}

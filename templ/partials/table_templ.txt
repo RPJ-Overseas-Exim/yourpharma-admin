@@ -1,0 +1,49 @@
+<table
+ class=\"w-full table-auto shadow-md rounded\"
+ class=\"
+\"
+>
+</table>
+<td class=\"text-center px-4 py-2 whitespace-nowrap\">
+</td>
+<td class=\"text-center px-4 py-2 whitespace-nowrap\">
+</td>
+<tr class=\"w-full text-foreground-muted border-b border-border-muted\">
+Product Name 
+Product Quantity 
+Product price 
+Actions 
+</tr>
+<tr class=\"w-full text-foreground border-b border-border-muted hover:bg-background-muted\">
+<div onclick=\"showForm(this)\" class=\"\">
+</div>
+</tr>
+<tr class=\"w-full text-foreground-muted border-b border-border-muted\">
+Name 
+Email 
+Address 
+Phone No. 
+Actions 
+</tr>
+<tr class=\"w-full text-foreground border-b border-border-muted hover:bg-background-muted\">
+<div onclick=\"showForm(this)\" class=\"\">
+</div>
+</tr>
+<tr class=\"w-full text-foreground-muted border-b border-border-muted\">
+OrderId 
+Name 
+Email 
+Product 
+Price 
+Status 
+Origin 
+Actions 
+</tr>
+<tr class=\"w-full text-foreground border-b border-border-muted hover:bg-background-muted\">
+<div class=\"px-2 rounded-xl bg-green-600 text-white\">
+</div>
+<div class=\"px-2 rounded-xl bg-green-800 text-white\">
+</div>
+<div onclick=\"showForm(this)\" class=\"\">
+</div>
+</tr>
