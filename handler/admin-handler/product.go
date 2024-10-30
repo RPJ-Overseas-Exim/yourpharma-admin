@@ -22,7 +22,7 @@ func NewProductService(db *gorm.DB) *productService {
     return &productService{DB:db}
 }
 
-func (ps *productService) ShowProductView(c echo.Context) templ.Component {
+func (ps *productService) ProductView(c echo.Context) templ.Component {
     var err error
     productsData, err := ps.GetProducts()
 
@@ -39,7 +39,7 @@ func (ps *productService) ShowProductView(c echo.Context) templ.Component {
 // database functions --------------------------------------------------------
 func (ps *productService) GetProducts() ([]types.Product, error) {
     var productsData []types.Product
-    result := ps.DB.Model(&models.Product{}).Select("price_qties as Id, products.name as Name, price_qties.price as Price, price_qties.qty as Qty").Joins("left join price_qties on price_qties.product_id = products.id").Scan(&productsData)
+    result := ps.DB.Model(&models.Product{}).Select("price_qties.id as Id, products.id as PId, products.name as Name, price_qties.price as Price, price_qties.qty as Qty").Joins("inner join price_qties on price_qties.product_id = products.id").Scan(&productsData)
 
     log.Printf("Product data: %v", productsData)
 
@@ -51,13 +51,25 @@ func (ps *productService) GetProducts() ([]types.Product, error) {
 }
 
 func (ps *productService) AddProductDetails(name string, qty, price int) error {
-    newProduct := models.NewProduct(name)
-    result := ps.DB.Create(&newProduct)
-    if result.Error != nil {
-        return result.Error
+    var product models.Product
+    var newPrice *models.PriceQty
+    var result *gorm.DB
+
+    result = ps.DB.Find(&product, "name like ?", name)
+    utils.ErrorHandler(result.Error, "Failed to parse the product details")
+    
+    if  result.RowsAffected == 0 {
+        newProduct := models.NewProduct(name)
+        result = ps.DB.Create(&newProduct)
+        if result.Error != nil {
+            return result.Error
+        }
+
+        newPrice = models.NewPriceQty((*newProduct).Id, price, qty)
+    }else{ 
+        newPrice = models.NewPriceQty(product.Id, price, qty)
     }
 
-    newPrice := models.NewPriceQty(newProduct.Id, qty, price)
     result = ps.DB.Create(&newPrice)
     if result.Error != nil {
         return result.Error
@@ -67,21 +79,43 @@ func (ps *productService) AddProductDetails(name string, qty, price int) error {
 }
 
 func (ps *productService) UpdateProductDetails(id, name string, price, qty int) error {
-    newPriceQty := ps.DB.Model(&models.PriceQty{}).Where("id like ?", id).Updates(map[string]interface{}{
-        "id": id,
+    var result *gorm.DB
+    result = ps.DB.Model(&models.PriceQty{}).Where("id like ?", id).Updates(map[string]interface{}{
         "price": price,
         "qty": qty,
     })
+    utils.ErrorHandler(result.Error, "Failed to update the price of the product")
 
-    utils.ErrorHandler(newPriceQty.Error, "Failed to update the price of the product")
+    var updatedPrice models.PriceQty
+    result = ps.DB.Find(&updatedPrice, "id like ?", id)
+    utils.ErrorHandler(result.Error, "Failed to get the product details")
+
+    result = ps.DB.Model(&models.Product{}).Where("id like ?", updatedPrice.ProductId).Updates(map[string]interface{}{
+        "name": name,
+    })
+    utils.ErrorHandler(result.Error, "Failed to update the product name")
 
     return nil
 }
 
+func (ps *productService) DeleteProductDetails(id string) error {
+   return nil 
+}
+
+func (ps *productService) DeletePriceDetails(id string) error {
+    var price models.PriceQty
+    result := ps.DB.Model(&models.PriceQty{}).Where("id like ?", id).Delete(&price)
+
+    utils.ErrorHandler(result.Error, "Failed to delete the price details")
+    
+    return nil
+}
+
+
 // routes functions --------------------------------------------------------
 func (ps *productService) Products(c echo.Context) error {
     var msgs []string
-    productView := ps.ShowProductView(c) 
+    productView := ps.ProductView(c) 
    return authHandler.RenderView(c, adminView.AdminIndex(
         "Products",
         true,
@@ -109,7 +143,7 @@ func (ps *productService) CreateProduct(c echo.Context) error {
         price,
     )
 
-    productView := ps.ShowProductView(c)
+    productView := ps.ProductView(c)
     return authHandler.RenderView(c, productView)
 }
 
@@ -124,7 +158,20 @@ func (ps *productService) UpdateProduct(c echo.Context) error {
 
     ps.UpdateProductDetails(id, name, price, quantity)
 
-    productView := ps.ShowProductView(c)
+    productView := ps.ProductView(c)
     return authHandler.RenderView(c, productView)
 }
 
+func (ps *productService) DeletePrice(c echo.Context) error {
+    id := c.Param("id")
+    ps.DeletePriceDetails(id)
+    productView := ps.ProductView(c)
+    return authHandler.RenderView(c, productView)
+}
+
+func (ps *productService) DeleteProduct(c echo.Context) error {
+    id := c.Param("id")
+    ps.DeleteProductDetails(id)
+    productView := ps.ProductView(c)
+    return authHandler.RenderView(c, productView)
+}

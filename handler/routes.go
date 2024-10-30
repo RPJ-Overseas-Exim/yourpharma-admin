@@ -24,6 +24,23 @@ func (h *handler) SetupCustomerRoutes(e *echo.Echo) {
     e.DELETE("/customers/:id", cs.DeleteCustomer)
 }
 
+func (h *handler) SetupProductRoutes(e *echo.Echo){
+    ps := adminHandler.NewProductService(h.DB)
+    e.GET("/products", ps.Products)
+    e.POST("/products", ps.CreateProduct)
+    e.PUT("/products/:id", ps.UpdateProduct)
+    e.DELETE("/price/:id", ps.DeletePrice)
+    e.DELETE("/products/:id", ps.DeleteProduct)
+}
+
+func (h *handler) SetupOrderRoutes(e *echo.Echo) {
+    ords := adminHandler.NewOrderService(h.DB)
+	e.GET("/orders", ords.Orders)
+	e.POST("/orders", ords.CreateOrder)
+	e.PUT("/orders", ords.UpdateOrder)
+	e.DELETE("/orders", ords.DeleteOrder)
+}
+
 func (h *handler) SetupAuthRoutes(e *echo.Echo) {
     as := authHandler.NewAuthService(h.DB)
 	e.GET("/", as.LoginHandler)
@@ -38,13 +55,4 @@ func (h *handler) SetupHomeRoutes(e *echo.Echo) {
 	e.POST("/home", hs.Home)
 }
 
-func (h *handler) SetupOrderRoutes(e *echo.Echo) {
-    ords := adminHandler.NewOrderService(h.DB)
-	e.GET("/orders", ords.Orders)
-}
 
-func (h *handler) SetupProductRoutes(e *echo.Echo){
-    ps := adminHandler.NewProductService(h.DB)
-    e.GET("/products", ps.Products)
-    e.POST("/products", ps.CreateProduct)
-}

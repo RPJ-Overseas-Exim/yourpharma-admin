@@ -117,14 +117,25 @@ templ ProductForm(product types.Product){
                 @EditProductForm(product)
 
                 <div
-                    hx-delete={"/product/"+product.Id}
+                    hx-delete={"/products/"+product.PId}
                     hx-trigger="click"
                     hx-target="#product-page"
                     hx-swap="outerHTML"
                     class=""
                 >
                     @Button("button", "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-red-600 hover:text-white text-lg font-semibold"){
-                        Delete Customer 
+                        Delete Product 
+                    }
+                </div>
+                <div
+                    hx-delete={"/price/"+product.Id}
+                    hx-trigger="click"
+                    hx-target="#product-page"
+                    hx-swap="outerHTML"
+                    class=""
+                >
+                    @Button("button", "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-red-600 hover:text-white text-lg font-semibold"){
+                        Delete Price
                     }
                 </div>
             </div>
@@ -139,7 +150,7 @@ templ EditProductForm(product types.Product){
         id={"add-form-filter"}
         class="hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10"></div>
     <form
-        hx-put={"/products/"+product.Id}
+        hx-put={"/products/" + product.Id}
         hx-target="#product-page"
         hx-swap="outerHTML"
         class="hidden absolute w-full h-full -top-2 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border"
@@ -164,19 +175,19 @@ templ EditProductForm(product types.Product){
                 "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
             )
             @FormField(
-                "Product Price",
-                "price",
+                "Product Quantity",
+                "quantity",
                 "number",
-                "Enter product price",
+                "Enter product quantity",
                 "",
                 "text-left text-semibold text-lg",
                 "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
             )
             @FormField(
-                "Product Quantity",
-                "quantity",
+                "Product Price",
+                "price",
                 "number",
-                "Enter product quantity",
+                "Enter product price",
                 "",
                 "text-left text-semibold text-lg",
                 "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",

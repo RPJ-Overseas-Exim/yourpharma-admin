@@ -16,7 +16,10 @@ Edit Product
 </div>
 <div hx-delete=\"
 \" hx-trigger=\"click\" hx-target=\"#product-page\" hx-swap=\"outerHTML\" class=\"\">
-Delete Customer 
+Delete Product 
+</div><div hx-delete=\"
+\" hx-trigger=\"click\" hx-target=\"#product-page\" hx-swap=\"outerHTML\" class=\"\">
+Delete Price
 </div></div></div></div>
 <div onclick=\"hideFormFromFilter(this)\" id=\"
 \" class=\"hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10\"></div><form hx-put=\"

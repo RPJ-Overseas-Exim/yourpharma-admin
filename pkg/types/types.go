@@ -3,10 +3,11 @@ package types
 import "time"
 
 type Product struct {
-    Id      string
-    Name    string
-    Qty     int
-    Price   int
+    Id          string
+    PId         string
+    Name        string
+    Qty         int
+    Price       int
 }
 
 type Customer struct{

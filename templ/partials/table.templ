@@ -46,8 +46,8 @@ templ ProductTableRows(products []types.Product){
     for _, product := range(products) {
         <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
             @TableBodyCell(){{ product.Name }}
-            @TableBodyCell(){{ strconv.Itoa(product.Price) }}
             @TableBodyCell(){{ strconv.Itoa(product.Qty) }}
+            @TableBodyCell(){{ strconv.Itoa(product.Price) }}
             @TableBodyCell(){
                 <div
                 onclick="showForm(this)"
