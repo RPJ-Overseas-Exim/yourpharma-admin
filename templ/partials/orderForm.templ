@@ -2,6 +2,109 @@ package partials
 
 import "strconv"
 import "RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
+import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
+
+templ AddOrderForm(){
+    <div
+        onclick="hideFormFromFilter(this)"
+        id={"add-form-filter"}
+        class="hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10"></div>
+    <form
+        hx-post="/orders"
+        hx-target="#order-page"
+        hx-swap="outerHTML"
+        class="hidden absolute md:w-1/3 h-full top-0 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-4 border border-border overflow-auto"
+    >
+        <button
+            type="button"
+            onclick="hideFormFromContainer(this)"
+            class="text-green-600 font-semibold text-xl flex gap-x-2 items-center mb-3"
+        >
+            @icons.Back()
+            <span class="whitespace-nowrap">Add Order Details</span>
+        </button>
+
+        <div class="space-y-3">
+            @FormField(
+                "Customer Name",
+                "name",
+                "text",
+                "Enter customer name",
+                "",
+                "",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+            @FormField(
+                "Customer Email",
+                "email",
+                "email",
+                "Enter customer email",
+                "",
+                "",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+            @FormField(
+                "Customer Number",
+                "number",
+                "number",
+                "Enter customer number",
+                "",
+                "",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+            @FormField(
+                "Customer Address",
+                "address",
+                "text",
+                "Enter customer address",
+                "",
+                "",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+            @FormField(
+                "Product Name",
+                "product",
+                "text",
+                "Enter product name",
+                "",
+                "",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+            @FormField(
+                "Price",
+                "price",
+                "number",
+                "Enter product price",
+                "",
+                "",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+            @FormField(
+                "Quantity",
+                "quantity",
+                "number",
+                "Enter product quantity",
+                "",
+                "",
+                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+            )
+        </div>
+        <div class="w-full space-y-2 mt-5">
+                @Button(
+                    "submit",
+                    "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-background-muted text-lg font-semibold",
+                ){
+                   Add Order 
+                }
+                @Button(
+                    "reset",
+                    "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-red-600 hover:text-white text-lg font-semibold",
+                ){
+                   Reset
+                }
+            </div>
+    </form>
+}
 
 templ OrderForm(order types.Order){
     <div

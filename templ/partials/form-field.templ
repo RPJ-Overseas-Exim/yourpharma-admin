@@ -29,6 +29,10 @@ templ FormField(title, name, inputType, placeholder, containerStyle, labelStyle,
             name={name}
             id={name}
             placeholder={placeholder}
+            if inputType == "text" {
+                minlength="3"
+            }
+            required
         />
     </div>
 }

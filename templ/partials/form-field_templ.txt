@@ -18,4 +18,6 @@
 \" name=\"
 \" id=\"
 \" placeholder=\"
-\"></div>
+\"
+ minlength=\"3\"
+ required></div>
