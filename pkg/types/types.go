@@ -24,7 +24,7 @@ type Order struct{
     Email,
     Product     string
     Number      *int
-    Status      StatusType
+    Status      string
     Quantity,
     Price       int
     Origin, 

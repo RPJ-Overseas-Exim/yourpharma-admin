@@ -6,7 +6,9 @@ import (
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/utils"
 	adminView "RPJ-Overseas-Exim/yourpharma-admin/templ/admin-views"
+	"log"
 	"strconv"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
@@ -21,10 +23,40 @@ func NewOrderService(db *gorm.DB) *orderService{
 }
 
 // database functions ===================================================
-func (ords *orderService) GetOrders() ([]types.Order, error) {
+func (ords *orderService) GetOrders(status string) ([]types.Order, error) {
     var ordersData []types.Order
+    var result *gorm.DB
+    selectStatement := `
+                orders.id as Id,
+                customers.name as Name,
+                customers.email as Email,
+                customers.number as Number,
+                customers.address as Address,
+                products.name as Product,
+                orders.quantity as Quantity,
+                orders.status as Status,
+                orders.origin as Origin,
+                orders.amount as Price,
+                orders.created_at as CreatedAt,
+                orders.updated_at as UpdatedAt
+            `
+    joinStatement1 := `
+                inner join customers
+                on customers.id = orders.customer_id
+            `
+    joinStatement2 := `
+                inner join products
+                on products.id = orders.product_id
+            `
 
-    result := ords.DB.Find(&ordersData)
+    if len(status) != 0 && status != "all" {
+        result = ords.DB.Model(&models.Order{}).Select(selectStatement).Joins(joinStatement1).Joins(joinStatement2).Where("orders.status like ?", status).Scan(&ordersData)
+    }else{
+        result = ords.DB.Model(&models.Order{}).Select(selectStatement).Joins(joinStatement1).Joins(joinStatement2).Scan(&ordersData)
+    }
+
+    log.Printf("Order result: %v", ordersData)
+
     if result.Error != nil {
         return ordersData, result.Error
     }
@@ -56,7 +88,24 @@ func (ords *orderService) AddOrderDetails(name, email, product string, number *i
     return nil
 }
 
-func (ords *orderService) UpdataeOrderDetails(id string) error {
+func (ords *orderService) UpdateOrderDetails(id string) error {
+    var order models.Order
+    var status string
+
+    result := ords.DB.Find(&order, "id like ?", id)
+    utils.ErrorHandler(result.Error, "Failed to get the order details")
+
+    if order.Status == "active" {
+        status = "paid"
+    }else if order.Status == "paid" {
+        status = "shipped"
+    }else if order.Status == "shipped" {
+        status = "delivered"
+    }
+
+    result = ords.DB.Model(&models.Order{}).Where("id like ?", id).Update("status", status)
+    utils.ErrorHandler(result.Error, "Failed to update the order status")
+
     return nil
 }
 
@@ -71,11 +120,14 @@ func (ords *orderService) DeleteOrderDetails(id string) error {
 // routes functions ===================================================
 func (ords *orderService) Orders(c echo.Context) error {
     var err error
-    ordersData, err := ords.GetOrders()
+    status := strings.ToLower(c.QueryParam("status"))
+    ordersData, err := ords.GetOrders(status)
     utils.ErrorHandler(err, "Failed to get the order data")
 
-	ordersView := adminView.Orders(ordersData)
+	ordersView := adminView.Orders(ordersData, status)
 	var msgs []string
+
+    log.Printf("status: %v", status)
 
 	return authHandler.RenderView(c, adminView.AdminIndex(
 		"Orders",
@@ -105,24 +157,33 @@ func (ords *orderService) CreateOrder(c echo.Context) error {
     
     ords.AddOrderDetails(name, email, product, &number, quantity, price, origin, address)
 
-    ordersData, err := ords.GetOrders()
+    ordersData, err := ords.GetOrders("")
     utils.ErrorHandler(err, "Failed to get the order data")
-    orderView := adminView.Orders(ordersData)
+    orderView := adminView.Orders(ordersData, "All")
     return authHandler.RenderView(c, orderView)
 }
 
 func (ords *orderService) UpdateOrder(c echo.Context) error {
     var err error
-    ordersData, err := ords.GetOrders()
+    id := c.Param("id")
+
+    ords.UpdateOrderDetails(id)
+
+    ordersData, err := ords.GetOrders("")
     utils.ErrorHandler(err, "Failed to get the order data")
-    orderView := adminView.Orders(ordersData)
+    orderView := adminView.Orders(ordersData, "All")
     return authHandler.RenderView(c, orderView)
 }
 
 func (ords *orderService) DeleteOrder(c echo.Context) error {
     var err error
-    ordersData, err := ords.GetOrders()
+    id := c.Param("id")
+    status := c.QueryParam("status")
+
+    ords.DeleteOrderDetails(id)
+
+    ordersData, err := ords.GetOrders(status)
     utils.ErrorHandler(err, "Failed to get the order data")
-    orderView := adminView.Orders(ordersData)
+    orderView := adminView.Orders(ordersData, "All")
     return authHandler.RenderView(c, orderView)
 }

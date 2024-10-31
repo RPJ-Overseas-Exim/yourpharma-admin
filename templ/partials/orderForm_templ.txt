@@ -17,6 +17,12 @@ Reset
 </div><div class=\"text-base font-semibold text-foreground-muted\">
 </div></div><hr class=\"w-full border-t border-border-muted\"><div class=\"mt-3 text-xl font-semibold text-foreground text-left\"># Address</div><div class=\"flex flex-col items-start\"><div class=\"text-base font-semibold text-foreground-muted\">
 </div></div><div class=\"w-full space-y-2\">
+<button type=\"button\" class=\"w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-background-muted text-lg font-semibold\" hx-put=\"
+\" hx-trigger=\"click\" hx-target=\"#order-page\" hx-swap=\"outerHTML\">
 Mark as Paid
-Cancel Order 
+Mark as Shipped
+Mark as Delivered
+</button> <button type=\"button\" class=\"w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-red-600 hover:text-white text-lg font-semibold\" hx-delete=\"
+\" hx-trigger=\"click\" hx-target=\"#order-page\" hx-swap=\"outerHTML\">Cancel Order </button>
+<div class=\"bg-green-600 w-full border border-border-muted rounded flex items-center justify-center py-2 text-lg font-semibold\">Order Completed</div>
 </div></div></div>

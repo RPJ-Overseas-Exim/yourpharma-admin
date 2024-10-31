@@ -37,8 +37,8 @@ func (h *handler) SetupOrderRoutes(e *echo.Echo) {
     ords := adminHandler.NewOrderService(h.DB)
 	e.GET("/orders", ords.Orders)
 	e.POST("/orders", ords.CreateOrder)
-	e.PUT("/orders", ords.UpdateOrder)
-	e.DELETE("/orders", ords.DeleteOrder)
+    e.PUT("/orders/:id", ords.UpdateOrder)
+    e.DELETE("/orders/:id", ords.DeleteOrder)
 }
 
 func (h *handler) SetupAuthRoutes(e *echo.Echo) {
