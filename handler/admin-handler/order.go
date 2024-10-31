@@ -6,7 +6,6 @@ import (
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/utils"
 	adminView "RPJ-Overseas-Exim/yourpharma-admin/templ/admin-views"
-	"log"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
