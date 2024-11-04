@@ -4,7 +4,7 @@ import "strconv"
 import "RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
 
-templ AddOrderForm(){
+templ AddOrderForm(products []types.Product){
     <div
         onclick="hideFormFromFilter(this)"
         id={"add-form-filter"}
@@ -52,24 +52,16 @@ templ AddOrderForm(){
                 "",
                 "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
             )
-            @FormField(
-                "Customer Address",
-                "address",
-                "text",
-                "Enter customer address",
-                "",
-                "",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
-            )
-            @FormField(
-                "Product Name",
-                "product",
-                "text",
-                "Enter product name",
-                "",
-                "",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
-            )
+            
+            <div class="flex flex-col gap-y-2">
+                <label>Select product</label>
+                <select name="product" id="product" class="px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0" required>
+                    for _, product := range(products){
+                        <option value={product.Name} >{product.Name}</option>
+                    }
+                </select>
+            </div>
+
             @FormField(
                 "Price",
                 "price",

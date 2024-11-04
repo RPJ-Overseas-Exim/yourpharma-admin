@@ -5,7 +5,7 @@ import (
     "RPJ-Overseas-Exim/yourpharma-admin/templ/partials"
 )
 
-templ Login(){
+templ Login(msg string){
     <section class="flex items-center justify-center w-full h-full bg-gradient-to-b from-blue-800 to-black">
         <div class="flex items-center flex-col gap-y-4 bg-background py-2 rounded-lg border border-border">
             <h2 class="text-foreground text-xl font-bold">Login</h2>
@@ -16,7 +16,6 @@ templ Login(){
                 method="POST"
                 action="/"
                 class="flex flex-col gap-y-2 px-4"
-                form
             >
                 @partials.FormField("Email", "email", "email", "Enter your email", "", "", "")
                 @partials.FormField("Password", "password", "password", "Enter your password", "", "", "")
@@ -24,15 +23,14 @@ templ Login(){
                 @partials.Button("submit", ""){
                     <span>Login</span>
                 }
-
-                <a href="/register" class="w-full text-center text-base text-foreground-muted">Dont have a account? <span class="text-blue-600 font-semibold">Register</span></a>
             </form>
+            <div class="text-red-600 text-lg font-semibold">{msg}</div>
         </div>
     </section>
 }
 
-templ LoginIndex(title string, isLoggedIn bool, errMsgs, sucMsgs []string, cmp templ.Component){
-   @layout.Base(title, isLoggedIn, errMsgs, sucMsgs){
+templ LoginIndex(title string, isLoggedIn bool, cmp templ.Component){
+   @layout.Base(title, isLoggedIn){
         @cmp
    }
 }

@@ -6,8 +6,8 @@ templ Home(){
     <section class="w-full h-full p-2">Home Page</section>
 }
 
-templ AdminIndex(title string, isLoggedIn bool, errMsgs, sucMsgs []string, cmp templ.Component){
-    @layout.Base(title, isLoggedIn, errMsgs, sucMsgs){
+templ AdminIndex(title string, isLoggedIn bool, cmp templ.Component){
+    @layout.Base(title, isLoggedIn){
         @cmp
     }
 }

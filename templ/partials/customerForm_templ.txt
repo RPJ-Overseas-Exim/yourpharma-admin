@@ -20,9 +20,9 @@ Edit Customer
 Delete Customer 
 </div></div></div></div>
 <div onclick=\"hideFormFromFilter(this)\" id=\"
-\" class=\"hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10\"></div><form hx-put=\"/customers\" hx-target=\"#customer-page\" hx-swap=\"outerHTML\" class=\"hidden absolute w-full h-full -top-2 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border\"><button type=\"button\" onclick=\"hideFormFromContainer(this)\" class=\"text-green-600 font-semibold text-xl flex gap-x-2 items-center mb-3\">
-<span class=\"whitespace-nowrap\">Edit Customer Details</span></button><div class=\"space-y-3\"><input type=\"text\" id=\"id\" name=\"id\" value=\"
-\" class=\"hidden\">
+\" class=\"hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10\"></div><form hx-put=\"
+\" hx-target=\"#customer-page\" hx-swap=\"outerHTML\" class=\"hidden absolute w-full h-full -top-2 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border\"><button type=\"button\" onclick=\"hideFormFromContainer(this)\" class=\"text-green-600 font-semibold text-xl flex gap-x-2 items-center mb-3\">
+<span class=\"whitespace-nowrap\">Edit Customer Details</span></button><div class=\"space-y-3\">
 </div><div class=\"w-full space-y-2 mt-5\">
 Edit 
 Reset

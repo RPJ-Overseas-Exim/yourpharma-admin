@@ -154,7 +154,7 @@ templ EditCustomerForm(customer types.Customer){
         id={"add-form-filter"}
         class="hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10"></div>
     <form
-        hx-put="/customers"
+        hx-put={"/customers/"+customer.Id}
         hx-target="#customer-page"
         hx-swap="outerHTML"
         class="hidden absolute w-full h-full -top-2 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border"
@@ -169,7 +169,6 @@ templ EditCustomerForm(customer types.Customer){
         </button>
 
         <div class="space-y-3">
-            <input type="text" id="id" name="id" value={customer.Id} class="hidden" />
             
             @FormField(
                 "Customer Name",

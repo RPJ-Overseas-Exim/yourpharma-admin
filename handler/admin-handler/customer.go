@@ -87,13 +87,10 @@ func (cs *customerService) Customers(c echo.Context) error {
     }
 
 	customersView := adminView.Customers(customersData)
-	var msgs []string
 
 	return authHandler.RenderView(c, adminView.AdminIndex(
 		"Customers",
 		true,
-		msgs,
-		msgs,
 		customersView,
 	))
 }
@@ -115,7 +112,7 @@ func (cs *customerService) UpdateCustomer(c echo.Context) error {
     var err error
     num, err := strconv.Atoi(c.FormValue("number"))
     err = cs.UpdateCustomerDetails(
-        c.FormValue("id"),
+        c.Param("id"),
         c.FormValue("name"),
         c.FormValue("email"),
         &num,

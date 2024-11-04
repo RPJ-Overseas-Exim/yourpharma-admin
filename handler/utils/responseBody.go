@@ -22,5 +22,4 @@ func GetJson(jsonData io.ReadCloser) (map[string]interface{}, error) {
     }
 
     return data, nil
-
 }

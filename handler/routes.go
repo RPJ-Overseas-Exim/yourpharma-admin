@@ -3,6 +3,7 @@ package handlers
 import (
 	"RPJ-Overseas-Exim/yourpharma-admin/handler/admin-handler"
 	"RPJ-Overseas-Exim/yourpharma-admin/handler/auth-handler"
+	authMiddleware "RPJ-Overseas-Exim/yourpharma-admin/pkg/middleware"
 
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
@@ -18,41 +19,49 @@ func New(db *gorm.DB) handler {
 
 func (h *handler) SetupCustomerRoutes(e *echo.Echo) {
     cs := adminHandler.NewCustomerService(h.DB)
-	e.GET("/customers", cs.Customers)
-	e.POST("/customers", cs.CreateCustomer)
-	e.PUT("/customers", cs.UpdateCustomer)
-    e.DELETE("/customers/:id", cs.DeleteCustomer)
+
+    customerRoute := e.Group("/customers", authMiddleware.AuthMiddleware)
+	customerRoute.GET("", cs.Customers)
+	customerRoute.POST("", cs.CreateCustomer)
+    customerRoute.PUT("/:id", cs.UpdateCustomer)
+    customerRoute.DELETE("/:id", cs.DeleteCustomer)
 }
 
 func (h *handler) SetupProductRoutes(e *echo.Echo){
     ps := adminHandler.NewProductService(h.DB)
-    e.GET("/products", ps.Products)
-    e.POST("/products", ps.CreateProduct)
-    e.PUT("/products/:id", ps.UpdateProduct)
-    e.DELETE("/price/:id", ps.DeletePrice)
-    e.DELETE("/products/:id", ps.DeleteProduct)
+
+    productRoute := e.Group("/products", authMiddleware.AuthMiddleware)
+    productRoute.GET("", ps.Products)
+    productRoute.POST("", ps.CreateProduct)
+    productRoute.PUT("/:id", ps.UpdateProduct)
+    productRoute.DELETE("/:id", ps.DeleteProduct)
+
+    priceRoute := e.Group("/price", authMiddleware.AuthMiddleware)
+    priceRoute.DELETE("/:id", ps.DeletePrice)
 }
 
 func (h *handler) SetupOrderRoutes(e *echo.Echo) {
     ords := adminHandler.NewOrderService(h.DB)
-	e.GET("/orders", ords.Orders)
-	e.POST("/orders", ords.CreateOrder)
-    e.PUT("/orders/:id", ords.UpdateOrder)
-    e.DELETE("/orders/:id", ords.DeleteOrder)
+
+    orderRoute := e.Group("/orders", authMiddleware.AuthMiddleware)
+	orderRoute.GET("", ords.Orders)
+	orderRoute.POST("", ords.CreateOrder)
+    orderRoute.PUT("/:id", ords.UpdateOrder)
+    orderRoute.DELETE("/:id", ords.DeleteOrder)
 }
 
 func (h *handler) SetupAuthRoutes(e *echo.Echo) {
     as := authHandler.NewAuthService(h.DB)
-	e.GET("/", as.LoginHandler)
-	e.POST("/", as.LoginHandler)
-
-	e.GET("/register", as.RegisterHandler)
+	e.GET("/", as.LoginHandler, authMiddleware.LoginMiddleware)
+	e.POST("/", as.LoginHandler, authMiddleware.LoginMiddleware)
 }
 
 func (h *handler) SetupHomeRoutes(e *echo.Echo) {
     hs := adminHandler.NewHomeService(h.DB)
-	e.GET("/home", hs.Home)
-	e.POST("/home", hs.Home)
+
+    homeRoute := e.Group("/home", authMiddleware.AuthMiddleware)
+	homeRoute.GET("", hs.Home)
+	homeRoute.POST("", hs.Home)
 }
 
 

@@ -120,31 +120,37 @@ func (ords *orderService) DeleteOrderDetails(id string) error {
 // routes functions ===================================================
 func (ords *orderService) Orders(c echo.Context) error {
     var err error
+    var productsData []types.Product
     status := strings.ToLower(c.QueryParam("status"))
+
     ordersData, err := ords.GetOrders(status)
-    utils.ErrorHandler(err, "Failed to get the order data")
+    if err != nil {
+        log.Printf("Failed to get the order data: %v", err)
+    }
 
-	ordersView := adminView.Orders(ordersData, status)
-	var msgs []string
-
-    log.Printf("status: %v", status)
+    result := ords.DB.Model(&models.Product{}).Select("name as Name").Scan(&productsData)
+    if result.Error != nil {
+        log.Printf("Failed to get the product data: %v", result.Error)
+    }
+	ordersView := adminView.Orders(ordersData, status, productsData)
 
 	return authHandler.RenderView(c, adminView.AdminIndex(
 		"Orders",
 		true,
-		msgs,
-		msgs,
 		ordersView,
 	))
 }
 
 func (ords *orderService) CreateOrder(c echo.Context) error {
     var err error
+    var productsData []types.Product
     name := c.FormValue("name")
     email := c.FormValue("email")
     address := c.FormValue("address")
     product := c.FormValue("product")
     origin := "Dash"
+
+    log.Printf("name: %v, email: %v, address: %v, product: %v", name, email, address, product)
 
     number, err := strconv.Atoi(c.FormValue("number"))
     utils.ErrorHandler(err, "Number is not provided")
@@ -159,24 +165,36 @@ func (ords *orderService) CreateOrder(c echo.Context) error {
 
     ordersData, err := ords.GetOrders("")
     utils.ErrorHandler(err, "Failed to get the order data")
-    orderView := adminView.Orders(ordersData, "All")
+    result := ords.DB.Model(&models.Product{}).Select("name as Name").Scan(&productsData)
+    if result.Error != nil {
+        log.Printf("Failed to get the product data: %v", result.Error)
+    }
+
+    orderView := adminView.Orders(ordersData, "All", productsData)
     return authHandler.RenderView(c, orderView)
 }
 
 func (ords *orderService) UpdateOrder(c echo.Context) error {
     var err error
+    var productsData []types.Product
     id := c.Param("id")
 
     ords.UpdateOrderDetails(id)
 
     ordersData, err := ords.GetOrders("")
     utils.ErrorHandler(err, "Failed to get the order data")
-    orderView := adminView.Orders(ordersData, "All")
+    result := ords.DB.Model(&models.Product{}).Select("name as Name").Scan(&productsData)
+    if result.Error != nil {
+        log.Printf("Failed to get the product data: %v", result.Error)
+    }
+
+    orderView := adminView.Orders(ordersData, "All", productsData)
     return authHandler.RenderView(c, orderView)
 }
 
 func (ords *orderService) DeleteOrder(c echo.Context) error {
     var err error
+    var productsData []types.Product
     id := c.Param("id")
     status := c.QueryParam("status")
 
@@ -184,6 +202,11 @@ func (ords *orderService) DeleteOrder(c echo.Context) error {
 
     ordersData, err := ords.GetOrders(status)
     utils.ErrorHandler(err, "Failed to get the order data")
-    orderView := adminView.Orders(ordersData, "All")
+    result := ords.DB.Model(&models.Product{}).Select("name as Name").Scan(&productsData)
+    if result.Error != nil {
+        log.Printf("Failed to get the product data: %v", result.Error)
+    }
+
+    orderView := adminView.Orders(ordersData, "All", productsData)
     return authHandler.RenderView(c, orderView)
 }

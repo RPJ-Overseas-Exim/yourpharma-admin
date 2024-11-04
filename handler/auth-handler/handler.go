@@ -1,20 +1,18 @@
 package authHandler
 
 import (
+	"RPJ-Overseas-Exim/yourpharma-admin/pkg/utils"
 	authView "RPJ-Overseas-Exim/yourpharma-admin/templ/auth-views"
-	"encoding/json"
-	"fmt"
 	"log"
+	"net/http"
+	"os"
+	"time"
 
 	"github.com/a-h/templ"
+	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
 )
-
-type Admin struct{
-    Email    string `json:"email"`
-    Password string `json:"password"`
-}
 
 type authService struct{
     DB *gorm.DB
@@ -25,42 +23,41 @@ func NewAuthService(db *gorm.DB) *authService {
 }
 
 func (as *authService) LoginHandler(c echo.Context) error {
-   	loginView := authView.Login()
-	var msgs []string
+    var loginView templ.Component
 
 	if c.Request().Method == "POST" {
-		// do the login procedures
-        formData := make(map[string]interface{})
-        err := json.NewDecoder(c.Request().Body).Decode(&formData)
-        if err!=nil {
-            log.Printf("The data is not right %v\n", err)
+        email := c.FormValue("email")
+        password := c.FormValue("password")
+
+        err := godotenv.Load()
+        if err != nil {
+            log.Printf("Failed to load the database url, %v", err)
+            return nil
         }
-        fmt.Printf("\nThe form data %v\n", formData)
+
+        if email == os.Getenv("ADMIN_EMAIL") || password == os.Getenv("ADMIN_PASSWORD"){
+            jwtCookie := new(http.Cookie)
+            jwtCookie.Name = "Authentication"
+            jwtCookie.Value = utils.CreateToken([]byte("secretKey"), "admin", "admin@gmail.com")
+            jwtCookie.Expires = time.Now().Add(24 * time.Hour)
+
+            c.SetCookie(jwtCookie)
+            return c.Redirect(http.StatusSeeOther, "/home")
+        }else{
+   	        loginView = authView.Login("Email or password is incorrect")
+            return RenderView(c, authView.LoginIndex(
+                "Login",
+                false,
+                loginView,
+            ))
+        }
 	}
 
+   	loginView = authView.Login("")
 	return RenderView(c, authView.LoginIndex(
 		"Login",
 		false,
-		msgs,
-		msgs,
 		loginView,
-	))
-}
-
-func (as *authService) RegisterHandler(c echo.Context) error {
-	registerView := authView.Register()
-	var msgs []string
-
-	if c.Request().Method == "POST" {
-		// do the register procedure
-	}
-
-	return RenderView(c, authView.RegisterIndex(
-		"Register",
-		false,
-		msgs,
-		msgs,
-		registerView,
 	))
 }
 

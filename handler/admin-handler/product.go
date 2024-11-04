@@ -36,7 +36,7 @@ func (ps *productService) ProductView(c echo.Context) templ.Component {
     return productView
 }
 
-// database functions --------------------------------------------------------
+// database functions ========================================================
 func (ps *productService) GetProducts() ([]types.Product, error) {
     var productsData []types.Product
     result := ps.DB.Model(&models.Product{}).Select("price_qties.id as Id, products.id as PId, products.name as Name, price_qties.price as Price, price_qties.qty as Qty").Joins("inner join price_qties on price_qties.product_id = products.id").Scan(&productsData)
@@ -90,15 +90,23 @@ func (ps *productService) UpdateProductDetails(id, name string, price, qty int) 
     result = ps.DB.Find(&updatedPrice, "id like ?", id)
     utils.ErrorHandler(result.Error, "Failed to get the product details")
 
-    result = ps.DB.Model(&models.Product{}).Where("id like ?", updatedPrice.ProductId).Updates(map[string]interface{}{
-        "name": name,
-    })
+    result = ps.DB.Model(&models.Product{}).Where("id like ?", updatedPrice.ProductId).Update("name", name)
     utils.ErrorHandler(result.Error, "Failed to update the product name")
 
     return nil
 }
 
 func (ps *productService) DeleteProductDetails(id string) error {
+    var result *gorm.DB
+    var priceQty models.PriceQty
+    var product models.Product
+
+    result = ps.DB.Model(&models.PriceQty{}).Where("product_id like ?", id).Delete(&priceQty)
+    utils.ErrorHandler(result.Error, "Failed to delete the prices of product")
+
+    result = ps.DB.Model(&models.Product{}).Where("id like ?", id).Delete(&product)
+    utils.ErrorHandler(result.Error, "Failed to delete the product")
+
    return nil 
 }
 
@@ -112,15 +120,12 @@ func (ps *productService) DeletePriceDetails(id string) error {
 }
 
 
-// routes functions --------------------------------------------------------
+// routes functions ========================================================
 func (ps *productService) Products(c echo.Context) error {
-    var msgs []string
     productView := ps.ProductView(c) 
    return authHandler.RenderView(c, adminView.AdminIndex(
         "Products",
         true,
-        msgs,
-        msgs,
         productView,
     ))
 
