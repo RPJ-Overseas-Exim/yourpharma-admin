@@ -30,7 +30,7 @@ templ Base(title string, isLoggedIn bool){
                     @partials.Navbar()                    
 			    </header>
             }
-			<main class="w-full h-full">
+			<main class="w-full h-full overflow-auto">
 				{ children... }
 			</main>
 		</body>

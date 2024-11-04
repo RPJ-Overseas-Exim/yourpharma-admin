@@ -39,12 +39,13 @@ func (ps *productService) ProductView(c echo.Context) templ.Component {
 // database functions ========================================================
 func (ps *productService) GetProducts() ([]types.Product, error) {
     var productsData []types.Product
-    result := ps.DB.Model(&models.Product{}).Select("price_qties.id as Id, products.id as PId, products.name as Name, price_qties.price as Price, price_qties.qty as Qty").Joins("inner join price_qties on price_qties.product_id = products.id").Scan(&productsData)
+    result := ps.DB.Model(&models.Product{}).Select("price_qties.id as Id, price_qties.product_id as PId, products.name as Name, price_qties.price as Price, price_qties.qty as Qty").Joins("inner join price_qties on price_qties.product_id = products.id").Find(&productsData)
 
     log.Printf("Product data: %v", productsData)
 
     if result.Error != nil {
-        return productsData, result.Error
+        log.Printf("Product data error: %v", result.Error)
+        return nil, result.Error
     }
 
     return productsData, nil

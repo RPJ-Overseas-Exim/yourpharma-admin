@@ -2,6 +2,12 @@ const body = document.querySelector("body")
 const sun = document.querySelector("#sun")
 const moon = document.querySelector("#moon")
 
+// logout handling program
+function Logout(){
+    document.cookie = "Authentication="
+    window.location.href = "/"
+}
+
 // theme handling programs -----------------------------
 function LightTheme(){
     body.classList.remove("dark")

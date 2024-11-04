@@ -1,4 +1,4 @@
-<nav class=\"w-full h-full flex md:flex-col gap-x-2 md:gap-x-0 md:gap-y-4 md:py-4 px-6 border-t md:border-t-0 md:border-r border-border-muted\"><div class=\"hidden md:flex items-center gap-x-4 justify-center\"><h2 class=\"text-lg text-green-600 font-semibold whitespace-nowrap\">Your Pharma</h2>
+<nav class=\"w-full h-full flex md:flex-col gap-x-2 md:gap-x-0 md:gap-y-4 md:py-4 md:px-6 border-t md:border-t-0 md:border-r border-border-muted\"><div class=\"hidden md:flex items-center gap-x-4 justify-center\"><h2 class=\"text-lg text-green-600 font-semibold whitespace-nowrap\">Your Pharma</h2>
 <div onclick=\"LightTheme()\" class=\"hidden \" id=\"sun\">
 </div><div onclick=\"DarkTheme()\" class=\"\" id=\"moon\">
 </div>

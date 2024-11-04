@@ -4,5 +4,5 @@
 </title></head><body onload=\"getTheme()\" class=\"light bg-background text-foreground sample-transition flex flex-col-reverse md:flex-row w-full h-[100dvh]\">
 <header class=\"w-full md:w-[200px] h-[60px] md:h-full\">
 </header>
-<main class=\"w-full h-full\">
+<main class=\"w-full h-full overflow-auto\">
 </main></body></html>
