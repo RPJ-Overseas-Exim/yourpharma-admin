@@ -26,32 +26,23 @@ templ AddProductForm(){
         </button>
 
         <div class="space-y-3">
-            @FormField(
+            @ProductTextFormField(
                 "Product Name",
-                "name",
-                "text",
                 "Enter product name",
+                "name",
                 "",
-                "",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
             )
-            @FormField(
+            @ProductNumberFormField(
                 "Product Quantity",
-                "quantity",
-                "number",
                 "Enter product quantity",
-                "",
-                "",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+                "quantity",
+                nil,
             )
-            @FormField(
+            @ProductNumberFormField(
                 "Product Price",
-                "price",
-                "number",
                 "Enter product price",
-                "",
-                "",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+                "price",
+                nil,
             )
         </div>
         <div class="w-full space-y-2 mt-5">
@@ -165,32 +156,23 @@ templ EditProductForm(product types.Product){
         </button>
 
         <div class="space-y-3">
-            @FormField(
+            @ProductTextFormField(
                 "Product Name",
-                "name",
-                "text",
                 "Enter product name",
-                "",
-                "text-left text-semibold text-lg",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+                "name",
+                product.Name,
             )
-            @FormField(
+            @ProductNumberFormField(
                 "Product Quantity",
-                "quantity",
-                "number",
                 "Enter product quantity",
-                "",
-                "text-left text-semibold text-lg",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+                "quantity",
+                &product.Qty,
             )
-            @FormField(
+            @ProductNumberFormField(
                 "Product Price",
-                "price",
-                "number",
                 "Enter product price",
-                "",
-                "text-left text-semibold text-lg",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+                "price",
+                &product.Price,
             )
         </div>
         
@@ -210,4 +192,51 @@ templ EditProductForm(product types.Product){
         </div>
 
     </form>
+}
+
+// product form fields =========================================================
+templ ProductTextFormField(label, placeholder, name, value string){
+    <div class="flex flex-col gap-y-2">
+        <label
+            for={name}
+            class="text-left text-semibold text-lg"
+        >
+            {label}
+        </label>
+        <input
+            class="px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0"
+            type="text"
+            name={name}
+            id={name}
+            placeholder={placeholder}
+            if len(value) != 0 {
+                value={value}
+            }
+            minlength="3"
+            required
+        />
+    </div>
+}
+
+templ ProductNumberFormField(label, placeholder, name string, value *int){
+    <div class="flex flex-col gap-y-2">
+        <label
+            for={name}
+            class="text-left text-semibold text-lg"
+        >
+            {label}
+        </label>
+        <input
+            class="px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0"
+            type="number"
+            name={name}
+            id={name}
+            placeholder={placeholder}
+            if value != nil {
+                value={strconv.Itoa(*value)}
+            }
+            min="1"
+            required
+        />
+    </div>
 }

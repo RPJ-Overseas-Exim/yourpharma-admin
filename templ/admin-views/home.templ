@@ -14,7 +14,7 @@ templ Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, to
             <button
                 onclick="Logout()"
                 type="button"
-                class="px-4 py-2 border border-border-muted rounded hover:bg-green-600 hover:text-white"
+                class="text-sm px-4 py-2 border border-border-muted rounded hover:bg-green-600 hover:text-white"
             >Logout</button>
         </div>
 
@@ -38,8 +38,8 @@ templ Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, to
 
         <div class="mt-3 w-full border border-border-muted border-b-0 rounded overflow-auto">
             @partials.Table(""){
-                @partials.OrderTableHeader()
-                @partials.OrderTableRows(ordersData)
+                @partials.HomeTableHeader()
+                @partials.HomeTableRows(ordersData)
             }
         </div>
         

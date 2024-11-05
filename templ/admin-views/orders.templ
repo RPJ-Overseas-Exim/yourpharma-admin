@@ -5,6 +5,7 @@ import (
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 	"fmt"
 	"strings"
+	"RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
 )
 
 templ Orders(ordersData []types.Order, status string, products []types.Product){
@@ -34,8 +35,9 @@ templ Orders(ordersData []types.Order, status string, products []types.Product){
             <button
             type="button"
             onclick="showForm(this)"
-            class="cursor-pointer px-4 py-2 border border-border-muted text-white bg-green-600 rounded mb-3">
-                <span class="">Add Order</span>
+            class="cursor-pointer px-4 py-2 border border-border-muted text-white bg-green-600 rounded mb-3 flex items-center gap-x-2">
+                <span class="text-sm">@icons.Add()</span>
+                <span class="text-sm">Add Order</span>
             </button>
             @partials.AddOrderForm(products)
         </div>

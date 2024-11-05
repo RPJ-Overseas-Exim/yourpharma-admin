@@ -22,9 +22,9 @@ func NewCustomerService(db *gorm.DB) *customerService {
 }
 
 // customers data methods
-func (cs *customerService) GetCustomers() ([]types.Customer, error) {
+func (cs *customerService) GetCustomers(page int, limit int) ([]types.Customer, error) {
     var customersData []types.Customer
-    result := cs.DB.Find(&customersData, "deleted_at is NULL")
+    result := cs.DB.Find(&customersData, "deleted_at is NULL").Offset(page*limit).Limit(limit)
 
     if result.Error != nil {
         return customersData, result.Error
@@ -79,7 +79,16 @@ func (cs *customerService) DeleteCustomerDetails(id string) error {
 
 // routes methods
 func (cs *customerService) Customers(c echo.Context) error {
-    customersData, err := cs.GetCustomers()
+    var err error
+    page, err := strconv.Atoi(c.QueryParam("page"))
+    if err!=nil {
+        page = 0
+    }
+    limit, err := strconv.Atoi(c.QueryParam("limit"))
+    if err != nil{
+        limit = 10
+    }
+    customersData, err := cs.GetCustomers(page, limit)
 
     if err != nil {
         log.Printf("Error in customers Data: %v", err)
@@ -96,10 +105,20 @@ func (cs *customerService) Customers(c echo.Context) error {
 }
 
 func (cs *customerService) CreateCustomer(c echo.Context) error {
+    var err error
     num, err :=  strconv.Atoi(c.FormValue("number"))
     err = cs.AddCustomer(c.FormValue("name"), c.FormValue("email"), &num, c.FormValue("address"))
 
-    customersData, err := cs.GetCustomers()
+    page, err := strconv.Atoi(c.QueryParam("page"))
+    if err!=nil {
+        page = 0
+    }
+    limit, err := strconv.Atoi(c.QueryParam("limit"))
+    if err != nil{
+        limit = 10
+    }
+
+    customersData, err := cs.GetCustomers(page, limit)
     if err != nil {
         log.Printf("Customers data is not fetched: %v", err)
     }
@@ -123,8 +142,16 @@ func (cs *customerService) UpdateCustomer(c echo.Context) error {
         return err
     }
 
-    customersData, err := cs.GetCustomers()
+    page, err := strconv.Atoi(c.QueryParam("page"))
+    if err!=nil {
+        page = 0
+    }
+    limit, err := strconv.Atoi(c.QueryParam("limit"))
+    if err != nil{
+        limit = 10
+    }
 
+    customersData, err := cs.GetCustomers(page, limit)
     customerView := adminView.Customers(customersData)
     return authHandler.RenderView(c, customerView)
 }
@@ -136,9 +163,17 @@ func (cs *customerService) DeleteCustomer(c echo.Context) error {
     if err != nil {
         return err
     }
-    
-    customersData, err := cs.GetCustomers()
 
+    page, err := strconv.Atoi(c.QueryParam("page"))
+    if err!=nil {
+        page = 0
+    }
+    limit, err := strconv.Atoi(c.QueryParam("limit"))
+    if err != nil{
+        limit = 10
+    }
+
+    customersData, err := cs.GetCustomers(page, limit)
     customerView := adminView.Customers(customersData)
     return authHandler.RenderView(c, customerView)
 }

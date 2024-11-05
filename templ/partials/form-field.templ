@@ -36,3 +36,41 @@ templ FormField(title, name, inputType, placeholder, containerStyle, labelStyle,
         />
     </div>
 }
+
+templ EditFormField(title, name, inputType, placeholder, value, containerStyle, labelStyle, inputStyle string){
+    <div
+        if len(containerStyle) == 0{
+            class="flex flex-col gap-y-2"
+        }else{
+            class={containerStyle}
+        }
+    >
+        <label
+            for={name}
+            if len(labelStyle) == 0{
+                class="text-lg font-semibold text-foreground-muted"
+            }else{
+                class={labelStyle}
+            }
+        >
+            {title}
+        </label>
+
+        <input
+            if len(inputStyle) == 0{
+                class="px-4 py-2 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none"
+            }else{
+                class={inputStyle}
+            }
+            type={inputType}
+            name={name}
+            id={name}
+            value={value}
+            placeholder={placeholder}
+            if inputType == "text" {
+                minlength="3"
+            }
+            required
+        />
+    </div>
+}

@@ -166,7 +166,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = partials.OrderTableHeader().Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = partials.HomeTableHeader().Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -174,7 +174,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = partials.OrderTableRows(ordersData).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = partials.HomeTableRows(ordersData).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

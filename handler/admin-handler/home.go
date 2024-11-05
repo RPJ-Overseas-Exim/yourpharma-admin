@@ -47,7 +47,7 @@ func (hs *homeService) GetOrders(status string) ([]types.Order, error) {
             `
 
     if len(status) != 0 && status != "all" {
-        result = hs.DB.Model(&models.Order{}).Select(selectStatement).Joins(joinStatement1).Joins(joinStatement2).Where("orders.status like ?", status).Scan(&ordersData)
+        result = hs.DB.Model(&models.Order{}).Select(selectStatement).Joins(joinStatement1).Joins(joinStatement2).Where("orders.status like ?", status).Limit(10).Scan(&ordersData)
     }else{
         result = hs.DB.Model(&models.Order{}).Select(selectStatement).Joins(joinStatement1).Joins(joinStatement2).Scan(&ordersData)
     }
@@ -61,13 +61,75 @@ func (hs *homeService) GetOrders(status string) ([]types.Order, error) {
     return ordersData, nil
 }
 
+func (hs *homeService) GetTotalSales() int {
+    var totalSales int
+
+    result := hs.DB.Model(&models.Order{}).Select("sum(amount) as Total").Where("status like ?", "delivered").Find(&totalSales)
+    if result.Error != nil {
+        return 0
+    }
+
+    return totalSales
+}
+
+func (hs *homeService) GetTotalOrders() int {
+    var totalOrders int
+
+    result := hs.DB.Model(&models.Order{}).Select("count(amount) as Total").Find(&totalOrders)
+    if result.Error != nil {
+        return 0
+    }
+
+    return totalOrders
+}
+
+func (hs *homeService) GetTotalOrderInProcess() int {
+    var totalOrderInProcess int
+
+    result := hs.DB.Model(&models.Order{}).Select("count(amount) as total").Where("status like ? or status like ?", "paid", "shipped").Find(&totalOrderInProcess)
+    if result.Error != nil {
+        return 0
+    }
+
+    return totalOrderInProcess
+}
+
+func (hs *homeService) GetTotalOrderDelivered() int {
+    var totalOrderDelivered int
+
+    result := hs.DB.Model(&models.Order{}).Select("count(amount) as total").Where("status like ?", "delivered").Find(&totalOrderDelivered)
+    if result.Error != nil {
+        return 0
+    }
+
+    return totalOrderDelivered
+}
+
+func (hs *homeService) GetTotalCustomers() int {
+    var totalCustomers int
+
+    result := hs.DB.Model(&models.Customer{}).Select("count(email) as total").Find(&totalCustomers)
+    if result.Error != nil {
+        return 0
+    }
+
+    return totalCustomers
+}
+
 // routes functions for home ===================================================
 func (hs *homeService) Home(c echo.Context) error {
     ordersData, err := hs.GetOrders("active")
     if err!=nil {
         log.Printf("Failed to get the orders data")
     }
-	homeView := adminView.Home(29000, 405, 24, 300, 320, ordersData)
+
+    totalSales := hs.GetTotalSales()
+    totalOrders := hs.GetTotalOrders()
+    totalOrderInProcess := hs.GetTotalOrderInProcess()
+    totalOrderDelivered := hs.GetTotalOrderDelivered()
+    totalCustomers := hs.GetTotalCustomers()
+
+	homeView := adminView.Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, totalCustomers, ordersData)
 
 	return authHandler.RenderView(c, adminView.AdminIndex(
 		"Home",

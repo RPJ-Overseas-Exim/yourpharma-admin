@@ -2,6 +2,7 @@ package adminView
 
 import "RPJ-Overseas-Exim/yourpharma-admin/templ/partials"
 import "RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
+import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
 
 templ Products(productsData []types.Product){
     <section id="product-page" class="w-full h-full p-2">
@@ -22,8 +23,9 @@ templ Products(productsData []types.Product){
             <button
             type="button"
             onclick="showForm(this)"
-            class="cursor-pointer px-4 py-2 border border-border-muted text-white bg-green-600 rounded mb-3">
-                <span class="">Add Product</span>
+            class="cursor-pointer px-4 py-2 border border-border-muted text-white bg-green-600 rounded mb-3 flex items-center gap-x-2">
+                <span class="text-sm">@icons.Add()</span>
+                <span class="text-sm">Add Product</span>
             </button>
             @partials.AddProductForm()
         </div>

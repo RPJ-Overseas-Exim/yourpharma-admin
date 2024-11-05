@@ -3,6 +3,7 @@ package adminView
 import (
     "RPJ-Overseas-Exim/yourpharma-admin/templ/partials"
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
+	"RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
 )
 
 templ Customers(customersData []types.Customer){
@@ -24,8 +25,9 @@ templ Customers(customersData []types.Customer){
             <button
             type="button"
             onclick="showForm(this)"
-            class="cursor-pointer px-4 py-2 border border-border-muted text-white bg-green-600 rounded mb-3">
-                <span class="">Add Customer</span>
+            class="cursor-pointer px-4 py-2 border border-border-muted text-white bg-green-600 rounded mb-3 flex gap-x-2 items-center">
+                <span class="text-sm">@icons.Add()</span>
+                <span class="text-sm">Add Customer</span>
             </button>
             @partials.AddCustomerForm()
         </div>

@@ -25,41 +25,29 @@ templ AddCustomerForm(){
         </button>
 
         <div class="space-y-3">
-            @FormField(
+            @CustomerTextFormField(
                 "Customer Name",
-                "name",
-                "text",
                 "Enter customer name",
+                "name",
                 "",
-                "",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
             )
-            @FormField(
+            @CustomerEmailFormField(
                 "Customer Email",
-                "email",
-                "email",
                 "Enter customer email",
+                "email",
                 "",
-                "",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
             )
-            @FormField(
+            @CustomerNumberFormField(
                 "Customer Number",
-                "number",
-                "number",
                 "Enter customer number",
-                "",
-                "",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+                "number",
+                nil,
             )
-            @FormField(
+            @CustomerTextFormField(
                 "Customer Address",
-                "address",
-                "text",
                 "Enter customer address",
+                "address",
                 "",
-                "",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
             )
         </div>
         <div class="w-full space-y-2 mt-5">
@@ -80,8 +68,7 @@ templ AddCustomerForm(){
     </form>
 }
 
-
-
+// show details form =========================================
 templ CustomerForm(customer types.Customer){
     <div
         onclick="hideFormFromFilter(this)"
@@ -148,6 +135,7 @@ templ CustomerForm(customer types.Customer){
     </div>
 }
 
+// edit customer form ================================
 templ EditCustomerForm(customer types.Customer){
     <div
         onclick="hideFormFromFilter(this)"
@@ -169,42 +157,29 @@ templ EditCustomerForm(customer types.Customer){
         </button>
 
         <div class="space-y-3">
-            
-            @FormField(
+            @CustomerTextFormField(
                 "Customer Name",
-                "name",
-                "text",
                 "Enter customer name",
-                "",
-                "text-left text-semibold text-lg",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+                "name",
+                customer.Name,
             )
-            @FormField(
+            @CustomerEmailFormField(
                 "Customer Email",
-                "email",
-                "email",
                 "Enter customer email",
-                "",
-                "text-left text-semibold text-lg",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+                "email",
+                customer.Email,
             )
-            @FormField(
+            @CustomerNumberFormField(
                 "Customer Number",
-                "number",
-                "number",
                 "Enter customer number",
-                "",
-                "text-left text-semibold text-lg",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+                "number",
+                customer.Number,
             )
-            @FormField(
+            @CustomerTextFormField(
                 "Customer Address",
-                "address",
-                "text",
                 "Enter customer address",
-                "",
-                "text-left text-semibold text-lg",
-                "px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0",
+                "address",
+                customer.Address,
             )
         </div>
         <div class="w-full space-y-2 mt-5">
@@ -223,4 +198,73 @@ templ EditCustomerForm(customer types.Customer){
             </div>
 
     </form>
+}
+
+// customer form fields =========================================================
+templ CustomerTextFormField(label, placeholder, name, value string){
+    <div class="flex flex-col gap-y-2">
+        <label
+            for={name}
+            class="text-left text-semibold text-lg"
+        >
+            {label}
+        </label>
+        <input
+            class="px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0"
+            type="text"
+            name={name}
+            id={name}
+            placeholder={placeholder}
+            if len(value) != 0 {
+                value={value}
+            }
+            minlength="3"
+            required
+        />
+    </div>
+}
+
+templ CustomerEmailFormField(label, placeholder, name, value string){
+    <div class="flex flex-col gap-y-2">
+        <label
+            for={name}
+            class="text-left text-semibold text-lg"
+        >
+            {label}
+        </label>
+        <input
+            class="px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0"
+            type="email"
+            name={name}
+            id={name}
+            placeholder={placeholder}
+            if len(value) != 0 {
+                value={value}
+            }
+            required
+        />
+    </div>
+}
+
+templ CustomerNumberFormField(label, placeholder, name string, value *int){
+    <div class="flex flex-col gap-y-2">
+        <label
+            for={name}
+            class="text-left text-semibold text-lg"
+        >
+            {label}
+        </label>
+        <input
+            class="px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0"
+            type="tel"
+            name={name}
+            id={name}
+            placeholder={placeholder}
+            if value != nil {
+                value={strconv.Itoa(*value)}
+            }
+            pattern="[0-9]{10,12}"
+            required
+        />
+    </div>
 }

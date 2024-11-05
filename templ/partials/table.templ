@@ -67,9 +67,8 @@ templ ProductTableRows(products []types.Product){
 templ CustomerTableHeader(){
     <tr class="w-full text-foreground-muted border-b border-border-muted">
         @TableHeadCell(){ Name }
-        @TableHeadCell(){ Email }
         @TableHeadCell(){ Address }
-        @TableHeadCell(){ Phone No. }
+        @TableHeadCell(){ Number }
         @TableHeadCell(){ Actions }
     </tr>
 }
@@ -78,7 +77,6 @@ templ CustomerTableRows(customers []types.Customer){
     for _, customer := range(customers){
         <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
             @TableBodyCell(){{ customer.Name }}
-            @TableBodyCell(){{ customer.Email }}
             @TableBodyCell(){{ customer.Address }}
             @TableBodyCell(){{ strconv.Itoa(*customer.Number) }}
             @TableBodyCell(){
@@ -101,9 +99,7 @@ templ OrderTableHeader(){
     <tr class="w-full text-foreground-muted border-b border-border-muted">
         @TableHeadCell(){ OrderId }
         @TableHeadCell(){ Name }
-        @TableHeadCell(){ Email }
         @TableHeadCell(){ Product }
-        @TableHeadCell(){ Price }
         @TableHeadCell(){ Status }
         @TableHeadCell(){ Origin }
         @TableHeadCell(){ Actions }
@@ -115,9 +111,7 @@ templ OrderTableRows(orders []types.Order){
         <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
             @TableBodyCell(){{ order.Id }}
             @TableBodyCell(){{ order.Name }}
-            @TableBodyCell(){{ order.Email }}
             @TableBodyCell(){{ order.Product }}
-            @TableBodyCell(){{ strconv.Itoa(order.Price) }}
             @TableBodyCell(){
                 <div class="px-2 rounded-xl bg-green-600 text-white">
                     {order.Status}
@@ -137,6 +131,37 @@ templ OrderTableRows(orders []types.Order){
                     }
                 </div>
                 @OrderForm(order)
+            }
+        </tr>
+    }
+}
+
+// Home Table functions
+templ HomeTableHeader(){
+    <tr class="w-full text-foreground-muted border-b border-border-muted">
+        @TableHeadCell(){ OrderId }
+        @TableHeadCell(){ Name }
+        @TableHeadCell(){ Product }
+        @TableHeadCell(){ Status }
+        @TableHeadCell(){ Origin }
+    </tr>
+}
+
+templ HomeTableRows(orders []types.Order){
+    for _, order := range(orders){
+        <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
+            @TableBodyCell(){{ order.Id }}
+            @TableBodyCell(){{ order.Name }}
+            @TableBodyCell(){{ order.Product }}
+            @TableBodyCell(){
+                <div class="px-2 rounded-xl bg-green-600 text-white">
+                    {order.Status}
+                </div>
+            }
+            @TableBodyCell(){
+                <div class="px-2 rounded-xl bg-green-800 text-white">
+                    {order.Origin}
+                </div>
             }
         </tr>
     }

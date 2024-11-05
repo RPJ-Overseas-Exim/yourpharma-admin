@@ -20,9 +20,8 @@ Actions
 </tr>
 <tr class=\"w-full text-foreground-muted border-b border-border-muted\">
 Name 
-Email 
 Address 
-Phone No. 
+Number 
 Actions 
 </tr>
 <tr class=\"w-full text-foreground border-b border-border-muted hover:bg-background-muted\">
@@ -32,9 +31,7 @@ Actions
 <tr class=\"w-full text-foreground-muted border-b border-border-muted\">
 OrderId 
 Name 
-Email 
 Product 
-Price 
 Status 
 Origin 
 Actions 
@@ -45,5 +42,18 @@ Actions
 <div class=\"px-2 rounded-xl bg-green-800 text-white\">
 </div>
 <div onclick=\"showForm(this)\" class=\"\">
+</div>
+</tr>
+<tr class=\"w-full text-foreground-muted border-b border-border-muted\">
+OrderId 
+Name 
+Product 
+Status 
+Origin 
+</tr>
+<tr class=\"w-full text-foreground border-b border-border-muted hover:bg-background-muted\">
+<div class=\"px-2 rounded-xl bg-green-600 text-white\">
+</div>
+<div class=\"px-2 rounded-xl bg-green-800 text-white\">
 </div>
 </tr>

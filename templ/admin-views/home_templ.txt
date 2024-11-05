@@ -1,4 +1,4 @@
-<section class=\"w-full h-full p-2\"><div class=\"w-full flex items-center justify-between px-4\"><h2 class=\"font-semibold\">Home</h2><button onclick=\"Logout()\" type=\"button\" class=\"px-4 py-2 border border-border-muted rounded hover:bg-green-600 hover:text-white\">Logout</button></div><div class=\"w-full py-2 flex flex-wrap justify-center gap-2\">
+<section class=\"w-full h-full p-2\"><div class=\"w-full flex items-center justify-between px-4\"><h2 class=\"font-semibold\">Home</h2><button onclick=\"Logout()\" type=\"button\" class=\"text-sm px-4 py-2 border border-border-muted rounded hover:bg-green-600 hover:text-white\">Logout</button></div><div class=\"w-full py-2 flex flex-wrap justify-center gap-2\">
 Sales icon
 Orders icon
 Process icon
