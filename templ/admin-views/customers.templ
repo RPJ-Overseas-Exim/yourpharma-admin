@@ -13,25 +13,18 @@ templ Customers(customersData []types.Customer){
 
             <div class="flex gap-x-2">
                 @partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs"){
-                    <div class="text-xs">Download</div>
+                    <div class="text-xs" onclick="tableToCsv()">Download</div>
                 }
-                @partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center"){
-                    <div class="text-xs">Upload</div>
-                }
+                <button
+                type="button"
+                onclick="showForm(this)"
+                class="cursor-pointer px-4 py-2 text-white bg-green-600 rounded flex gap-x-2 items-center">
+                    <span class="text-sm">@icons.Add()</span>
+                    <span class="text-sm font-semibold">Add Customer</span>
+                </button>
+                @partials.AddCustomerForm()
             </div>
         </div>
-
-        <div class="flex items-center w-full justify-end px-4">
-            <button
-            type="button"
-            onclick="showForm(this)"
-            class="cursor-pointer px-4 py-2 border border-border-muted text-white bg-green-600 rounded mb-3 flex gap-x-2 items-center">
-                <span class="text-sm">@icons.Add()</span>
-                <span class="text-sm">Add Customer</span>
-            </button>
-            @partials.AddCustomerForm()
-        </div>
-
 
         <div class="w-full border border-border-muted border-b-0 rounded overflow-auto">
             @partials.Table(""){

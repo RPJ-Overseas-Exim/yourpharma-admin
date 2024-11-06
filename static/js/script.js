@@ -75,3 +75,43 @@ function hideFormFromContainer(elem){
     formFilter.classList.add("hidden")
     formContainer.classList.add("hidden")
 }
+
+// table data download functions =======================
+function tableToCsv(){
+    let csv_data = []
+    console.log("download clicked")
+
+    let rows = document.getElementsByTagName("tr")
+    for(let row of rows){
+        let cells = row.querySelectorAll("td,th")
+
+        csv_row = []
+        for (let cell of cells){
+           csv_row.push(cell.innerText)
+        }
+
+        csv_data.push(csv_row.slice(0, -1).join(", "))
+    }
+
+    csv_data = csv_data.join("\n")
+    console.log(csv_data)
+//    downloadCsvFile(csv_data)
+}
+
+function downloadCsvFile(csv_data){
+    let CsvFile = new Blob([csv_data], {type : "text/csv"})
+
+    let tempLink = document.createElement("a")
+
+    tempLink.download = "data.csv"
+    let url = window.URL.createObjectURL(CsvFile)
+    tempLink.href = url
+
+    tempLink.style.display ="none"
+    document.body.appendChild(tempLink)
+
+    tempLink.click()
+    document.body.removeChild(tempLink)
+}
+
+
