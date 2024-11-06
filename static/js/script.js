@@ -94,8 +94,7 @@ function tableToCsv(){
     }
 
     csv_data = csv_data.join("\n")
-    console.log(csv_data)
-//    downloadCsvFile(csv_data)
+    downloadCsvFile(csv_data)
 }
 
 function downloadCsvFile(csv_data){

@@ -30,24 +30,28 @@ templ AddCustomerForm(){
                 "Enter customer name",
                 "name",
                 "",
+                "true",
             )
             @CustomerEmailFormField(
                 "Customer Email",
                 "Enter customer email",
                 "email",
                 "",
+                "true",
             )
             @CustomerNumberFormField(
                 "Customer Number",
                 "Enter customer number",
                 "number",
                 nil,
+                "false",
             )
             @CustomerTextFormField(
                 "Customer Address",
                 "Enter customer address",
                 "address",
                 "",
+                "false",
             )
         </div>
         <div class="w-full space-y-2 mt-5">
@@ -162,24 +166,28 @@ templ EditCustomerForm(customer types.Customer){
                 "Enter customer name",
                 "name",
                 customer.Name,
+                "true",
             )
             @CustomerEmailFormField(
                 "Customer Email",
                 "Enter customer email",
                 "email",
                 customer.Email,
+                "true",
             )
             @CustomerNumberFormField(
                 "Customer Number",
                 "Enter customer number",
                 "number",
                 customer.Number,
+                "false",
             )
             @CustomerTextFormField(
                 "Customer Address",
                 "Enter customer address",
                 "address",
                 customer.Address,
+                "false",
             )
         </div>
         <div class="w-full space-y-2 mt-5">
@@ -201,7 +209,7 @@ templ EditCustomerForm(customer types.Customer){
 }
 
 // customer form fields =========================================================
-templ CustomerTextFormField(label, placeholder, name, value string){
+templ CustomerTextFormField(label, placeholder, name, value, required string){
     <div class="flex flex-col gap-y-2">
         <label
             for={name}
@@ -219,12 +227,14 @@ templ CustomerTextFormField(label, placeholder, name, value string){
                 value={value}
             }
             minlength="3"
-            required
+            if required == "true" {
+                required
+            }
         />
     </div>
 }
 
-templ CustomerEmailFormField(label, placeholder, name, value string){
+templ CustomerEmailFormField(label, placeholder, name, value string, required string){
     <div class="flex flex-col gap-y-2">
         <label
             for={name}
@@ -241,12 +251,14 @@ templ CustomerEmailFormField(label, placeholder, name, value string){
             if len(value) != 0 {
                 value={value}
             }
-            required
+            if required == "true" {
+                required
+            }
         />
     </div>
 }
 
-templ CustomerNumberFormField(label, placeholder, name string, value *int){
+templ CustomerNumberFormField(label, placeholder, name string, value *int, required string){
     <div class="flex flex-col gap-y-2">
         <label
             for={name}
@@ -264,7 +276,9 @@ templ CustomerNumberFormField(label, placeholder, name string, value *int){
                 value={strconv.Itoa(*value)}
             }
             pattern="[0-9]{10,12}"
-            required
+            if required == "true" {
+                required
+            }
         />
     </div>
 }

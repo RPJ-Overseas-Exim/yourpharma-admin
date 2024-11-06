@@ -30,18 +30,21 @@ templ AddOrderForm(products []types.Product){
                 "Enter customer name",
                 "name",
                 "",
+                "true",
             )
             @CustomerEmailFormField(
                 "Customer Email",
                 "Enter customer email",
                 "email",
                 "",
+                "true",
             )
             @CustomerNumberFormField(
                 "Customer Number",
                 "Enter customer number",
                 "number",
                 nil,
+                "false",
             )
             
             <div class="flex flex-col gap-y-2">
