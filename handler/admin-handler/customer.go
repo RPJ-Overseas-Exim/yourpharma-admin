@@ -22,15 +22,20 @@ func NewCustomerService(db *gorm.DB) *customerService {
 }
 
 // customers data methods
-func (cs *customerService) GetCustomers(page int, limit int) ([]types.Customer, error) {
+func (cs *customerService) GetCustomers(page int, limit int) ([]types.Customer, int, error) {
     var customersData []types.Customer
-    result := cs.DB.Find(&customersData, "deleted_at is NULL").Offset(page*limit).Limit(limit)
-
+    var totalCustomers int
+    result := cs.DB.Model(&models.Customer{}).Offset(page*limit).Limit(limit).Find(&customersData)
     if result.Error != nil {
-        return customersData, result.Error
+        return customersData, 0, result.Error
     }
 
-    return customersData, nil
+    result = cs.DB.Model(&models.Customer{}).Select("count(email) as Total").Find(&totalCustomers)
+    if result.Error != nil {
+        return customersData, totalCustomers, result.Error
+    }
+
+    return customersData, totalCustomers, nil
 }
 
 func (cs *customerService) AddCustomer(name, email string, number *int, address string) error {
@@ -66,10 +71,11 @@ func (cs *customerService) UpdateCustomerDetails(id, name, email string, number 
 }
 
 func (cs *customerService) DeleteCustomerDetails(id string) error {
-    result := cs.DB.Delete(&models.Customer{}, "id like ?", id)
+    var deletedCustomer types.Customer
+    result := cs.DB.Delete(&deletedCustomer, "id like ?", id)
 
     if result.Error != nil {
-        log.Printf("Failed to delete the customer: %v", result.Error)
+        log.Printf("\n\nFailed to delete the customer: %v", result.Error)
         return result.Error
     }
 
@@ -88,15 +94,12 @@ func (cs *customerService) Customers(c echo.Context) error {
     if err != nil{
         limit = 10
     }
-    customersData, err := cs.GetCustomers(page, limit)
-
+    customersData, totalCustomers, err := cs.GetCustomers(page, limit)
     if err != nil {
         log.Printf("Error in customers Data: %v", err)
-        return c.JSON(400, &echo.Map{"message":"Customers not present"})
     }
 
-	customersView := adminView.Customers(customersData)
-
+	customersView := adminView.Customers(customersData, totalCustomers, page, limit)
 	return authHandler.RenderView(c, adminView.AdminIndex(
 		"Customers",
 		true,
@@ -118,12 +121,12 @@ func (cs *customerService) CreateCustomer(c echo.Context) error {
         limit = 10
     }
 
-    customersData, err := cs.GetCustomers(page, limit)
+    customersData, totalCustomers, err := cs.GetCustomers(page, limit)
     if err != nil {
         log.Printf("Customers data is not fetched: %v", err)
     }
 
-    customersView := adminView.Customers(customersData)
+    customersView := adminView.Customers(customersData, totalCustomers, page, limit)
     return authHandler.RenderView(c, customersView)
 }
 
@@ -151,17 +154,17 @@ func (cs *customerService) UpdateCustomer(c echo.Context) error {
         limit = 10
     }
 
-    customersData, err := cs.GetCustomers(page, limit)
-    customerView := adminView.Customers(customersData)
+    customersData, totalCustomers, err := cs.GetCustomers(page, limit)
+    customerView := adminView.Customers(customersData, totalCustomers, page, limit)
     return authHandler.RenderView(c, customerView)
 }
 
 func (cs *customerService) DeleteCustomer(c echo.Context) error {
     var err error
-    err = cs.DeleteCustomerDetails(c.Param("id"))
-
+    id := c.Param("id")
+    err = cs.DeleteCustomerDetails(id)
     if err != nil {
-        return err
+        log.Printf("\n\nfailed to delete the customer: %v", err)
     }
 
     page, err := strconv.Atoi(c.QueryParam("page"))
@@ -173,7 +176,7 @@ func (cs *customerService) DeleteCustomer(c echo.Context) error {
         limit = 10
     }
 
-    customersData, err := cs.GetCustomers(page, limit)
-    customerView := adminView.Customers(customersData)
+    customersData, totalCustomers, err := cs.GetCustomers(page, limit)
+    customerView := adminView.Customers(customersData, totalCustomers, page, limit)
     return authHandler.RenderView(c, customerView)
 }

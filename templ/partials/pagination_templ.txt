@@ -1,0 +1,6 @@
+<div class=\"w-full h-full flex justify-between\"><a href=\"
+\" class=\"flex gap-x-2 items-center\"><span>
+</span> <span>Prev</span></a><div class=\"\">
+</div><a href=\"
+\" class=\"flex gap-x-2 items-center\"><span>Next</span> <span>
+</span></a></div>

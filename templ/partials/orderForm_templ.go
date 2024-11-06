@@ -283,9 +283,9 @@ func OrderForm(order types.Order) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var12 string
-		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(order.CreatedAt.String())
+		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs("2024-04-23")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 114, Col: 84}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 115, Col: 72}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
 		if templ_7745c5c3_Err != nil {
@@ -298,7 +298,7 @@ func OrderForm(order types.Order) templ.Component {
 		var templ_7745c5c3_Var13 string
 		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(order.Product)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 122, Col: 39}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 123, Col: 39}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 		if templ_7745c5c3_Err != nil {
@@ -311,7 +311,7 @@ func OrderForm(order types.Order) templ.Component {
 		var templ_7745c5c3_Var14 string
 		templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(order.Quantity))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 123, Col: 84}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 124, Col: 84}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 		if templ_7745c5c3_Err != nil {
@@ -324,7 +324,7 @@ func OrderForm(order types.Order) templ.Component {
 		var templ_7745c5c3_Var15 string
 		templ_7745c5c3_Var15, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(order.Price))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 125, Col: 87}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 126, Col: 87}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var15))
 		if templ_7745c5c3_Err != nil {
@@ -337,7 +337,7 @@ func OrderForm(order types.Order) templ.Component {
 		var templ_7745c5c3_Var16 string
 		templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs(order.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 132, Col: 80}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 133, Col: 80}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 		if templ_7745c5c3_Err != nil {
@@ -350,7 +350,7 @@ func OrderForm(order types.Order) templ.Component {
 		var templ_7745c5c3_Var17 string
 		templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs(order.Email)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 133, Col: 87}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 134, Col: 87}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 		if templ_7745c5c3_Err != nil {
@@ -363,7 +363,7 @@ func OrderForm(order types.Order) templ.Component {
 		var templ_7745c5c3_Var18 string
 		templ_7745c5c3_Var18, templ_7745c5c3_Err = templ.JoinStringErrs(order.Address)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 140, Col: 89}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 141, Col: 89}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var18))
 		if templ_7745c5c3_Err != nil {
@@ -381,7 +381,7 @@ func OrderForm(order types.Order) templ.Component {
 			var templ_7745c5c3_Var19 string
 			templ_7745c5c3_Var19, templ_7745c5c3_Err = templ.JoinStringErrs("/orders/" + order.Id)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 148, Col: 51}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 149, Col: 51}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var19))
 			if templ_7745c5c3_Err != nil {
@@ -414,7 +414,7 @@ func OrderForm(order types.Order) templ.Component {
 			var templ_7745c5c3_Var20 string
 			templ_7745c5c3_Var20, templ_7745c5c3_Err = templ.JoinStringErrs("/orders/" + order.Id)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 167, Col: 54}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/orderForm.templ`, Line: 168, Col: 54}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var20))
 			if templ_7745c5c3_Err != nil {

@@ -1,7 +1,8 @@
-<section id=\"customer-page\" class=\"w-full h-full p-2\"><div class=\"flex items-center justify-between px-4 py-2\"><div class=\"font-semibold text-xl\">Customers</div><div class=\"flex gap-x-2\">
+<section id=\"customer-page\" class=\"w-full h-full p-2 flex flex-col\"><div class=\"flex items-center justify-between md:px-4 py-2 gap-x-2\"><div class=\"font-semibold text-xl\">Customers</div><div class=\"flex gap-x-2\">
 <div class=\"text-xs\" onclick=\"tableToCsv()\">Download</div>
 <button type=\"button\" onclick=\"showForm(this)\" class=\"cursor-pointer px-4 py-2 text-white bg-green-600 rounded flex gap-x-2 items-center\"><span class=\"text-sm\">
-</span> <span class=\"text-sm font-semibold\">Add Customer</span></button>
-</div></div><div class=\"w-full border border-border-muted border-b-0 rounded overflow-auto\">
+</span> <span class=\"text-sm font-semibold whitespace-nowrap\">Add Customer</span></button>
+</div></div><div class=\"w-full h-full\"><div class=\"w-full border border-border-muted border-b-0 rounded overflow-auto\">
  
+</div></div><div class=\"w-full\">
 </div></section>

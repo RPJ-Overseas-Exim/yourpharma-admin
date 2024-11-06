@@ -12,7 +12,6 @@ type Customer struct{
     Email       string  `gorm:"unique"`
     Number      *int  
     Address     string  
-    Order       []Order
 }
 
 func NewCustomer(name, email string, number *int, address string) *Customer{

@@ -1,0 +1,28 @@
+package partials
+
+import "strconv"
+import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
+
+templ Pagination(total, limit, page int){
+    <div class="w-full h-full flex justify-between">
+        <a
+            href={templ.URL("/customers?page="+strconv.Itoa((page-1)%total))}
+            class="flex gap-x-2 items-center"
+        >
+            <span>@icons.Prev()</span>
+            <span>Prev</span>
+        </a>
+
+        <div class="">
+            {strconv.Itoa(page + 1) + " / " + strconv.Itoa(total/limit + 1)}
+        </div>
+
+        <a
+            href={templ.URL("/customers?page="+strconv.Itoa((page+1)%total))}
+            class="flex gap-x-2 items-center"
+        >
+            <span>Next</span>
+            <span>@icons.Next()</span>
+        </a>
+    </div>
+}
