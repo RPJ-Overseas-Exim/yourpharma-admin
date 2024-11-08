@@ -38,6 +38,7 @@ func (h *handler) SetupProductRoutes(e *echo.Echo){
 
     priceRoute := e.Group("/price", authMiddleware.AuthMiddleware)
     priceRoute.DELETE("/:id", ps.DeletePrice)
+    priceRoute.POST("", ps.CreatePrice)
 }
 
 func (h *handler) SetupOrderRoutes(e *echo.Echo) {

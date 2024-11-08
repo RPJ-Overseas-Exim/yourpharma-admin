@@ -63,7 +63,16 @@ func (ps *productService) GetProducts(limit, page int) ([]types.Product, int, er
     return productsData, totalProducts, nil
 }
 
-func (ps *productService) AddProductDetails(name string, qty, price int) error {
+func (ps *productService) AddProductDetails(name string) error {
+        newProduct := models.NewProduct(name)
+        result := ps.DB.Create(&newProduct)
+        if result.Error != nil {
+            return result.Error
+        }
+        return nil
+}
+
+func (ps *productService) AddPriceDetails(name string, qty, price int) error {
     var product models.Product
     var newPrice *models.PriceQty
     var result *gorm.DB
@@ -144,7 +153,7 @@ func (ps *productService) Products(c echo.Context) error {
 
 }
 
-func (ps *productService) CreateProduct(c echo.Context) error {
+func (ps *productService) CreatePrice(c echo.Context) error {
     var err error
     quantity, err := strconv.Atoi(c.FormValue("quantity"))
     if err != nil {
@@ -155,11 +164,21 @@ func (ps *productService) CreateProduct(c echo.Context) error {
         return err
     }
 
-    ps.AddProductDetails(
+    ps.AddPriceDetails(
         c.FormValue("name"),
         quantity,
         price,
     )
+
+    productView := ps.ProductView(c)
+    return authHandler.RenderView(c, productView)
+}
+
+func (ps *productService) CreateProduct(c echo.Context) error {
+    err := ps.AddProductDetails(c.FormValue("name"))
+    if err != nil {
+        log.Printf("Failed to create the product: %v", err)
+    }
 
     productView := ps.ProductView(c)
     return authHandler.RenderView(c, productView)
