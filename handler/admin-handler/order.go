@@ -23,9 +23,11 @@ func NewOrderService(db *gorm.DB) *orderService{
 }
 
 // database functions ===================================================
-func (ords *orderService) GetOrders(status string) ([]types.Order, error) {
+func (ords *orderService) GetOrders(status string, limit, page int) ([]types.Order, int, error) {
     var ordersData []types.Order
+    var totalOrders int
     var result *gorm.DB
+    var countResult *gorm.DB
     selectStatement := `
                 orders.id as Id,
                 customers.name as Name,
@@ -48,20 +50,22 @@ func (ords *orderService) GetOrders(status string) ([]types.Order, error) {
                 inner join products
                 on products.id = orders.product_id
             `
+    dataQuery := ords.DB.Model(&models.Order{}).Select(selectStatement).Joins(joinStatement1).Joins(joinStatement2)
+    countQuery := ords.DB.Model(&models.Order{}).Select("count(id) as Total")
 
     if len(status) != 0 && status != "all" {
-        result = ords.DB.Model(&models.Order{}).Select(selectStatement).Joins(joinStatement1).Joins(joinStatement2).Where("orders.status like ?", status).Scan(&ordersData)
+        result = dataQuery.Where("status like ?", status).Offset(page*limit).Limit(limit).Scan(&ordersData)
+        countResult = countQuery.Where("status like ?", status).Scan(&totalOrders)
     }else{
-        result = ords.DB.Model(&models.Order{}).Select(selectStatement).Joins(joinStatement1).Joins(joinStatement2).Scan(&ordersData)
+        result = dataQuery.Offset(page*limit).Limit(limit).Scan(&ordersData)
+        countResult = countQuery.Scan(&totalOrders)
     }
 
-    log.Printf("Order result: %v", ordersData)
-
-    if result.Error != nil {
-        return ordersData, result.Error
+    if result.Error != nil || countResult.Error != nil {
+        return ordersData, totalOrders, result.Error
     }
 
-    return ordersData, nil
+    return ordersData, totalOrders, nil
 }
 
 func (ords *orderService) AddOrderDetails(name, email, product string, number *int, quantity, price int, origin, address string) error {
@@ -121,9 +125,17 @@ func (ords *orderService) DeleteOrderDetails(id string) error {
 func (ords *orderService) Orders(c echo.Context) error {
     var err error
     var productsData []types.Product
+    limit, err := strconv.Atoi(c.QueryParam("limit"))
+    if err != nil {
+        limit = 10
+    }
+    page, err := strconv.Atoi(c.QueryParam("page"))
+    if err != nil {
+        page = 0
+    }
     status := strings.ToLower(c.QueryParam("status"))
 
-    ordersData, err := ords.GetOrders(status)
+    ordersData, totalOrders, err := ords.GetOrders(status, limit, page)
     if err != nil {
         log.Printf("Failed to get the order data: %v", err)
     }
@@ -132,7 +144,7 @@ func (ords *orderService) Orders(c echo.Context) error {
     if result.Error != nil {
         log.Printf("Failed to get the product data: %v", result.Error)
     }
-	ordersView := adminView.Orders(ordersData, status, productsData)
+	ordersView := adminView.Orders(ordersData, status, productsData, totalOrders, limit, page)
 
 	return authHandler.RenderView(c, adminView.AdminIndex(
 		"Orders",
@@ -163,14 +175,23 @@ func (ords *orderService) CreateOrder(c echo.Context) error {
     
     ords.AddOrderDetails(name, email, product, &number, quantity, price, origin, address)
 
-    ordersData, err := ords.GetOrders("")
+    limit, err := strconv.Atoi(c.QueryParam("limit"))
+    if err != nil {
+        limit = 10
+    }
+    page, err := strconv.Atoi(c.QueryParam("page"))
+    if err!=nil{
+        page = 0
+    }
+
+    ordersData, totalOrders, err := ords.GetOrders("", limit, page)
     utils.ErrorHandler(err, "Failed to get the order data")
     result := ords.DB.Model(&models.Product{}).Select("name as Name").Scan(&productsData)
     if result.Error != nil {
         log.Printf("Failed to get the product data: %v", result.Error)
     }
 
-    orderView := adminView.Orders(ordersData, "All", productsData)
+    orderView := adminView.Orders(ordersData, "All", productsData, totalOrders, limit, page)
     return authHandler.RenderView(c, orderView)
 }
 
@@ -181,14 +202,23 @@ func (ords *orderService) UpdateOrder(c echo.Context) error {
 
     ords.UpdateOrderDetails(id)
 
-    ordersData, err := ords.GetOrders("")
+    limit, err := strconv.Atoi(c.QueryParam("limit"))
+    if err != nil {
+        limit = 10
+    }
+    page, err := strconv.Atoi(c.QueryParam("page"))
+    if err!=nil{
+        page = 0
+    }
+
+    ordersData, totalOrders, err := ords.GetOrders("", limit, page)
     utils.ErrorHandler(err, "Failed to get the order data")
     result := ords.DB.Model(&models.Product{}).Select("name as Name").Scan(&productsData)
     if result.Error != nil {
         log.Printf("Failed to get the product data: %v", result.Error)
     }
 
-    orderView := adminView.Orders(ordersData, "All", productsData)
+    orderView := adminView.Orders(ordersData, "All", productsData, totalOrders, limit, page)
     return authHandler.RenderView(c, orderView)
 }
 
@@ -200,13 +230,22 @@ func (ords *orderService) DeleteOrder(c echo.Context) error {
 
     ords.DeleteOrderDetails(id)
 
-    ordersData, err := ords.GetOrders(status)
+    limit, err := strconv.Atoi(c.QueryParam("limit"))
+    if err != nil {
+        limit = 10
+    }
+    page, err := strconv.Atoi(c.QueryParam("page"))
+    if err!=nil{
+        page = 0
+    }
+
+    ordersData, totalOrders, err := ords.GetOrders(status, limit, page)
     utils.ErrorHandler(err, "Failed to get the order data")
     result := ords.DB.Model(&models.Product{}).Select("name as Name").Scan(&productsData)
     if result.Error != nil {
         log.Printf("Failed to get the product data: %v", result.Error)
     }
 
-    orderView := adminView.Orders(ordersData, "All", productsData)
+    orderView := adminView.Orders(ordersData, "All", productsData, totalOrders, limit, page)
     return authHandler.RenderView(c, orderView)
 }

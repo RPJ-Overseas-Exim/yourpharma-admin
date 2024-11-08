@@ -1,6 +1,11 @@
-<div class=\"w-full h-full flex justify-between\"><a href=\"
-\" class=\"flex gap-x-2 items-center\"><span>
-</span> <span>Prev</span></a><div class=\"\">
-</div><a href=\"
-\" class=\"flex gap-x-2 items-center\"><span>Next</span> <span>
+<div class=\"w-full h-full flex justify-end gap-x-4\"><a
+ href=\"
+\"
+ href=\"
+\"
+ class=\"flex gap-x-2 items-center text-foreground-muted text-sm\"><span>
+</span> <span>Prev</span></a><div class=\"font-semibold\">
+ <span class=\"text-foreground-muted\">
+</span></div><a href=\"
+\" class=\"flex gap-x-2 items-center text-foreground-muted text-sm\"><span>Next</span> <span>
 </span></a></div>

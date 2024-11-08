@@ -24,31 +24,43 @@ func NewProductService(db *gorm.DB) *productService {
 
 func (ps *productService) ProductView(c echo.Context) templ.Component {
     var err error
-    productsData, err := ps.GetProducts()
+    limit, err := strconv.Atoi(c.QueryParam("limit"))
+    if err!=nil {
+        limit = 10
+    }
+    page, err := strconv.Atoi(c.QueryParam("page"))
+    if err!=nil {
+        page=0
+    }
+    productsData, totalProducts, err := ps.GetProducts(limit, page)
 
     if err != nil {
         log.Printf("Failed to get the products data: %v", err)
         return nil
     }
 
-    productView := adminView.Products(productsData)
+    productView := adminView.Products(productsData, totalProducts, limit, page)
 
     return productView
 }
 
 // database functions ========================================================
-func (ps *productService) GetProducts() ([]types.Product, error) {
+func (ps *productService) GetProducts(limit, page int) ([]types.Product, int, error) {
     var productsData []types.Product
-    result := ps.DB.Model(&models.Product{}).Select("price_qties.id as Id, price_qties.product_id as PId, products.name as Name, price_qties.price as Price, price_qties.qty as Qty").Joins("inner join price_qties on price_qties.product_id = products.id").Find(&productsData)
+    var totalProducts int
 
-    log.Printf("Product data: %v", productsData)
-
+    result := ps.DB.Model(&models.Product{}).Select("price_qties.id as Id, price_qties.product_id as PId, products.name as Name, price_qties.price as Price, price_qties.qty as Qty").Joins("inner join price_qties on price_qties.product_id = products.id").Offset(page*limit).Limit(limit).Find(&productsData)
     if result.Error != nil {
         log.Printf("Product data error: %v", result.Error)
-        return nil, result.Error
+        return nil, totalProducts, result.Error
     }
 
-    return productsData, nil
+    result = ps.DB.Model(&models.Product{}).Select("count(name) as Total").Find(&totalProducts)
+    if result.Error != nil {
+        return productsData, totalProducts, result.Error
+    }
+
+    return productsData, totalProducts, nil
 }
 
 func (ps *productService) AddProductDetails(name string, qty, price int) error {

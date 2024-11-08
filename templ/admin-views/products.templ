@@ -4,15 +4,18 @@ import "RPJ-Overseas-Exim/yourpharma-admin/templ/partials"
 import "RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
 
-templ Products(productsData []types.Product){
+templ Products(productsData []types.Product, totalProducts, limit, page int){
     <section id="product-page" class="w-full h-full p-2 flex flex-col">
         <div class="flex items-center justify-between md:px-4 py-2">
             <div class="font-semibold text-xl">Products</div>
 
             <div class="flex gap-x-2">
-                @partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center"){
-                    <div class="text-xs font-semibold" onclick="tableToCsv()" >Download</div>
-                }
+                <div class="text-xs font-semibold" onclick="tableToCsv()" >
+                    @partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center"){
+                        Download
+                    }
+                </div>
+
                 <button
                 type="button"
                 onclick="showForm(this)"
@@ -33,6 +36,8 @@ templ Products(productsData []types.Product){
             </div>
         </div>
 
-        <div class="w-full">Pagination</div>
+        <div class="w-full">
+            @partials.Pagination(totalProducts, limit, page, "/products")
+        </div>
     </section>
 }
