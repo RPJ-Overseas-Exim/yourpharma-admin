@@ -3,8 +3,9 @@ package adminView
 import "RPJ-Overseas-Exim/yourpharma-admin/templ/partials"
 import "RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
+import "RPJ-Overseas-Exim/yourpharma-admin/db/models"
 
-templ Products(productsData []types.Product, totalProducts, limit, page int){
+templ Products(productsData []models.Product, priceData []types.Product, totalProducts, limit, page int){
     <section id="product-page" class="w-full h-full p-2 flex flex-col">
         <div class="flex items-center justify-between md:px-4 py-2">
             <div class="font-semibold text-xl">Products</div>
@@ -21,6 +22,15 @@ templ Products(productsData []types.Product, totalProducts, limit, page int){
                 onclick="showForm(this)"
                 class="cursor-pointer px-4 py-2 text-white bg-green-600 rounded flex items-center gap-x-2">
                     <span class="text-sm">@icons.Add()</span>
+                    <span class="text-sm font-semibold whitespace-nowrap">Add Price</span>
+                </button>
+                @partials.AddPriceForm(productsData)
+
+                <button
+                type="button"
+                onclick="showForm(this)"
+                class="cursor-pointer px-4 py-2 text-white bg-green-600 rounded flex items-center gap-x-2">
+                    <span class="text-sm">@icons.Add()</span>
                     <span class="text-sm font-semibold whitespace-nowrap">Add Product</span>
                 </button>
                 @partials.AddProductForm()
@@ -31,7 +41,7 @@ templ Products(productsData []types.Product, totalProducts, limit, page int){
             <div class="w-full border border-border-muted border-b-0 rounded overflow-auto">
                 @partials.Table(""){
                     @partials.ProductTableHeader()
-                    @partials.ProductTableRows(productsData)
+                    @partials.ProductTableRows(priceData)
                 }
             </div>
         </div>

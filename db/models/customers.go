@@ -9,7 +9,7 @@ type Customer struct{
     gorm.Model
     Id          string  `gorm:"primaryKey"`
     Name        string  
-    Email       string  `gorm:"unique"`
+    Email       string  `gorm:"uniqueIndex"`
     Number      *int  
     Address     string  
 }
