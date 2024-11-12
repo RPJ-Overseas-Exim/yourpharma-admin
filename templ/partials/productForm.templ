@@ -3,8 +3,9 @@ package partials
 import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
 import "RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 import "strconv"
+import "RPJ-Overseas-Exim/yourpharma-admin/db/models"
 
-templ AddPriceForm(){
+templ AddPriceForm(products []models.Product){
     <div
         onclick="hideFormFromFilter(this)"
         id={"add-form-filter"}
@@ -26,11 +27,11 @@ templ AddPriceForm(){
         </button>
 
         <div class="space-y-3">
-            @ProductTextFormField(
+            @ProductSelectFormField(
                 "Product Name",
                 "Enter product name",
                 "name",
-                "",
+                products,
             )
             @ProductNumberFormField(
                 "Product Quantity",
@@ -285,5 +286,26 @@ templ ProductNumberFormField(label, placeholder, name string, value *int){
             min="1"
             required
         />
+    </div>
+}
+
+templ ProductSelectFormField(label, placeholder, name string, data []models.Product){
+    <div class="flex flex-col gap-y-2">
+        <label
+            for={name}
+            class="text-left text-semibold text-lg"
+        >
+            {label}
+        </label>
+        <select
+            class="px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0"
+            name={name}
+            id={name}
+            placeholder={placeholder}
+        >
+            for _, value := range(data){
+                <option value={value.Name} >{value.Name}</option>
+            }
+        </select>
     </div>
 }

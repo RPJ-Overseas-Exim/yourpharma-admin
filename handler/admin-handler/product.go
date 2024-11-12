@@ -32,35 +32,47 @@ func (ps *productService) ProductView(c echo.Context) templ.Component {
     if err!=nil {
         page=0
     }
-    productsData, totalProducts, err := ps.GetProducts(limit, page)
-
+    productsData, priceData, totalProducts, err := ps.GetProducts(limit, page)
     if err != nil {
         log.Printf("Failed to get the products data: %v", err)
         return nil
     }
 
-    productView := adminView.Products(productsData, totalProducts, limit, page)
+    productView := adminView.Products(productsData, priceData, totalProducts, limit, page)
 
     return productView
 }
 
 // database functions ========================================================
-func (ps *productService) GetProducts(limit, page int) ([]types.Product, int, error) {
-    var productsData []types.Product
+func (ps *productService) GetProducts(limit, page int) ([]models.Product, []types.Product, int, error) {
+    var productsData []models.Product
+    var priceData []types.Product
     var totalProducts int
 
-    result := ps.DB.Model(&models.Product{}).Select("price_qties.id as Id, price_qties.product_id as PId, products.name as Name, price_qties.price as Price, price_qties.qty as Qty").Joins("inner join price_qties on price_qties.product_id = products.id").Offset(page*limit).Limit(limit).Find(&productsData)
+    productTable := ps.DB.Model(&models.Product{})
+    selectStatement := "price_qties.id as Id, price_qties.product_id as PId, products.name as Name, price_qties.price as Price, price_qties.qty as Qty"
+    joinStatement := "inner join price_qties on price_qties.product_id = products.id"
+
+    result := productTable.Select(selectStatement).Joins(joinStatement).Offset(page*limit).Limit(limit).Find(&priceData)
     if result.Error != nil {
-        log.Printf("Product data error: %v", result.Error)
-        return nil, totalProducts, result.Error
+        log.Printf("Price data error: %v", result.Error)
+        return productsData, nil, totalProducts, result.Error
     }
 
-    result = ps.DB.Model(&models.Product{}).Select("count(name) as Total").Find(&totalProducts)
+    result = ps.DB.Model(&models.Product{}).Select("id as Id, name as Name").Find(&productsData)
+    log.Printf("Products data: %v", productsData)
     if result.Error != nil {
-        return productsData, totalProducts, result.Error
+        log.Printf("Price data error: %v", result.Error)
+        return productsData, priceData, totalProducts, result.Error
     }
 
-    return productsData, totalProducts, nil
+    result = productTable.Select("count(name) as Total").Find(&totalProducts)
+    if result.Error != nil {
+        log.Printf("Price count error: %v", result.Error)
+        return productsData, priceData, totalProducts, result.Error
+    }
+
+    return productsData, priceData, totalProducts, nil
 }
 
 func (ps *productService) AddProductDetails(name string) error {
