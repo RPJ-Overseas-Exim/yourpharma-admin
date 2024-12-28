@@ -61,6 +61,7 @@ func (ords *orderService) GetOrders(status string, limit, page int) ([]types.Ord
         countResult = countQuery.Scan(&totalOrders)
     }
 
+
     if result.Error != nil || countResult.Error != nil {
         return ordersData, totalOrders, result.Error
     }
@@ -73,22 +74,26 @@ func (ords *orderService) AddOrderDetails(name, email, product string, number *i
     var productData models.Product
     var result *gorm.DB 
 
-    result = ords.DB.Find(&customerData, "email like ?", email)
+    result = ords.DB.Find(&customerData, "email = ?", email)
     if result.RowsAffected == 0 {
         newCustomer := models.NewCustomer(name, email, number, address)
         result = ords.DB.Create(newCustomer)
         customerData.Id = newCustomer.Id
     }
 
-    result = ords.DB.Find(&productData, "name like ?", product)
+    result = ords.DB.Find(&productData, "name = ?", product)
     if result.RowsAffected == 0 {
-        newProduct := models.NewProduct(product)
+        newProduct := models.NewProduct(product, price, quantity)
         result = ords.DB.Create(newProduct)
         productData.Id = newProduct.Id
     }
 
-    newOrder := models.NewOrder(customerData.Id, origin, productData.Id, quantity, price)
+    newOrder := models.NewOrder(customerData.Id, productData.Id, origin, quantity, price)
     result = ords.DB.Create(newOrder)
+    if result.Error != nil {
+        log.Printf("error in order create: %v", result.Error)
+    }
+
     return nil
 }
 
@@ -96,7 +101,7 @@ func (ords *orderService) UpdateOrderDetails(id string) error {
     var order models.Order
     var status string
 
-    result := ords.DB.Find(&order, "id like ?", id)
+    result := ords.DB.Find(&order, "id = ?", id)
     utils.ErrorHandler(result.Error, "Failed to get the order details")
 
     if order.Status == "active" {

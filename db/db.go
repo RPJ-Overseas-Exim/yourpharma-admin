@@ -1,7 +1,6 @@
 package db
 
 import (
-	"RPJ-Overseas-Exim/yourpharma-admin/db/models"
 	"log"
 	"os"
 
@@ -35,7 +34,7 @@ func ConnectDB() *gorm.DB {
         return nil
     }
 
-    db.AutoMigrate(&models.PriceQty{}, &models.Product{}, &models.Customer{}, &models.Order{})
+    // migrate(db)
 
     return db
 }

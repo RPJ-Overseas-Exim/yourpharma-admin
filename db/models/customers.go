@@ -1,17 +1,20 @@
 package models
 
 import (
+	"time"
+
 	"github.com/aidarkhanov/nanoid"
-	"gorm.io/gorm"
 )
 
 type Customer struct{
-    gorm.Model
-    Id          string  `gorm:"primaryKey"`
-    Name        string  
-    Email       string  `gorm:"uniqueIndex"`
-    Number      *int  
-    Address     string  
+    Id,
+    Name string 
+    Email string `gorm:"uniqueIndex"`
+    Number *int 
+	Address *string
+    Order []Order
+    CreatedAt,
+    UpdatedAt time.Time
 }
 
 func NewCustomer(name, email string, number *int, address string) *Customer{
@@ -22,7 +25,7 @@ func NewCustomer(name, email string, number *int, address string) *Customer{
         Name:name,
         Email:email,
         Number: number,
-        Address:address,
+        Address: &address,
     }
 }
 

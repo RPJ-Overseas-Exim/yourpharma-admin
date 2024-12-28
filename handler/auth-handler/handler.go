@@ -38,7 +38,7 @@ func (as *authService) LoginHandler(c echo.Context) error {
         if email == os.Getenv("ADMIN_EMAIL") || password == os.Getenv("ADMIN_PASSWORD"){
             jwtCookie := new(http.Cookie)
             jwtCookie.Name = "Authentication"
-            jwtCookie.Value = utils.CreateToken([]byte("secretKey"), "admin", "admin@gmail.com")
+            jwtCookie.Value = utils.CreateToken([]byte("secretKey"), "admin", os.Getenv("ADMIN_EMAIL"))
             jwtCookie.Expires = time.Now().Add(24 * time.Hour)
 
             c.SetCookie(jwtCookie)

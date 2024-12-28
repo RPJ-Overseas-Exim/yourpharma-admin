@@ -4,6 +4,7 @@ import (
     "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
     "strconv"
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
+	"RPJ-Overseas-Exim/yourpharma-admin/db/models"
 )
 
 templ Table(tableStyle string){
@@ -42,23 +43,25 @@ templ ProductTableHeader(){
     </tr>
 }
 
-templ ProductTableRows(products []types.Product){
+templ ProductTableRows(products []models.Product){
     for _, product := range(products) {
-        <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
-            @TableBodyCell(){{ product.Name }}
-            @TableBodyCell(){{ strconv.Itoa(product.Qty) }}
-            @TableBodyCell(){{ strconv.Itoa(product.Price) }}
-            @TableBodyCell(){
-                <div
-                onclick="showForm(this)"
-                class="">
-                    @Button("button", "w-full flex text-foreground-muted hover:text-foreground items-center justify-center"){
-                        @icons.Options ()
-                    }
-                </div>
-                @ProductForm(product)
-            }
-        </tr>
+        for _, priceQty := range(product.PriceQty){
+            <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
+                @TableBodyCell(){{ product.Name }}
+                @TableBodyCell(){{ strconv.Itoa(int(priceQty.Qty)) }}
+                @TableBodyCell(){{ strconv.Itoa(int(priceQty.Price)) }}
+                @TableBodyCell(){
+                    <div
+                    onclick="showForm(this)"
+                    class="">
+                        @Button("button", "w-full flex text-foreground-muted hover:text-foreground items-center justify-center"){
+                            @icons.Options ()
+                        }
+                    </div>
+                    @ProductForm(product, priceQty)
+                }
+            </tr>
+        }
     }
 }
 

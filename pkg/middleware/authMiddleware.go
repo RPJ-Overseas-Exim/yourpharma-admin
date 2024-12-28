@@ -2,7 +2,6 @@ package authMiddleware
 
 import (
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/utils"
-	"log"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -16,7 +15,7 @@ func AuthMiddleware(next echo.HandlerFunc) echo.HandlerFunc {
         }
 
         verifyErr := utils.VerifyToken(token.Value, []byte("secretKey"))
-        log.Printf("auth middleware called %v, err: %v", token, err)
+        // log.Printf("auth middleware called %v, err: %v", token, err)
 
         if verifyErr!=nil {
             return c.Redirect(http.StatusSeeOther, "/")

@@ -3,7 +3,6 @@ package adminHandler
 import (
 	"RPJ-Overseas-Exim/yourpharma-admin/db/models"
 	authHandler "RPJ-Overseas-Exim/yourpharma-admin/handler/auth-handler"
-	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/utils"
 	adminView "RPJ-Overseas-Exim/yourpharma-admin/templ/admin-views"
 	"log"
@@ -32,52 +31,53 @@ func (ps *productService) ProductView(c echo.Context) templ.Component {
     if err!=nil {
         page=0
     }
-    productsData, priceData, totalProducts, err := ps.GetProducts(limit, page)
+    productsData, totalProducts, err := ps.GetProducts(limit, page)
     if err != nil {
         log.Printf("Failed to get the products data: %v", err)
         return nil
     }
 
-    productView := adminView.Products(productsData, priceData, totalProducts, limit, page)
-
+    productView := adminView.Products(productsData, totalProducts, limit, page)
     return productView
 }
 
 // database functions ========================================================
-func (ps *productService) GetProducts(limit, page int) ([]models.Product, []types.Product, int, error) {
+func (ps *productService) GetProducts(limit, page int) ([]models.Product, int, error) {
+    var priceData []models.PriceQty
     var productsData []models.Product
-    var priceData []types.Product
-    var totalProducts int
 
-    productTable := ps.DB.Model(&models.Product{})
-    selectStatement := "price_qties.id as Id, price_qties.product_id as PId, products.name as Name, price_qties.price as Price, price_qties.qty as Qty"
-    joinStatement := "inner join price_qties on price_qties.product_id = products.id"
+    result := ps.DB.Table("products").Preload("PriceQty").Find(&productsData)
+    log.Printf("\n products: %v \n", productsData)
 
-    result := productTable.Select(selectStatement).Joins(joinStatement).Offset(page*limit).Limit(limit).Find(&priceData)
     if result.Error != nil {
         log.Printf("Price data error: %v", result.Error)
-        return productsData, nil, totalProducts, result.Error
+        return productsData, 0, result.Error
     }
 
-    result = ps.DB.Model(&models.Product{}).Select("id as Id, name as Name").Find(&productsData)
-    log.Printf("Products data: %v", productsData)
-    if result.Error != nil {
-        log.Printf("Price data error: %v", result.Error)
-        return productsData, priceData, totalProducts, result.Error
-    }
-
-    result = productTable.Select("count(name) as Total").Find(&totalProducts)
+    result = ps.DB.Model(&models.PriceQty{}).Find(&priceData)
     if result.Error != nil {
         log.Printf("Price count error: %v", result.Error)
-        return productsData, priceData, totalProducts, result.Error
+        return productsData, 0, result.Error
     }
 
-    return productsData, priceData, totalProducts, nil
+    return productsData, len(priceData), nil
 }
 
-func (ps *productService) AddProductDetails(name string) error {
-        newProduct := models.NewProduct(name)
-        result := ps.DB.Create(&newProduct)
+func (ps *productService) AddProductDetails(name string, price, quantity int) error {
+        var result *gorm.DB
+        var product models.Product
+
+        result = ps.DB.Find(&product, "name = ?", name)
+
+        if result.RowsAffected == 0 {
+            newProduct := models.NewProduct(name, price, quantity)
+            result = ps.DB.Create(&newProduct)
+        }else{
+            newPriceQty := models.NewPriceQty(product.Id, price, quantity)
+            result = ps.DB.Create(&newPriceQty)
+        }
+
+
         if result.Error != nil {
             return result.Error
         }
@@ -89,24 +89,21 @@ func (ps *productService) AddPriceDetails(name string, qty, price int) error {
     var newPrice *models.PriceQty
     var result *gorm.DB
 
-    result = ps.DB.Find(&product, "name like ?", name)
+    result = ps.DB.Find(&product, "name = ?", name)
     utils.ErrorHandler(result.Error, "Failed to parse the product details")
     
     if  result.RowsAffected == 0 {
-        newProduct := models.NewProduct(name)
+        newProduct := models.NewProduct(name, price, qty)
         result = ps.DB.Create(&newProduct)
         if result.Error != nil {
             return result.Error
         }
-
-        newPrice = models.NewPriceQty((*newProduct).Id, price, qty)
     }else{ 
         newPrice = models.NewPriceQty(product.Id, price, qty)
-    }
-
-    result = ps.DB.Create(&newPrice)
-    if result.Error != nil {
-        return result.Error
+        result = ps.DB.Create(&newPrice)
+        if result.Error != nil {
+            return result.Error
+        }
     }
 
     return nil
@@ -187,7 +184,18 @@ func (ps *productService) CreatePrice(c echo.Context) error {
 }
 
 func (ps *productService) CreateProduct(c echo.Context) error {
-    err := ps.AddProductDetails(c.FormValue("name"))
+    price , err := strconv.Atoi(c.FormValue("price"))
+    if err != nil {
+        log.Printf("Please provide price: %v", err)
+        price = 290
+    }
+    quantity, err := strconv.Atoi(c.FormValue("quantity"))
+    if err != nil {
+        log.Printf("Please provide quantity: %v", err)
+        quantity = 90
+    }
+
+    err = ps.AddProductDetails(c.FormValue("name"), price, quantity)
     if err != nil {
         log.Printf("Failed to create the product: %v", err)
     }
