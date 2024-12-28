@@ -104,11 +104,11 @@ func (ords *orderService) UpdateOrderDetails(id string) error {
     result := ords.DB.Find(&order, "id = ?", id)
     utils.ErrorHandler(result.Error, "Failed to get the order details")
 
-    if order.Status == "active" {
+    if strings.ToLower(order.Status) == "active" {
         status = "paid"
-    }else if order.Status == "paid" {
+    }else if strings.ToLower(order.Status) == "paid" {
         status = "shipped"
-    }else if order.Status == "shipped" {
+    }else if strings.ToLower(order.Status) == "shipped" {
         status = "delivered"
     }
 
