@@ -146,7 +146,7 @@ templ OrderForm(order types.Order){
             </div>
 
             <div class="w-full space-y-2">
-                if order.Status != "delivered"{
+                if strings.ToLower(order.Status) != "delivered"{
                     <button
                         type="button"
                         class="w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-background-muted text-lg font-semibold"
