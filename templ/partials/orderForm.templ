@@ -3,6 +3,7 @@ package partials
 import "strconv"
 import "RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
+import "strings"
 
 templ AddOrderForm(products []types.Product){
     <div
@@ -154,13 +155,13 @@ templ OrderForm(order types.Order){
                         hx-target="#order-page"
                         hx-swap="outerHTML"
                     >
-                        if order.Status == "active"{
+                        if strings.ToLower(order.Status) == "active"{
                             Mark as Paid
                         }
-                        else if order.Status == "paid"{
+                        else if strings.ToLower(order.Status) == "paid"{
                             Mark as Shipped
                         }
-                        else if order.Status == "shipped"{
+                        else if strings.ToLower(order.Status) == "shipped"{
                             Mark as Delivered
                         }
                         
