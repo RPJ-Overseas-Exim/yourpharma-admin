@@ -5,9 +5,13 @@ import (
 	authHandler "RPJ-Overseas-Exim/yourpharma-admin/handler/auth-handler"
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 	adminView "RPJ-Overseas-Exim/yourpharma-admin/templ/admin-views"
+	"bytes"
+	"encoding/json"
 	"log"
 	"strconv"
+	"strings"
 
+	"github.com/Sydsvenskan/json2csv"
 	"github.com/aidarkhanov/nanoid"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
@@ -22,20 +26,28 @@ func NewCustomerService(db *gorm.DB) *customerService {
 }
 
 // customers data methods
-func (cs *customerService) GetCustomers(page int, limit int) ([]types.Customer, int, error) {
+func (cs *customerService) GetCustomers(page int, limit int) ([]types.Customer, int, string, error) {
     var customersData []types.Customer
     var totalCustomers int
     result := cs.DB.Model(&models.Customer{}).Offset(page*limit).Limit(limit).Find(&customersData)
     if result.Error != nil {
-        return customersData, 0, result.Error
+        return customersData, 0, "", result.Error
     }
 
+    // get the total customer counts
     result = cs.DB.Model(&models.Customer{}).Select("count(email) as Total").Find(&totalCustomers)
     if result.Error != nil {
-        return customersData, totalCustomers, result.Error
+        return customersData, totalCustomers, "", result.Error
     }
 
-    return customersData, totalCustomers, nil
+    // convert data to string
+    var dataBuffer bytes.Buffer
+    stringsByte, err := json.Marshal(customersData)
+    if err == nil {
+        json2csv.Convert(strings.NewReader(string(stringsByte)), &dataBuffer)
+    }
+
+    return customersData, totalCustomers, dataBuffer.String(), nil
 }
 
 func (cs *customerService) AddCustomer(name, email string, number *int, address string) error {
@@ -94,12 +106,12 @@ func (cs *customerService) Customers(c echo.Context) error {
     if err != nil{
         limit = 10
     }
-    customersData, totalCustomers, err := cs.GetCustomers(page, limit)
+    customersData, totalCustomers, customersString, err := cs.GetCustomers(page, limit)
     if err != nil {
         log.Printf("Error in customers Data: %v", err)
     }
 
-	customersView := adminView.Customers(customersData, totalCustomers, page, limit)
+	customersView := adminView.Customers(customersData, totalCustomers, customersString, page, limit)
 	return authHandler.RenderView(c, adminView.AdminIndex(
 		"Customers",
 		true,
@@ -121,12 +133,12 @@ func (cs *customerService) CreateCustomer(c echo.Context) error {
         limit = 10
     }
 
-    customersData, totalCustomers, err := cs.GetCustomers(page, limit)
+    customersData, totalCustomers, customersString, err := cs.GetCustomers(page, limit)
     if err != nil {
         log.Printf("Customers data is not fetched: %v", err)
     }
 
-    customersView := adminView.Customers(customersData, totalCustomers, page, limit)
+    customersView := adminView.Customers(customersData, totalCustomers, customersString, page, limit)
     return authHandler.RenderView(c, customersView)
 }
 
@@ -154,8 +166,8 @@ func (cs *customerService) UpdateCustomer(c echo.Context) error {
         limit = 10
     }
 
-    customersData, totalCustomers, err := cs.GetCustomers(page, limit)
-    customerView := adminView.Customers(customersData, totalCustomers, page, limit)
+    customersData, totalCustomers, customersString, err := cs.GetCustomers(page, limit)
+    customerView := adminView.Customers(customersData, totalCustomers, customersString, page, limit)
     return authHandler.RenderView(c, customerView)
 }
 
@@ -176,7 +188,7 @@ func (cs *customerService) DeleteCustomer(c echo.Context) error {
         limit = 10
     }
 
-    customersData, totalCustomers, err := cs.GetCustomers(page, limit)
-    customerView := adminView.Customers(customersData, totalCustomers, page, limit)
+    customersData, totalCustomers, customersString, err := cs.GetCustomers(page, limit)
+    customerView := adminView.Customers(customersData, totalCustomers, customersString, page, limit)
     return authHandler.RenderView(c, customerView)
 }

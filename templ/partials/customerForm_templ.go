@@ -216,59 +216,91 @@ func CustomerForm(customer types.Customer) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"whitespace-nowrap\">Customer Details</span></button><div class=\"w-full flex flex-col gap-y-2 mt-3\"><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Name :</div><div class=\"text-foreground-muted text-lg\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"whitespace-nowrap\">Customer Details</span></button><div class=\"w-full flex flex-col gap-y-2 mt-3\"><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Name :</div><div onClick=\"copyText(this)\" class=\"flex gap-x-2\"><div class=\"text-foreground-muted text-lg copy\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(customer.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 97, Col: 73}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 98, Col: 82}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Email :</div><div class=\"text-lg text-foreground-muted\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"w-5 text-foreground-muted cursor-pointer\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = icons.Copy().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Email :</div><div onClick=\"copyText(this)\" class=\"flex gap-x-2\"><div class=\"text-lg text-foreground-muted copy\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(customer.Email)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 102, Col: 74}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 108, Col: 83}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Address :</div><div class=\"text-foreground-muted text-lg\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"w-5 text-foreground-muted cursor-pointer\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = icons.Copy().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Address :</div><div onClick=\"copyText(this)\" class=\"flex gap-x-2\"><div class=\"text-foreground-muted text-lg copy\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var10 string
 		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(customer.Address)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 107, Col: 76}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 118, Col: 85}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Phone No. :</div><div class=\"text-foreground-muted text-lg\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"w-5 text-foreground-muted cursor-pointer\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = icons.Copy().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Phone No. :</div><div onClick=\"copyText(this)\" class=\"flex gap-x-2\"><div class=\"text-foreground-muted text-lg copy\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var11 string
 		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(*customer.Number))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 112, Col: 90}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 128, Col: 99}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\"w-full space-y-2\"><div onclick=\"showForm(this)\" class=\"\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"w-5 text-foreground-muted cursor-pointer\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = icons.Copy().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div><div class=\"w-full space-y-2\"><div onclick=\"showForm(this)\" class=\"\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -309,7 +341,7 @@ func CustomerForm(customer types.Customer) templ.Component {
 		var templ_7745c5c3_Var13 string
 		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs("/customers/" + customer.Id)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 126, Col: 56}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 146, Col: 56}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 		if templ_7745c5c3_Err != nil {
@@ -378,7 +410,7 @@ func EditCustomerForm(customer types.Customer) templ.Component {
 		var templ_7745c5c3_Var16 string
 		templ_7745c5c3_Var16, templ_7745c5c3_Err = templ.JoinStringErrs("add-form-filter")
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 146, Col: 29}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 166, Col: 29}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var16))
 		if templ_7745c5c3_Err != nil {
@@ -391,7 +423,7 @@ func EditCustomerForm(customer types.Customer) templ.Component {
 		var templ_7745c5c3_Var17 string
 		templ_7745c5c3_Var17, templ_7745c5c3_Err = templ.JoinStringErrs("/customers/" + customer.Id)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 149, Col: 41}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 169, Col: 41}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var17))
 		if templ_7745c5c3_Err != nil {
@@ -540,7 +572,7 @@ func CustomerTextFormField(label, placeholder, name, value, required string) tem
 		var templ_7745c5c3_Var21 string
 		templ_7745c5c3_Var21, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 215, Col: 21}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 235, Col: 21}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var21))
 		if templ_7745c5c3_Err != nil {
@@ -553,7 +585,7 @@ func CustomerTextFormField(label, placeholder, name, value, required string) tem
 		var templ_7745c5c3_Var22 string
 		templ_7745c5c3_Var22, templ_7745c5c3_Err = templ.JoinStringErrs(label)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 218, Col: 18}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 238, Col: 18}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var22))
 		if templ_7745c5c3_Err != nil {
@@ -566,7 +598,7 @@ func CustomerTextFormField(label, placeholder, name, value, required string) tem
 		var templ_7745c5c3_Var23 string
 		templ_7745c5c3_Var23, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 223, Col: 22}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 243, Col: 22}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var23))
 		if templ_7745c5c3_Err != nil {
@@ -579,7 +611,7 @@ func CustomerTextFormField(label, placeholder, name, value, required string) tem
 		var templ_7745c5c3_Var24 string
 		templ_7745c5c3_Var24, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 224, Col: 20}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 244, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var24))
 		if templ_7745c5c3_Err != nil {
@@ -592,7 +624,7 @@ func CustomerTextFormField(label, placeholder, name, value, required string) tem
 		var templ_7745c5c3_Var25 string
 		templ_7745c5c3_Var25, templ_7745c5c3_Err = templ.JoinStringErrs(placeholder)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 225, Col: 36}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 245, Col: 36}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var25))
 		if templ_7745c5c3_Err != nil {
@@ -610,7 +642,7 @@ func CustomerTextFormField(label, placeholder, name, value, required string) tem
 			var templ_7745c5c3_Var26 string
 			templ_7745c5c3_Var26, templ_7745c5c3_Err = templ.JoinStringErrs(value)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 227, Col: 28}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 247, Col: 28}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var26))
 			if templ_7745c5c3_Err != nil {
@@ -667,7 +699,7 @@ func CustomerEmailFormField(label, placeholder, name, value string, required str
 		var templ_7745c5c3_Var28 string
 		templ_7745c5c3_Var28, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 240, Col: 21}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 260, Col: 21}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var28))
 		if templ_7745c5c3_Err != nil {
@@ -680,7 +712,7 @@ func CustomerEmailFormField(label, placeholder, name, value string, required str
 		var templ_7745c5c3_Var29 string
 		templ_7745c5c3_Var29, templ_7745c5c3_Err = templ.JoinStringErrs(label)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 243, Col: 18}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 263, Col: 18}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var29))
 		if templ_7745c5c3_Err != nil {
@@ -693,7 +725,7 @@ func CustomerEmailFormField(label, placeholder, name, value string, required str
 		var templ_7745c5c3_Var30 string
 		templ_7745c5c3_Var30, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 248, Col: 22}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 268, Col: 22}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var30))
 		if templ_7745c5c3_Err != nil {
@@ -706,7 +738,7 @@ func CustomerEmailFormField(label, placeholder, name, value string, required str
 		var templ_7745c5c3_Var31 string
 		templ_7745c5c3_Var31, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 249, Col: 20}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 269, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var31))
 		if templ_7745c5c3_Err != nil {
@@ -719,7 +751,7 @@ func CustomerEmailFormField(label, placeholder, name, value string, required str
 		var templ_7745c5c3_Var32 string
 		templ_7745c5c3_Var32, templ_7745c5c3_Err = templ.JoinStringErrs(placeholder)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 250, Col: 36}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 270, Col: 36}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var32))
 		if templ_7745c5c3_Err != nil {
@@ -737,7 +769,7 @@ func CustomerEmailFormField(label, placeholder, name, value string, required str
 			var templ_7745c5c3_Var33 string
 			templ_7745c5c3_Var33, templ_7745c5c3_Err = templ.JoinStringErrs(value)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 252, Col: 28}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 272, Col: 28}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var33))
 			if templ_7745c5c3_Err != nil {
@@ -790,7 +822,7 @@ func CustomerNumberFormField(label, placeholder, name string, value *int, requir
 		var templ_7745c5c3_Var35 string
 		templ_7745c5c3_Var35, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 264, Col: 21}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 284, Col: 21}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var35))
 		if templ_7745c5c3_Err != nil {
@@ -803,7 +835,7 @@ func CustomerNumberFormField(label, placeholder, name string, value *int, requir
 		var templ_7745c5c3_Var36 string
 		templ_7745c5c3_Var36, templ_7745c5c3_Err = templ.JoinStringErrs(label)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 267, Col: 18}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 287, Col: 18}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var36))
 		if templ_7745c5c3_Err != nil {
@@ -816,7 +848,7 @@ func CustomerNumberFormField(label, placeholder, name string, value *int, requir
 		var templ_7745c5c3_Var37 string
 		templ_7745c5c3_Var37, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 272, Col: 22}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 292, Col: 22}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var37))
 		if templ_7745c5c3_Err != nil {
@@ -829,7 +861,7 @@ func CustomerNumberFormField(label, placeholder, name string, value *int, requir
 		var templ_7745c5c3_Var38 string
 		templ_7745c5c3_Var38, templ_7745c5c3_Err = templ.JoinStringErrs(name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 273, Col: 20}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 293, Col: 20}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var38))
 		if templ_7745c5c3_Err != nil {
@@ -842,7 +874,7 @@ func CustomerNumberFormField(label, placeholder, name string, value *int, requir
 		var templ_7745c5c3_Var39 string
 		templ_7745c5c3_Var39, templ_7745c5c3_Err = templ.JoinStringErrs(placeholder)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 274, Col: 36}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 294, Col: 36}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var39))
 		if templ_7745c5c3_Err != nil {
@@ -860,7 +892,7 @@ func CustomerNumberFormField(label, placeholder, name string, value *int, requir
 			var templ_7745c5c3_Var40 string
 			templ_7745c5c3_Var40, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(*value))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 276, Col: 43}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/partials/customerForm.templ`, Line: 296, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var40))
 			if templ_7745c5c3_Err != nil {

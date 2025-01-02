@@ -47,7 +47,7 @@ func (hs *homeService) GetOrders(status string) ([]types.Order, error) {
             `
 
     if len(status) != 0 && status != "all" {
-        result = hs.DB.Model(&models.Order{}).Select(selectStatement).Joins(joinStatement1).Joins(joinStatement2).Where("orders.status like ?", status).Limit(10).Scan(&ordersData)
+        result = hs.DB.Model(&models.Order{}).Select(selectStatement).Joins(joinStatement1).Joins(joinStatement2).Where("orders.status ilike ?", status).Limit(10).Scan(&ordersData)
     }else{
         result = hs.DB.Model(&models.Order{}).Select(selectStatement).Joins(joinStatement1).Joins(joinStatement2).Scan(&ordersData)
     }
@@ -64,7 +64,7 @@ func (hs *homeService) GetOrders(status string) ([]types.Order, error) {
 func (hs *homeService) GetTotalSales() int {
     var totalSales int
 
-    result := hs.DB.Model(&models.Order{}).Select("sum(amount) as Total").Where("status like ?", "delivered").Find(&totalSales)
+    result := hs.DB.Model(&models.Order{}).Select("sum(amount) as Total").Where("status ilike ?", "delivered").Find(&totalSales)
     if result.Error != nil {
         return 0
     }
@@ -86,7 +86,7 @@ func (hs *homeService) GetTotalOrders() int {
 func (hs *homeService) GetTotalOrderInProcess() int {
     var totalOrderInProcess int
 
-    result := hs.DB.Model(&models.Order{}).Select("count(amount) as total").Where("status like ? or status like ?", "paid", "shipped").Find(&totalOrderInProcess)
+    result := hs.DB.Model(&models.Order{}).Select("count(amount) as total").Where("status ilike ? or status ilike ?", "paid", "shipped").Find(&totalOrderInProcess)
     if result.Error != nil {
         return 0
     }
@@ -97,7 +97,7 @@ func (hs *homeService) GetTotalOrderInProcess() int {
 func (hs *homeService) GetTotalOrderDelivered() int {
     var totalOrderDelivered int
 
-    result := hs.DB.Model(&models.Order{}).Select("count(amount) as total").Where("status like ?", "delivered").Find(&totalOrderDelivered)
+    result := hs.DB.Model(&models.Order{}).Select("count(amount) as total").Where("status ilike ?", "delivered").Find(&totalOrderDelivered)
     if result.Error != nil {
         return 0
     }

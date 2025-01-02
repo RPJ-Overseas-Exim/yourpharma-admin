@@ -12,7 +12,7 @@ import "RPJ-Overseas-Exim/yourpharma-admin/templ/partials"
 import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
 import "RPJ-Overseas-Exim/yourpharma-admin/db/models"
 
-func Products(productsData []models.Product, totalProducts, limit, page int) templ.Component {
+func Products(productsData []models.Product, totalProducts int, productsString string, limit, page int) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -33,11 +33,50 @@ func Products(productsData []models.Product, totalProducts, limit, page int) tem
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<section id=\"product-page\" class=\"w-full h-full p-2 flex flex-col\"><div class=\"flex items-center justify-between md:px-4 py-2\"><div class=\"font-semibold text-xl\">Products</div><div class=\"flex gap-x-2\"><div class=\"text-xs font-semibold\" onclick=\"tableToCsv()\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<section id=\"product-page\" class=\"w-full h-full p-2 flex flex-col\"><div><div class=\"flex items-center justify-between p-2\"><div class=\"font-semibold text-xl\">Products</div><div class=\"flex gap-x-2\"><div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Var2 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+			if !templ_7745c5c3_IsBuffer {
+				defer func() {
+					templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+					if templ_7745c5c3_Err == nil {
+						templ_7745c5c3_Err = templ_7745c5c3_BufErr
+					}
+				}()
+			}
+			ctx = templ.InitializeContext(ctx)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<label for=\"csv-data\">Import</label>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			return templ_7745c5c3_Err
+		})
+		templ_7745c5c3_Err = partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input type=\"file\" id=\"csv-data\" name=\"csv-data\" class=\"hidden\"></div><div data-csv=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var3 string
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(productsString)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/admin-views/products.templ`, Line: 24, Col: 48}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" id=\"download-button\" onclick=\"downloadDataToCsv()\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Var4 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
 			if !templ_7745c5c3_IsBuffer {
@@ -55,11 +94,11 @@ func Products(productsData []models.Product, totalProducts, limit, page int) tem
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center").Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs").Render(templ.WithChildren(ctx, templ_7745c5c3_Var4), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><button type=\"button\" onclick=\"showForm(this)\" class=\"cursor-pointer px-4 py-2 text-white bg-green-600 rounded flex items-center gap-x-2\"><span class=\"text-sm\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div><div class=\"flex items-center gap-x-2 mb-3 justify-end px-2\"><button type=\"button\" onclick=\"showForm(this)\" class=\"cursor-pointer px-2 py-1 text-white bg-green-600 rounded flex gap-x-1 items-center\"><span class=\"text-sm\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -67,7 +106,7 @@ func Products(productsData []models.Product, totalProducts, limit, page int) tem
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span> <span class=\"text-sm font-semibold whitespace-nowrap\">Add Price</span></button>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span> <span class=\"text-sm font-normal whitespace-nowrap\">Add Price</span></button>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -75,7 +114,7 @@ func Products(productsData []models.Product, totalProducts, limit, page int) tem
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<button type=\"button\" onclick=\"showForm(this)\" class=\"cursor-pointer px-4 py-2 text-white bg-green-600 rounded flex items-center gap-x-2\"><span class=\"text-sm\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<button type=\"button\" onclick=\"showForm(this)\" class=\"cursor-pointer px-2 py-1 text-white bg-green-600 rounded flex gap-x-1 items-center\"><span class=\"text-sm\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -83,7 +122,7 @@ func Products(productsData []models.Product, totalProducts, limit, page int) tem
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span> <span class=\"text-sm font-semibold whitespace-nowrap\">Add Product</span></button>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span> <span class=\"text-sm font-normal whitespace-nowrap\">Add Product</span></button>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -95,7 +134,7 @@ func Products(productsData []models.Product, totalProducts, limit, page int) tem
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Var3 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_Var5 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
 			if !templ_7745c5c3_IsBuffer {
@@ -121,7 +160,7 @@ func Products(productsData []models.Product, totalProducts, limit, page int) tem
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = partials.Table("").Render(templ.WithChildren(ctx, templ_7745c5c3_Var3), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = partials.Table("").Render(templ.WithChildren(ctx, templ_7745c5c3_Var5), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

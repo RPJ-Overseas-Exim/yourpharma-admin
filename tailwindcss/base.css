@@ -6,6 +6,10 @@
     --button: #6e54b5;
 }
 
+*{
+    user-select: none;
+}
+
 .light{
      --background: #f9f9f9;
      --background-muted: #EEEEED;

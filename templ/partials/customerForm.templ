@@ -94,22 +94,42 @@ templ CustomerForm(customer types.Customer){
         <div class="w-full flex flex-col gap-y-2 mt-3">
             <div class="flex gap-x-2 items-center">
                 <div class="text-foreground text-lg font-semibold">Name :</div>
-                <div class="text-foreground-muted text-lg">{customer.Name}</div>
+                <div onClick="copyText(this)" class="flex gap-x-2">
+                    <div class="text-foreground-muted text-lg copy">{customer.Name}</div>
+                    <div class="w-5 text-foreground-muted cursor-pointer">
+                        @icons.Copy()
+                    </div>
+                </div>
             </div>
 
             <div class="flex gap-x-2 items-center">
                 <div class="text-foreground text-lg font-semibold">Email :</div>
-                <div class="text-lg text-foreground-muted">{customer.Email}</div>
+                <div onClick="copyText(this)" class="flex gap-x-2">
+                    <div class="text-lg text-foreground-muted copy">{customer.Email}</div>
+                    <div class="w-5 text-foreground-muted cursor-pointer">
+                    @icons.Copy()
+                    </div>
+                </div>
             </div>
 
             <div class="flex gap-x-2 items-center">
                 <div class="text-foreground text-lg font-semibold">Address :</div>
-                <div class="text-foreground-muted text-lg">{customer.Address}</div>
+                <div onClick="copyText(this)" class="flex gap-x-2">
+                    <div class="text-foreground-muted text-lg copy">{customer.Address}</div>
+                    <div class="w-5 text-foreground-muted cursor-pointer">
+                        @icons.Copy()
+                    </div>
+                </div>
             </div>
 
             <div class="flex gap-x-2 items-center">
                 <div class="text-foreground text-lg font-semibold">Phone No. :</div>
-                <div class="text-foreground-muted text-lg">{strconv.Itoa(*customer.Number)}</div>
+                <div onClick="copyText(this)" class="flex gap-x-2">
+                    <div class="text-foreground-muted text-lg copy">{strconv.Itoa(*customer.Number)}</div>
+                    <div class="w-5 text-foreground-muted cursor-pointer">
+                        @icons.Copy()
+                    </div>
+                </div>
             </div>
 
             <div class="w-full space-y-2">

@@ -5,9 +5,13 @@ import (
 	authHandler "RPJ-Overseas-Exim/yourpharma-admin/handler/auth-handler"
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/utils"
 	adminView "RPJ-Overseas-Exim/yourpharma-admin/templ/admin-views"
+	"bytes"
+	"encoding/json"
 	"log"
 	"strconv"
+	"strings"
 
+	"github.com/Sydsvenskan/json2csv"
 	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
@@ -31,36 +35,41 @@ func (ps *productService) ProductView(c echo.Context) templ.Component {
     if err!=nil {
         page=0
     }
-    productsData, totalProducts, err := ps.GetProducts(limit, page)
+    productsData, totalProducts, productsString, err := ps.GetProducts(limit, page)
     if err != nil {
         log.Printf("Failed to get the products data: %v", err)
         return nil
     }
 
-    productView := adminView.Products(productsData, totalProducts, limit, page)
+    productView := adminView.Products(productsData, totalProducts, productsString, limit, page)
     return productView
 }
 
 // database functions ========================================================
-func (ps *productService) GetProducts(limit, page int) ([]models.Product, int, error) {
+func (ps *productService) GetProducts(limit, page int) ([]models.Product, int, string, error) {
     var priceData []models.PriceQty
     var productsData []models.Product
 
     result := ps.DB.Table("products").Preload("PriceQty").Find(&productsData)
-    log.Printf("\n products: %v \n", productsData)
 
     if result.Error != nil {
         log.Printf("Price data error: %v", result.Error)
-        return productsData, 0, result.Error
+        return productsData, 0, "", result.Error
     }
 
     result = ps.DB.Model(&models.PriceQty{}).Find(&priceData)
     if result.Error != nil {
         log.Printf("Price count error: %v", result.Error)
-        return productsData, 0, result.Error
+        return productsData, 0, "", result.Error
     }
 
-    return productsData, len(priceData), nil
+    var dataBuffer bytes.Buffer
+    stringsByte, err := json.Marshal(productsData)
+    if err == nil {
+        json2csv.Convert(strings.NewReader(string(stringsByte)), &dataBuffer)
+    }
+
+    return productsData, len(priceData), dataBuffer.String(), nil
 }
 
 func (ps *productService) AddProductDetails(name string, price, quantity int) error {

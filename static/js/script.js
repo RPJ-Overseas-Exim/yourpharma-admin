@@ -77,24 +77,10 @@ function hideFormFromContainer(elem){
 }
 
 // table data download functions =======================
-function tableToCsv(){
-    let csv_data = []
-    console.log("download clicked")
-
-    let rows = document.getElementsByTagName("tr")
-    for(let row of rows){
-        let cells = row.querySelectorAll("td,th")
-
-        csv_row = []
-        for (let cell of cells){
-           csv_row.push(cell.innerText)
-        }
-
-        csv_data.push(csv_row.slice(0, -1).join(", "))
-    }
-
-    csv_data = csv_data.join("\n")
-    downloadCsvFile(csv_data)
+function downloadDataToCsv(){
+    const downloadButton = document.querySelector("#download-button")
+    const data = downloadButton.dataset["csv"]
+    downloadCsvFile(data)
 }
 
 function downloadCsvFile(csv_data){
@@ -114,3 +100,9 @@ function downloadCsvFile(csv_data){
 }
 
 
+// copy function ====================================
+function copyText(event){
+    const copyElement = event.querySelector(".copy")
+    console.log(copyElement, copyElement.innerText)
+    navigator.clipboard.writeText(copyElement.innerText)
+}

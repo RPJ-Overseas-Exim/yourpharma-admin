@@ -4,35 +4,54 @@ import "RPJ-Overseas-Exim/yourpharma-admin/templ/partials"
 import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
 import "RPJ-Overseas-Exim/yourpharma-admin/db/models"
 
-templ Products(productsData []models.Product, totalProducts, limit, page int){
+templ Products(productsData []models.Product, totalProducts int, productsString string, limit, page int){
     <section id="product-page" class="w-full h-full p-2 flex flex-col">
-        <div class="flex items-center justify-between md:px-4 py-2">
-            <div class="font-semibold text-xl">Products</div>
+        <div>
+            <div class="flex items-center justify-between p-2">
+                <div class="font-semibold text-xl">Products</div>
 
-            <div class="flex gap-x-2">
-                <div class="text-xs font-semibold" onclick="tableToCsv()" >
-                    @partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center"){
-                        Download
-                    }
+                <div class="flex gap-x-2">
+                    <div>
+                        @partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs"){
+                            <label for="csv-data">
+                                Import
+                            </label>
+                        }
+                        <input type="file" id="csv-data" name="csv-data" class="hidden">
+                    </div>
+
+                    <div
+                        data-csv={productsString}
+                        id="download-button"
+                        onclick="downloadDataToCsv()"
+                    >
+                        @partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs"){
+                            Download
+                        }
+                    </div>
                 </div>
+            </div>
+
+            <div class="flex items-center gap-x-2 mb-3 justify-end px-2">
 
                 <button
                 type="button"
                 onclick="showForm(this)"
-                class="cursor-pointer px-4 py-2 text-white bg-green-600 rounded flex items-center gap-x-2">
+                class="cursor-pointer px-2 py-1 text-white bg-green-600 rounded flex gap-x-1 items-center">
                     <span class="text-sm">@icons.Add()</span>
-                    <span class="text-sm font-semibold whitespace-nowrap">Add Price</span>
+                    <span class="text-sm font-normal whitespace-nowrap">Add Price</span>
                 </button>
                 @partials.AddPriceForm(productsData)
 
                 <button
                 type="button"
                 onclick="showForm(this)"
-                class="cursor-pointer px-4 py-2 text-white bg-green-600 rounded flex items-center gap-x-2">
+                class="cursor-pointer px-2 py-1 text-white bg-green-600 rounded flex gap-x-1 items-center">
                     <span class="text-sm">@icons.Add()</span>
-                    <span class="text-sm font-semibold whitespace-nowrap">Add Product</span>
+                    <span class="text-sm font-normal whitespace-nowrap">Add Product</span>
                 </button>
                 @partials.AddProductForm()
+
             </div>
         </div>
 
