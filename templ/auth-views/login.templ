@@ -7,15 +7,16 @@ import (
 
 templ Login(msg string){
     <section class="flex items-center justify-center w-full h-full bg-gradient-to-b from-blue-800 to-black">
-        <div class="flex items-center flex-col gap-y-4 bg-background py-2 rounded-lg border border-border">
-            <h2 class="text-foreground text-xl font-bold">Login</h2>
-
-            <hr class="w-full border-t border-border"/>
+        <div class="flex items-center flex-col gap-y-4 bg-background rounded-lg border border-border">
+            <div class="w-full text-center">
+                <h2 class="text-foreground text-3xl font-bold py-2">Login</h2>
+                <hr class="w-full border-t border-border"/>
+            </div>
 
             <form
                 method="POST"
                 action="/"
-                class="flex flex-col gap-y-2 px-4"
+                class="flex flex-col gap-y-2 px-6 min-w-[17em]"
             >
                 @partials.FormField("Email", "email", "email", "Enter your email", "", "", "")
                 @partials.FormField("Password", "password", "password", "Enter your password", "", "", "")

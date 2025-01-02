@@ -3,7 +3,7 @@ package partials
 templ FormField(title, name, inputType, placeholder, containerStyle, labelStyle, inputStyle string){
     <div
         if len(containerStyle) == 0{
-            class="flex flex-col gap-y-2"
+            class="flex flex-col"
         }else{
             class={containerStyle}
         }
@@ -11,7 +11,7 @@ templ FormField(title, name, inputType, placeholder, containerStyle, labelStyle,
         <label
             for={name}
             if len(labelStyle) == 0{
-                class="text-lg font-semibold text-foreground-muted"
+                class="text-sm font-semibold text-foreground-muted"
             }else{
                 class={labelStyle}
             }
@@ -21,7 +21,7 @@ templ FormField(title, name, inputType, placeholder, containerStyle, labelStyle,
 
         <input
             if len(inputStyle) == 0{
-                class="px-4 py-2 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none"
+                class="p-2 text-sm border-b border-border bg-transparent active:outline-none hover:outline-none"
             }else{
                 class={inputStyle}
             }
