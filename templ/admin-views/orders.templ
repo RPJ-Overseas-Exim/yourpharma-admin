@@ -15,7 +15,9 @@ templ Orders(ordersData []types.Order, status string, products []types.Product, 
                 <div class="font-semibold text-xl">Orders</div>
 
                 <div class="flex gap-x-2">
-                    <div>
+                    <div
+                        hx-post="/orders/import"
+                    >
                         @partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs"){
                             <label for="csv-data">
                                 Import

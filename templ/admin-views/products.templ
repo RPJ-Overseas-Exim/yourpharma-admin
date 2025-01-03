@@ -10,25 +10,14 @@ templ Products(productsData []models.Product, totalProducts int, productsString 
             <div class="flex items-center justify-between p-2">
                 <div class="font-semibold text-xl">Products</div>
 
-                <div class="flex gap-x-2">
-                    <div>
-                        @partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs"){
-                            <label for="csv-data">
-                                Import
-                            </label>
-                        }
-                        <input type="file" id="csv-data" name="csv-data" class="hidden">
-                    </div>
-
-                    <div
-                        data-csv={productsString}
-                        id="download-button"
-                        onclick="downloadDataToCsv()"
-                    >
-                        @partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs"){
-                            Download
-                        }
-                    </div>
+                <div
+                    data-csv={productsString}
+                    id="download-button"
+                    onclick="downloadDataToCsv()"
+                >
+                    @partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs"){
+                        Download
+                    }
                 </div>
             </div>
 

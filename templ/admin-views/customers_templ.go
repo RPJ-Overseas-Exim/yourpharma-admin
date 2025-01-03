@@ -35,7 +35,7 @@ func Customers(customersData []types.Customer, totalCustomers int, customersStri
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<section id=\"customer-page\" class=\"w-full h-full p-2 flex flex-col\"><div><div class=\"flex items-center justify-between p-2\"><div class=\"font-semibold text-xl\">Customers</div><div class=\"flex gap-x-2\"><div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<section id=\"customer-page\" class=\"w-full h-full p-2 flex flex-col\"><div><div class=\"flex items-center justify-between p-2\"><div class=\"font-semibold text-xl\">Customers</div><div class=\"flex gap-x-2\"><div hx-post=\"/customers/import\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -51,7 +51,7 @@ func Customers(customersData []types.Customer, totalCustomers int, customersStri
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<label for=\"csv-data\">Import</label>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<label for=\"csv-file\">Import</label>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -61,14 +61,14 @@ func Customers(customersData []types.Customer, totalCustomers int, customersStri
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input type=\"file\" id=\"csv-data\" name=\"csv-data\" class=\"hidden\"></div><div id=\"download-button\" data-csv=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input type=\"file\" id=\"csv-file\" name=\"csv-data\" class=\"hidden\"></div><div id=\"download-button\" data-csv=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(customersString)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/admin-views/customers.templ`, Line: 27, Col: 49}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/admin-views/customers.templ`, Line: 29, Col: 49}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {

@@ -37,7 +37,7 @@ func Orders(ordersData []types.Order, status string, products []types.Product, t
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<section id=\"order-page\" class=\"w-full h-full p-2 flex flex-col\"><div><div class=\"flex items-center justify-between p-2\"><div class=\"font-semibold text-xl\">Orders</div><div class=\"flex gap-x-2\"><div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<section id=\"order-page\" class=\"w-full h-full p-2 flex flex-col\"><div><div class=\"flex items-center justify-between p-2\"><div class=\"font-semibold text-xl\">Orders</div><div class=\"flex gap-x-2\"><div hx-post=\"/orders/import\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -70,7 +70,7 @@ func Orders(ordersData []types.Order, status string, products []types.Product, t
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(customersString)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/admin-views/orders.templ`, Line: 28, Col: 49}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/admin-views/orders.templ`, Line: 30, Col: 49}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
@@ -244,7 +244,7 @@ func FilterButton(label string, status string) templ.Component {
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(label)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/admin-views/orders.templ`, Line: 89, Col: 14}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `templ/admin-views/orders.templ`, Line: 91, Col: 14}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
