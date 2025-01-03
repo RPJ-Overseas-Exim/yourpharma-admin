@@ -106,3 +106,28 @@ function copyText(event){
     console.log(copyElement, copyElement.innerText)
     navigator.clipboard.writeText(copyElement.innerText)
 }
+
+// import funciton 
+function importCsvFile(){
+    const form = document.querySelector("#import-form")
+    const input = document.querySelector("#csv-file")
+    if(form && input){
+        form.addEventListener("submit", (e)=>{
+            e.preventDefault()
+        })
+
+        input.addEventListener("input", (e)=>{
+            if (e.target.files.length >0){
+                const ipBtn = document.querySelector(".import-btn")
+                const ipLbl = document.querySelector(".input-label")
+                ipLbl.classList.add("hidden")
+                ipBtn.classList.remove("hidden")
+            }
+        })
+
+    }
+}
+
+if (location.pathname==="/customers"){
+    importCsvFile()
+}

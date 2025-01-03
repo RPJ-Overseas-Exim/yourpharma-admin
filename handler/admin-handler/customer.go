@@ -5,9 +5,13 @@ import (
 	authHandler "RPJ-Overseas-Exim/yourpharma-admin/handler/auth-handler"
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 	adminView "RPJ-Overseas-Exim/yourpharma-admin/templ/admin-views"
+	"bufio"
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"log"
+	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -15,14 +19,15 @@ import (
 	"github.com/aidarkhanov/nanoid"
 	"github.com/labstack/echo/v4"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
-type customerService struct{
-    DB *gorm.DB
+type customerService struct {
+	DB *gorm.DB
 }
 
 func NewCustomerService(db *gorm.DB) *customerService {
-    return &customerService{DB: db}
+	return &customerService{DB: db}
 }
 
 // customers data methods
@@ -50,50 +55,126 @@ func (cs *customerService) GetCustomers(page int, limit int) ([]types.Customer, 
     return customersData, totalCustomers, dataBuffer.String(), nil
 }
 
+func (cs *customerService) ImportCustomers(c echo.Context) error {
+	csvFile, err := c.FormFile("csv-file")
+
+	if err != nil {
+		return err
+	}
+
+	src, err1 := csvFile.Open()
+
+	if err1 != nil {
+		return err1
+	}
+
+	fileScanner := bufio.NewScanner(src)
+    cs.insertManyCustomers(fileScanner)
+    return authHandler.RenderView(c, adminView.ImportForm())
+}
+
+func (cs *customerService) insertManyCustomers(fileScanner *bufio.Scanner) error {
+	fileScanner.Split(bufio.ScanLines)
+	fileScanner.Scan()
+
+	headers := strings.Split(fileScanner.Text(), ",")
+	nameIndex := slices.IndexFunc(headers, func(heading string) bool { return strings.ToLower(heading) == "name" })
+	emailIndex := slices.IndexFunc(headers, func(heading string) bool { return strings.ToLower(heading) == "email" })
+	addressIndex := slices.IndexFunc(headers, func(heading string) bool { return strings.ToLower(heading) == "address" })
+	numberIndex := slices.IndexFunc(headers, func(heading string) bool { return strings.ToLower(heading) == "number" })
+
+	if nameIndex == -1 ||
+		emailIndex == -1 {
+		return fmt.Errorf("Name or Email not provided in the file")
+	}
+
+	var customers []*models.Customer
+	var customer *models.Customer
+
+	for fileScanner.Scan() {
+		line := strings.Split(fileScanner.Text(), ",")
+        name := line[nameIndex]
+        email := line[emailIndex]
+
+		if name == "" || email == "" {
+			continue
+		}
+
+		matched, err := regexp.MatchString(`^[\w-\.]+@([\w-]+\.)+[\w-]+$`, email)
+
+		if err != nil && !matched {
+			continue
+		}
+
+        var (
+            address string
+            number int
+        )
+
+		if addressIndex != -1 && line[addressIndex] != "" {
+			address = line[addressIndex]
+		}
+
+		if numberIndex != -1 && line[numberIndex] != "" {
+			if num, err := strconv.Atoi(line[numberIndex]); err == nil {
+				number = num
+			}
+		}
+
+		customer = models.NewCustomer(name, email, &number, address)
+		customers = append(customers, customer)
+	}
+
+	err := cs.DB.Clauses(clause.OnConflict{
+        Columns: []clause.Column{{Name:"email"}},
+        DoUpdates: clause.AssignmentColumns([]string{"email"}),
+    }).Create(&customers).Error
+	return err
+}
+
 func (cs *customerService) AddCustomer(name, email string, number *int, address string) error {
-    id := nanoid.New()
-    customer := types.Customer{
-        Id: id,
-        Name: name,
-        Email: email,
-        Number: number,
-        Address: address,
-    }
+	id := nanoid.New()
+	customer := types.Customer{
+		Id:      id,
+		Name:    name,
+		Email:   email,
+		Number:  number,
+		Address: address,
+	}
 
-    err := cs.DB.Create(&customer).Error
+	err := cs.DB.Create(&customer).Error
 
-    if err != nil {
-        return  err
-    }
-    return nil
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (cs *customerService) UpdateCustomerDetails(id, name, email string, number *int, address string) error {
-    result := cs.DB.Model(models.Customer{}).Where("id = ?", id).Updates(map[string]interface{}{
-        "name": name, 
-        "email": email,
-        "number": number,
-        "address": address,
-    })
+	result := cs.DB.Model(models.Customer{}).Where("id = ?", id).Updates(map[string]interface{}{
+		"name":    name,
+		"email":   email,
+		"number":  number,
+		"address": address,
+	})
 
-    if result.Error != nil {
-        return result.Error
-    }
-    return nil
+	if result.Error != nil {
+		return result.Error
+	}
+	return nil
 }
 
 func (cs *customerService) DeleteCustomerDetails(id string) error {
-    var deletedCustomer types.Customer
-    result := cs.DB.Delete(&deletedCustomer, "id like ?", id)
+	var deletedCustomer types.Customer
+	result := cs.DB.Delete(&deletedCustomer, "id like ?", id)
 
-    if result.Error != nil {
-        log.Printf("\n\nFailed to delete the customer: %v", result.Error)
-        return result.Error
-    }
+	if result.Error != nil {
+		log.Printf("\n\nFailed to delete the customer: %v", result.Error)
+		return result.Error
+	}
 
-    return nil 
+	return nil
 }
-
 
 // routes methods
 func (cs *customerService) Customers(c echo.Context) error {
@@ -120,18 +201,18 @@ func (cs *customerService) Customers(c echo.Context) error {
 }
 
 func (cs *customerService) CreateCustomer(c echo.Context) error {
-    var err error
-    num, err :=  strconv.Atoi(c.FormValue("number"))
-    err = cs.AddCustomer(c.FormValue("name"), c.FormValue("email"), &num, c.FormValue("address"))
+	var err error
+	num, err := strconv.Atoi(c.FormValue("number"))
+	err = cs.AddCustomer(c.FormValue("name"), c.FormValue("email"), &num, c.FormValue("address"))
 
-    page, err := strconv.Atoi(c.QueryParam("page"))
-    if err!=nil {
-        page = 0
-    }
-    limit, err := strconv.Atoi(c.QueryParam("limit"))
-    if err != nil{
-        limit = 10
-    }
+	page, err := strconv.Atoi(c.QueryParam("page"))
+	if err != nil {
+		page = 0
+	}
+	limit, err := strconv.Atoi(c.QueryParam("limit"))
+	if err != nil {
+		limit = 10
+	}
 
     customersData, totalCustomers, customersString, err := cs.GetCustomers(page, limit)
     if err != nil {
@@ -143,28 +224,28 @@ func (cs *customerService) CreateCustomer(c echo.Context) error {
 }
 
 func (cs *customerService) UpdateCustomer(c echo.Context) error {
-    var err error
-    num, err := strconv.Atoi(c.FormValue("number"))
-    err = cs.UpdateCustomerDetails(
-        c.Param("id"),
-        c.FormValue("name"),
-        c.FormValue("email"),
-        &num,
-        c.FormValue("address"),
-    )
+	var err error
+	num, err := strconv.Atoi(c.FormValue("number"))
+	err = cs.UpdateCustomerDetails(
+		c.Param("id"),
+		c.FormValue("name"),
+		c.FormValue("email"),
+		&num,
+		c.FormValue("address"),
+	)
 
-    if err != nil{
-        return err
-    }
+	if err != nil {
+		return err
+	}
 
-    page, err := strconv.Atoi(c.QueryParam("page"))
-    if err!=nil {
-        page = 0
-    }
-    limit, err := strconv.Atoi(c.QueryParam("limit"))
-    if err != nil{
-        limit = 10
-    }
+	page, err := strconv.Atoi(c.QueryParam("page"))
+	if err != nil {
+		page = 0
+	}
+	limit, err := strconv.Atoi(c.QueryParam("limit"))
+	if err != nil {
+		limit = 10
+	}
 
     customersData, totalCustomers, customersString, err := cs.GetCustomers(page, limit)
     customerView := adminView.Customers(customersData, totalCustomers, customersString, page, limit)
@@ -172,21 +253,21 @@ func (cs *customerService) UpdateCustomer(c echo.Context) error {
 }
 
 func (cs *customerService) DeleteCustomer(c echo.Context) error {
-    var err error
-    id := c.Param("id")
-    err = cs.DeleteCustomerDetails(id)
-    if err != nil {
-        log.Printf("\n\nfailed to delete the customer: %v", err)
-    }
+	var err error
+	id := c.Param("id")
+	err = cs.DeleteCustomerDetails(id)
+	if err != nil {
+		log.Printf("\n\nfailed to delete the customer: %v", err)
+	}
 
-    page, err := strconv.Atoi(c.QueryParam("page"))
-    if err!=nil {
-        page = 0
-    }
-    limit, err := strconv.Atoi(c.QueryParam("limit"))
-    if err != nil{
-        limit = 10
-    }
+	page, err := strconv.Atoi(c.QueryParam("page"))
+	if err != nil {
+		page = 0
+	}
+	limit, err := strconv.Atoi(c.QueryParam("limit"))
+	if err != nil {
+		limit = 10
+	}
 
     customersData, totalCustomers, customersString, err := cs.GetCustomers(page, limit)
     customerView := adminView.Customers(customersData, totalCustomers, customersString, page, limit)

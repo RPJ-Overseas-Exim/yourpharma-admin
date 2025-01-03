@@ -51,9 +51,7 @@ templ ProductTableRows(products []models.Product){
                 @TableBodyCell(){{ strconv.Itoa(int(priceQty.Qty)) }}
                 @TableBodyCell(){{ strconv.Itoa(int(priceQty.Price)) }}
                 @TableBodyCell(){
-                    <div
-                    onclick="showForm(this)"
-                    class="">
+                    <div onclick="showForm(this)">
                         @Button("button", "w-full flex text-foreground-muted hover:text-foreground items-center justify-center"){
                             @icons.Options ()
                         }

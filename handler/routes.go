@@ -25,6 +25,7 @@ func (h *handler) SetupCustomerRoutes(e *echo.Echo) {
 	customerRoute.POST("", cs.CreateCustomer)
     customerRoute.PUT("/:id", cs.UpdateCustomer)
     customerRoute.DELETE("/:id", cs.DeleteCustomer)
+    customerRoute.POST("/import", cs.ImportCustomers)
 }
 
 func (h *handler) SetupProductRoutes(e *echo.Echo){

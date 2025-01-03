@@ -1,64 +1,74 @@
 package adminView
 
 import (
-    "RPJ-Overseas-Exim/yourpharma-admin/templ/partials"
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 	"RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
+	"RPJ-Overseas-Exim/yourpharma-admin/templ/partials"
 )
 
-templ Customers(customersData []types.Customer, totalCustomers int, customersString string, page, limit int){
-    <section id="customer-page" class="w-full h-full p-2 flex flex-col">
-        <div>
-            <div class="flex items-center justify-between p-2">
-                <div class="font-semibold text-xl">Customers</div>
+templ Customers(customersData []types.Customer, totalCustomers int, customersString string, page, limit int) {
+	<section id="customer-page" class="w-full h-full p-2 flex flex-col">
+		<div>
+			<div class="flex items-center justify-between p-2">
+				<div class="font-semibold text-xl">Customers</div>
+				<div class="flex gap-x-2">
+					@ImportForm()
+					<div
+						id="download-button"
+						data-csv={ customersString }
+						onClick="downloadDataToCsv()"
+					>
+						@partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs") {
+							Download
+						}
+					</div>
+				</div>
+			</div>
+			<div class="flex justify-end mb-3 px-2">
+				<button
+					type="button"
+					onclick="showForm(this)"
+					class="cursor-pointer px-2 py-1 text-white bg-green-600 rounded flex gap-x-1 items-center"
+				>
+					<span class="text-sm">@icons.Add()
+</span>
+					<span class="text-sm font-normal whitespace-nowrap">Add Customer</span>
+				</button>
+				@partials.AddCustomerForm()
+			</div>
+		</div>
+		<div class="w-full h-full">
+			<div class="w-full border border-border-muted border-b-0 rounded overflow-auto">
+				@partials.Table("") {
+					@partials.CustomerTableHeader()
+					@partials.CustomerTableRows(customersData)
+				}
+			</div>
+		</div>
+		<div class="w-full">
+			@partials.Pagination(totalCustomers, limit, page, "/customers")
+		</div>
+	</section>
+}
 
-                <div class="flex gap-x-2">
-                    <div
-                        hx-post="/customers/import"
-                    >
-                        @partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs"){
-                            <label for="csv-file">
-                                Import
-                            </label>
-                        }
-                        <input type="file" id="csv-file" name="csv-data" class="hidden">
-                    </div>
+templ ImportForm() {
+	<form
+		id="import-form"
+		hx-encoding="multipart/form-data"
+		hx-post="/customers/import"
+		hx-swap="outerHTML"
+	>
+		@partials.Button("button", "bg-background hover:bg-background-muted border border-border-muted rounded flex items-center justify-center text-xs input-label") {
+			<label for="csv-file" class="py-2 px-4 cursor-pointer">
+				Import
+			</label>
+		}
 
-                    <div
-                        id="download-button"
-                        data-csv={customersString}
-                        onClick="downloadDataToCsv()"
-                    >
-                        @partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs"){
-                            Download
-                        }
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex justify-end mb-3 px-2">
-                <button
-                type="button"
-                onclick="showForm(this)"
-                class="cursor-pointer px-2 py-1 text-white bg-green-600 rounded flex gap-x-1 items-center">
-                    <span class="text-sm">@icons.Add()</span>
-                    <span class="text-sm font-normal whitespace-nowrap">Add Customer</span>
-                </button>
-                @partials.AddCustomerForm()
-            </div>
-        </div>
-
-        <div class="w-full h-full">
-            <div class="w-full border border-border-muted border-b-0 rounded overflow-auto">
-                @partials.Table(""){
-                    @partials.CustomerTableHeader()
-                    @partials.CustomerTableRows(customersData)
-                }
-            </div>
-        </div>
-
-        <div class="w-full">
-            @partials.Pagination(totalCustomers, limit, page, "/customers")
-        </div>
-    </section>
+		@partials.Button("submit", "bg-background hover:bg-background-muted border border-border-muted rounded flex items-center justify-center text-xs import-btn hidden") {
+            <p class="py-2 px-4">
+                Upload
+            </p>
+		}
+		<input type="file" id="csv-file" name="csv-file" hidden/>
+	</form>
 }
