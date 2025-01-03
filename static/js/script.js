@@ -103,7 +103,6 @@ function downloadCsvFile(csv_data){
 // copy function ====================================
 function copyText(event){
     const copyElement = event.querySelector(".copy")
-    console.log(copyElement, copyElement.innerText)
     navigator.clipboard.writeText(copyElement.innerText)
 }
 

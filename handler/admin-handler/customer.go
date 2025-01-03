@@ -70,7 +70,19 @@ func (cs *customerService) ImportCustomers(c echo.Context) error {
 
 	fileScanner := bufio.NewScanner(src)
     cs.insertManyCustomers(fileScanner)
-    return authHandler.RenderView(c, adminView.ImportForm())
+
+	page, err := strconv.Atoi(c.QueryParam("page"))
+	if err != nil {
+		page = 0
+	}
+	limit, err := strconv.Atoi(c.QueryParam("limit"))
+	if err != nil {
+		limit = 10
+	}
+
+    customersData, totalCustomers, customersString, err := cs.GetCustomers(page, limit)
+    customerView := adminView.Customers(customersData, totalCustomers, customersString, page, limit)
+    return authHandler.RenderView(c, customerView)
 }
 
 func (cs *customerService) insertManyCustomers(fileScanner *bufio.Scanner) error {
