@@ -1,4 +1,5 @@
 .env
 *.txt
 tmp
+tailwindcss/node_modules/
 
