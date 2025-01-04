@@ -75,6 +75,7 @@ func (ps *productService) GetProducts(limit, page int) ([]models.Product, int, s
 func (ps *productService) AddProductDetails(name string, price, quantity int) error {
         var result *gorm.DB
         var product models.Product
+        name = strings.ToLower(name)
 
         result = ps.DB.Find(&product, "name = ?", name)
 

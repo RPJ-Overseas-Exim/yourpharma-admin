@@ -15,16 +15,7 @@ templ Orders(ordersData []types.Order, status string, products []types.Product, 
                 <div class="font-semibold text-xl">Orders</div>
 
                 <div class="flex gap-x-2">
-                    <div
-                        hx-post="/orders/import"
-                    >
-                        @partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs"){
-                            <label for="csv-data">
-                                Import
-                            </label>
-                        }
-                        <input type="file" id="csv-data" name="csv-data" class="hidden">
-                    </div>
+                    @OrderImportForm()
 
                     <div
                         data-csv={customersString}
@@ -92,3 +83,25 @@ templ FilterButton(label string, status string){
     </a>
 }
 
+templ OrderImportForm() {
+	<form
+		id="import-form"
+		hx-encoding="multipart/form-data"
+		hx-post="/orders/import"
+		hx-swap="outerHTML"
+        hx-target="#order-page"
+	>
+		@partials.Button("button", "bg-background hover:bg-background-muted border border-border-muted rounded flex items-center justify-center text-xs input-label") {
+			<label for="csv-file" class="py-2 px-4 cursor-pointer">
+				Import
+			</label>
+		}
+
+		@partials.Button("submit", "bg-background hover:bg-background-muted border border-border-muted rounded flex items-center justify-center text-xs import-btn hidden") {
+            <p class="py-2 px-4">
+                Upload
+            </p>
+		}
+		<input type="file" id="csv-file" name="csv-file" hidden/>
+	</form>
+}

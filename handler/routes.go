@@ -50,6 +50,7 @@ func (h *handler) SetupOrderRoutes(e *echo.Echo) {
 	orderRoute.POST("", ords.CreateOrder)
     orderRoute.PUT("/:id", ords.UpdateOrder)
     orderRoute.DELETE("/:id", ords.DeleteOrder)
+    orderRoute.POST("/import", ords.ImportOrders)
 }
 
 func (h *handler) SetupAuthRoutes(e *echo.Echo) {

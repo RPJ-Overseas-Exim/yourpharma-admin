@@ -127,6 +127,6 @@ function importCsvFile(){
     }
 }
 
-if (location.pathname==="/customers"){
+if (location.pathname==="/customers" || location.pathname === "/orders"){
     importCsvFile()
 }

@@ -34,3 +34,19 @@ func NewOrder(customerId, productId, origin string, quantity, amount int) *Order
     }
 }
 
+func NewImportOrder(customerId, productId, status string, quantity, amount int) *Order{
+    id := nanoid.New()
+
+    return &Order{
+        Id: id,
+        CustomerId: customerId,
+        ProductId: productId,
+        Quantity: quantity,
+        Amount: amount,
+        Status: status,
+        Origin: "Dash",
+        CreatedAt: time.Now(),
+        UpdatedAt: time.Now(),
+    }
+
+}
