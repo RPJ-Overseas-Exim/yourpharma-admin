@@ -143,7 +143,7 @@ templ EditUserForm(user models.Admin){
         class="hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10"></div>
 
     <form
-        hx-put={"/users"}
+        hx-put={"/users/" + user.Id}
         hx-target="#users-page"
         hx-indicator="#edit-user-btn"
         hx-swap="outerHTML"
