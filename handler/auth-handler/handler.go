@@ -1,8 +1,10 @@
 package authHandler
 
 import (
+	"RPJ-Overseas-Exim/yourpharma-admin/db/models"
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/utils"
 	authView "RPJ-Overseas-Exim/yourpharma-admin/templ/auth-views"
+	"errors"
 	"log"
 	"net/http"
 	"os"
@@ -32,10 +34,14 @@ func (as *authService) LoginHandler(c echo.Context) error {
         err := godotenv.Load()
         if err != nil {
             log.Printf("Failed to load the database url, %v", err)
-            return nil
+            c.Response().WriteHeader(500)
+            return errors.New("Failed to load the database url")
         }
 
-        if email == os.Getenv("ADMIN_EMAIL") || password == os.Getenv("ADMIN_PASSWORD"){
+        var admin models.Admin
+        as.DB.Find(&admin, "email = ? and password = ?", email, password)
+
+        if admin.Email!=""{
             jwtCookie := new(http.Cookie)
             jwtCookie.Name = "Authentication"
             jwtCookie.Value = utils.CreateToken([]byte("secretKey"), "admin", os.Getenv("ADMIN_EMAIL"))

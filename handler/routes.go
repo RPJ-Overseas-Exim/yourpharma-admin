@@ -69,9 +69,13 @@ func (h *handler) SetupHomeRoutes(e *echo.Echo) {
 
 func (h *handler) SetupUsersRoutes(e *echo.Echo){
     us := adminHandler.NewUserService(h.DB)
+    uh := adminHandler.NewUserHandler(us)
 
     usersRoute := e.Group("/users", authMiddleware.AuthMiddleware)
-    usersRoute.GET("", us.GetUserPage)
+    usersRoute.GET("", uh.GetUserPage)
+    usersRoute.POST("", uh.HandleCreateUser)
+    usersRoute.PUT("", uh.HandleUpdateUser)
+    usersRoute.DELETE("", uh.HandleDeleteUser)
 }
 
 
