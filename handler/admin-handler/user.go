@@ -102,15 +102,19 @@ func (us *userService) createUser(email, password string) error {
 func (us *userService) updateUser(email, password string) error {
     var admin models.Admin
 
-    if email!=""{
-        admin.Email = email
-    }else if password!=""{
-        admin.Password = password
-    }else{
+    if email=="" && password==""{
         return errors.New("No updates to be done")
     }
 
-    return us.dbConn.Model(&models.Admin{}).Updates(&admin).Error
+    if email!=""{
+        admin.Email = email
+    }
+
+    if password!=""{
+        admin.Password = password
+    }
+
+    return us.dbConn.Model(&models.Admin{}).Where("email = ?", email).Updates(&admin).Error
 }
 
 func (us *userService) deleteUser(id string) error{
