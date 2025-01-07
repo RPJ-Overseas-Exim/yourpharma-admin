@@ -14,7 +14,7 @@ type userServiceInt interface {
     getUsers() ([]models.Admin, error)
     createUser(email, password string) error
     updateUser(email, password string) error
-    deleteUser(email string) error
+    deleteUser(id string) error
 }
 
 type userService struct{
@@ -42,33 +42,46 @@ func (uh *userHandler) GetUserPage(c echo.Context) error {
 }
 
 func (uh *userHandler) HandleCreateUser(c echo.Context) error{
-    error := uh.us.createUser(c.Param("email"), c.Param("password"))
+    error := uh.us.createUser(c.FormValue("email"), c.FormValue("password"))
 
     if error!=nil{
         c.Response().WriteHeader(400)
         return error
     }
 
-    return uh.GetUserPage(c)
+    return uh.getUserTable(c)
 }
 
 func (uh *userHandler) HandleUpdateUser(c echo.Context) error{
-    error := uh.us.updateUser(c.Param("email"), c.Param("password"))
+    error := uh.us.updateUser(c.FormValue("email"), c.FormValue("password"))
     if error!=nil{
         c.Response().WriteHeader(400)
         return error
     }
-    return uh.GetUserPage(c)
+    return uh.getUserTable(c)
 }
 
 func (uh *userHandler) HandleDeleteUser(c echo.Context) error{
-    error := uh.us.deleteUser(c.Param("email"))
+    error := uh.us.deleteUser(c.Param("id"))
     if error!=nil{
         c.Response().WriteHeader(400)
         return error
     }
-    return uh.GetUserPage(c)
+    return uh.getUserTable(c)
 }
+
+func (uh *userHandler) getUserTable(c echo.Context) error {
+    users,error := uh.us.getUsers()
+
+    if error !=nil{
+        c.Response().WriteHeader(400)
+        return error
+    }
+
+    userView := adminView.Users(users)
+    return authHandler.RenderView(c, userView)
+}
+
 
 func (us *userService) getUsers() ([]models.Admin, error){
     var admins []models.Admin
@@ -100,15 +113,15 @@ func (us *userService) updateUser(email, password string) error {
     return us.dbConn.Model(&models.Admin{}).Updates(&admin).Error
 }
 
-func (us *userService) deleteUser(email string) error{
-    if email =="" {
-        return errors.New("No email provided to delete user")
+func (us *userService) deleteUser(id string) error{
+    if id =="" {
+        return errors.New("No id provided to delete user")
     }
 
     var admin models.Admin
 
-    admin.Email = email
-    return us.dbConn.Where("email = ?", email).Delete(&admin).Error
+    admin.Email = id
+    return us.dbConn.Where("id = ?", id).Delete(&admin).Error
 }
 
 func NewUserHandler(us userServiceInt) *userHandler{

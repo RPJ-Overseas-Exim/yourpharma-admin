@@ -71,11 +71,11 @@ func (h *handler) SetupUsersRoutes(e *echo.Echo){
     us := adminHandler.NewUserService(h.DB)
     uh := adminHandler.NewUserHandler(us)
 
-    usersRoute := e.Group("/users", authMiddleware.AuthMiddleware)
+    usersRoute := e.Group("/users", authMiddleware.AuthMiddleware, authMiddleware.IsSuperAdmin)
     usersRoute.GET("", uh.GetUserPage)
     usersRoute.POST("", uh.HandleCreateUser)
     usersRoute.PUT("", uh.HandleUpdateUser)
-    usersRoute.DELETE("", uh.HandleDeleteUser)
+    usersRoute.DELETE("/:id", uh.HandleDeleteUser)
 }
 
 

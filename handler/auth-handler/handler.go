@@ -5,7 +5,6 @@ import (
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/utils"
 	authView "RPJ-Overseas-Exim/yourpharma-admin/templ/auth-views"
 	"errors"
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -33,7 +32,6 @@ func (as *authService) LoginHandler(c echo.Context) error {
 
         err := godotenv.Load()
         if err != nil {
-            log.Printf("Failed to load the database url, %v", err)
             c.Response().WriteHeader(500)
             return errors.New("Failed to load the database url")
         }
@@ -44,7 +42,7 @@ func (as *authService) LoginHandler(c echo.Context) error {
         if admin.Email!=""{
             jwtCookie := new(http.Cookie)
             jwtCookie.Name = "Authentication"
-            jwtCookie.Value = utils.CreateToken([]byte("secretKey"), "admin", os.Getenv("ADMIN_EMAIL"))
+            jwtCookie.Value = utils.CreateToken([]byte(os.Getenv("JWT_SECRET")), "admin", admin.Email, admin.Role)
             jwtCookie.Expires = time.Now().Add(24 * time.Hour)
 
             c.SetCookie(jwtCookie)
