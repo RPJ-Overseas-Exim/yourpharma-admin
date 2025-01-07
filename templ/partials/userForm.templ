@@ -1,8 +1,9 @@
 package partials
 
 import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
+import "RPJ-Overseas-Exim/yourpharma-admin/db/models"
 
-templ UserForm(){
+templ AddUserForm(){
     <div
         onclick="hideFormFromFilter(this)"
         id={"add-form-filter"}
@@ -56,6 +57,139 @@ templ UserForm(){
                 }
             </div>
 
+    </form>
+}
+
+templ UserDetails(user models.Admin){
+    <div
+        onclick="hideFormFromFilter(this)"
+        id={"form-filter-" + user.Id}
+        class="hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10"></div>
+    <div
+        id={"form-container-" + user.Id}
+        class="hidden absolute h-full top-0 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border"
+    >
+        <button
+            type="button"
+            onclick="hideFormFromContainer(this)"
+            class="text-green-600 font-semibold text-xl flex gap-x-2 items-center"
+        >
+            @icons.Back()
+            <span class="whitespace-nowrap">Order Details</span>
+        </button>        
+
+        <div class="w-full flex flex-col gap-y-2 mt-3">
+            <div class="flex gap-x-2 items-center">
+                <div class="text-foreground text-lg font-semibold">User Id:</div>
+                <div class="text-foreground-muted text-lg">{user.Id}</div>
+            </div>
+
+            <div class="flex gap-x-2 items-center">
+                <div class="text-foreground text-lg font-semibold">Admin Email:</div>
+                <div onClick="copyText(this)" class="flex gap-x-2">
+                    <div class="text-foreground-muted text-lg copy text-sm w-[80%]">{user.Email}</div>
+                    <div class="w-4 text-foreground-muted cursor-pointer grow-0 shrink-0">
+                        @icons.Copy()
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-x-2 items-center">
+                <div class="text-foreground text-lg font-semibold">Admin Password:</div>
+                <div onClick="copyText(this)" class="flex gap-x-2">
+                    <div class="text-foreground-muted text-lg copy text-sm w-[80%]">{user.Password}</div>
+                    <div class="w-4 text-foreground-muted cursor-pointer grow-0 shrink-0">
+                        @icons.Copy()
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-x-2 items-center">
+                <div class="text-foreground text-lg font-semibold">Admin Role:</div>
+                <div class="text-foreground-muted text-lg">{user.Role}</div>
+            </div>
+
+        </div>
+
+        <div class="w-full space-y-2 mt-3">
+            <div
+            onclick="showForm(this)"
+            class="">
+                @Button("button", "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-background-muted text-lg font-semibold"){
+                   Edit Customer 
+                }
+            </div>
+            @EditUserForm(user)
+
+            <div
+                hx-delete={"/users/"+ user.Id}
+                hx-trigger="click"
+                hx-target="#users-page"
+                hx-swap="outerHTML"
+            >
+                @Button("button", "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-red-600 hover:text-white text-lg font-semibold"){
+                    Delete User 
+                }
+            </div>
+        </div>
+
+    </div>
+}
+
+templ EditUserForm(user models.Admin){
+    <div
+        onclick="hideFormFromFilter(this)"
+        id={"add-form-filter"}
+        class="hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10"></div>
+
+    <form
+        hx-put={"/users"}
+        hx-target="#users-page"
+        hx-indicator="#edit-user-btn"
+        hx-swap="outerHTML"
+        class="hidden absolute w-full h-full -top-2 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border"
+    >
+        <button
+            type="button"
+            onclick="hideFormFromContainer(this)"
+            class="text-green-600 font-semibold text-xl flex gap-x-2 items-center mb-3"
+        >
+            @icons.Back()
+            <span class="whitespace-nowrap">Edit User Details</span>
+        </button>
+
+        <div class="space-y-3">
+            @UserEmailFormField(
+                "User Email",
+                "Enter email",
+                "email",
+                user.Email,
+                "true",
+            )
+            @UserTextFormField(
+                "User Password",
+                "Enter password",
+                "password",
+                user.Password,
+                "true",
+            )
+        </div>
+
+        <div class="w-full space-y-2 mt-5">
+            @Button(
+                "submit",
+                "w-full border border-border-muted rounded flex items-center gap-2 justify-center py-2 hover:bg-background-muted text-lg font-semibold",
+            ){
+               Edit 
+               @Spinner(templ.Attributes{"id": "edit-customer-btn", "style": "height:1.2em;width:1.2em;"})
+            }
+            @Button(
+                "reset",
+                "w-full border border-border-muted rounded flex items-center justify-center py-2 hover:bg-red-600 hover:text-white text-lg font-semibold",
+            ){
+               Reset
+            }
+        </div>
     </form>
 }
 
@@ -114,7 +248,7 @@ templ UserEmailFormField(label, placeholder, name, value string, required string
     </div>
 }
 
-templ UserPasswordFormField(label, placeholder, name string, value *int, required string){
+templ UserPasswordFormField(label, placeholder, name string, value, required string){
     <div class="flex flex-col gap-y-2">
         <label
             for={name}

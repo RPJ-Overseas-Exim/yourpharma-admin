@@ -35,18 +35,20 @@ function DarkTheme(){
 
 function getTheme(){
     const theme = localStorage.getItem("theme")
-    if(theme === "light"){
-        LightTheme()
-    }else if(theme === "dark"){
-        DarkTheme()
-    }else{
-        LightTheme()
+    if (moon || sun){
+        if(theme === "light"){
+            LightTheme()
+        }else if(theme === "dark"){
+            DarkTheme()
+        }else{
+            LightTheme()
+        }
     }
 }
 
 // active element in navbar programs -----------------------------
 const id = window.location.pathname
-if(id){
+if(id && id != "/"){
     document.querySelector(`#${id.replace("/", "")}`).classList.add("bg-green-600")
 }
 
