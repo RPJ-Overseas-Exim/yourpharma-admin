@@ -31,8 +31,9 @@ templ Customers(customersData []types.Customer, totalCustomers int, customersStr
 					onclick="showForm(this)"
 					class="cursor-pointer px-2 py-1 text-white bg-green-600 rounded flex gap-x-1 items-center"
 				>
-					<span class="text-sm">@icons.Add()
-</span>
+					<span class="text-sm">
+						@icons.Add()
+					</span>
 					<span class="text-sm font-normal whitespace-nowrap">Add Customer</span>
 				</button>
 				@partials.AddCustomerForm()
@@ -59,17 +60,20 @@ templ ImportForm() {
 		hx-post="/customers/import"
 		hx-swap="outerHTML"
         hx-target="#customer-page"
+		hx-indicator="#import-spinner"
 	>
 		@partials.Button("button", "bg-background hover:bg-background-muted border border-border-muted rounded flex items-center justify-center text-xs input-label") {
 			<label for="csv-file" class="py-2 px-4 cursor-pointer">
 				Import
 			</label>
 		}
-
-		@partials.Button("submit", "bg-background hover:bg-background-muted border border-border-muted rounded flex items-center justify-center text-xs import-btn hidden") {
-            <p class="py-2 px-4">
-                Upload
-            </p>
+		@partials.Button("submit", "bg-background hover:bg-background-muted border border-border-muted rounded text-xs import-btn hidden") {
+			<div class="py-2 px-4 flex items-center justify-center gap-2">
+				<p>
+					Upload
+				</p>
+                @partials.Spinner(templ.Attributes{"id": "import-spinner", "style": "height:1.1em;width:1.1em;"})
+			</div>
 		}
 		<input type="file" id="csv-file" name="csv-file" hidden/>
 	</form>

@@ -2,6 +2,14 @@ const body = document.querySelector("body")
 const sun = document.querySelector("#sun")
 const moon = document.querySelector("#moon")
 
+document.body.addEventListener("htmx:afterSettle", function(e){
+    switch (e.detail.target.id){
+        case "import-form":
+            importCsvFile()
+            break
+    }
+})
+
 // logout handling program
 function Logout(){
     document.cookie = "Authentication="

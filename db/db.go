@@ -34,7 +34,7 @@ func ConnectDB() *gorm.DB {
         return nil
     }
 
-    // migrate(db)
+    migrate(db)
 
     return db
 }

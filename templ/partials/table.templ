@@ -78,7 +78,11 @@ templ CustomerTableRows(customers []types.Customer){
     for _, customer := range(customers){
         <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
             @TableBodyCell(){{ customer.Name }}
-            @TableBodyCell(){{ customer.Address }}
+            if len(customer.Address)>=20{
+                @TableBodyCell(){{customer.Address[:20]}}
+            }else{
+                @TableBodyCell(){{customer.Address}}
+            }
             @TableBodyCell(){{ strconv.Itoa(*customer.Number) }}
             @TableBodyCell(){
                 <div
