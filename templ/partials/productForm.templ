@@ -30,18 +30,21 @@ templ AddPriceForm(products []models.Product){
                 "Product Name",
                 "Enter product name",
                 "name",
+                "true",
                 products,
             )
             @ProductNumberFormField(
                 "Product Quantity",
                 "Enter product quantity",
                 "quantity",
+                "true",
                 0,
             )
             @ProductNumberFormField(
                 "Product Price",
                 "Enter product price",
                 "price",
+                "true",
                 0,
             )
         </div>
@@ -90,6 +93,7 @@ templ AddProductForm(){
                 "Enter product name",
                 "name",
                 "",
+                "true",
             )
         </div>
         <div class="w-full space-y-2 mt-5">
@@ -208,17 +212,20 @@ templ EditProductForm(product models.Product, price models.PriceQty){
                 "Enter product name",
                 "name",
                 product.Name,
+                "true",
             )
             @ProductNumberFormField(
                 "Product Quantity",
                 "Enter product quantity",
                 "quantity",
+                "true",
                 int(price.Qty),
             )
             @ProductNumberFormField(
                 "Product Price",
                 "Enter product price",
                 "price",
+                "true",
                 int(price.Price),
             )
         </div>
@@ -242,13 +249,16 @@ templ EditProductForm(product models.Product, price models.PriceQty){
 }
 
 // product form fields =========================================================
-templ ProductTextFormField(label, placeholder, name, value string){
+templ ProductTextFormField(label, placeholder, name, value, required string){
     <div class="flex flex-col gap-y-2">
         <label
             for={name}
             class="text-left text-semibold text-lg"
         >
             {label}
+            if required == "true" {
+                *
+            }
         </label>
         <input
             class="px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0"
@@ -260,18 +270,23 @@ templ ProductTextFormField(label, placeholder, name, value string){
                 value={value}
             }
             minlength="3"
-            required
+            if required == "true" {
+                required
+            }
         />
     </div>
 }
 
-templ ProductNumberFormField(label, placeholder, name string, value int){
+templ ProductNumberFormField(label, placeholder, name, required string, value int){
     <div class="flex flex-col gap-y-2">
         <label
             for={name}
             class="text-left text-semibold text-lg"
         >
             {label}
+            if required == "true" {
+                *
+            }
         </label>
         <input
             class="px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0"
@@ -281,25 +296,34 @@ templ ProductNumberFormField(label, placeholder, name string, value int){
             placeholder={placeholder}
             value={strconv.Itoa(value)}
             min="1"
-            required
+            if required == "true" {
+                required
+            }
         />
     </div>
 }
 
-templ ProductSelectFormField(label, placeholder, name string, data []models.Product){
+templ ProductSelectFormField(label, placeholder, required, name string, data []models.Product){
     <div class="flex flex-col gap-y-2">
         <label
             for={name}
             class="text-left text-semibold text-lg"
         >
             {label}
+            if required == "true" {
+                *
+            }
         </label>
         <select
             class="px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0"
             name={name}
             id={name}
             placeholder={placeholder}
+            if required == "true" {
+                required
+            }
         >
+            <option value="">Select product</option>
             for _, value := range(data){
                 <option value={value.Name} >{value.Name}</option>
             }

@@ -27,14 +27,17 @@ func ConnectDB() *gorm.DB {
     db, err = gorm.Open( postgres.New(postgres.Config{
           DSN: dbs,
           PreferSimpleProtocol: true,
-      }), &gorm.Config{})
+      }), &gorm.Config{
+          PrepareStmt: true,
+          SkipDefaultTransaction: true,
+      })
 
     if err != nil {
         log.Printf("failed to connect, %v", err)
         return nil
     }
 
-    migrate(db)
+    // migrate(db)
 
     return db
 }

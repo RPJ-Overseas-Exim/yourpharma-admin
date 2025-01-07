@@ -171,3 +171,32 @@ templ HomeTableRows(orders []types.Order){
         </tr>
     }
 }
+
+
+// User table functions
+templ UserTableHeader(){
+    <tr class="w-full text-foreground-muted border-b border-border-muted">
+        @TableHeadCell(){ Email }
+        @TableHeadCell(){ Role }
+        @TableHeadCell(){ Actions }
+    </tr>
+}
+
+templ UserTableRows(users []models.Admin){
+    for _, user := range(users){
+        <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
+            @TableBodyCell(){{ user.Email }}
+            @TableBodyCell(){{ user.Role }}
+            @TableBodyCell(){
+                <div
+                onclick="showForm(this)"
+                class="">
+                    @Button("button", "w-full flex text-foreground-muted hover:text-foreground items-center justify-center"){
+                        @icons.Options ()
+                    }
+                </div>
+                // @OrderForm(order)
+            }
+        </tr>
+    }
+}

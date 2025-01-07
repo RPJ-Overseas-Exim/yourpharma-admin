@@ -49,7 +49,6 @@ templ Orders(ordersData []types.Order, status string, products []types.Product, 
                 @FilterButton("Shipped", status)
                 @FilterButton("Delivered", status)
             </div>
-
             
         </div>
         
@@ -77,7 +76,7 @@ templ FilterButton(label string, status string){
             class="px-2 pb-2"
         }
 
-        href={templ.URL(fmt.Sprintf("/orders?status=%s", label))}
+        href={templ.URL(fmt.Sprintf("/orders?status=%s", strings.ToLower(label)))}
     >
         {label}
     </a>

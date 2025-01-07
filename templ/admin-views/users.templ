@@ -1,0 +1,36 @@
+package adminView
+
+import "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
+import "RPJ-Overseas-Exim/yourpharma-admin/templ/partials"
+import "RPJ-Overseas-Exim/yourpharma-admin/db/models"
+
+templ Users(usersData []models.Admin){
+	<section id="users-page" class="w-full h-full p-2 flex flex-col">
+        <div>
+			<div class="flex items-center justify-between p-2">
+				<div class="font-semibold text-xl">Users</div>
+
+				<button
+					type="button"
+					onclick="showForm(this)"
+					class="cursor-pointer px-2 py-1 text-white bg-green-600 rounded flex gap-x-1 items-center"
+				>
+					<span class="text-sm">
+						@icons.Add()
+					</span>
+					<span class="text-sm font-normal whitespace-nowrap">Add User</span>
+				</button>
+                @partials.UserForm()
+			</div>
+        </div>
+        <div class="w-full h-full">
+			<div class="w-full border border-border-muted border-b-0 rounded overflow-auto">
+				@partials.Table("") {
+					@partials.UserTableHeader()
+					@partials.UserTableRows(usersData)
+				}
+			</div>
+		</div>
+
+    </section>
+}

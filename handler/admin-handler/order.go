@@ -118,7 +118,7 @@ func (ords *orderService) ImportOrders(c echo.Context) error {
 		log.Printf("Failed to get the product data: %v", result.Error)
 	}
 
-	orderView := adminView.Orders(ordersData, "All", productsData, totalOrders, ordersString, limit, page)
+	orderView := adminView.Orders(ordersData, "all", productsData, totalOrders, ordersString, limit, page)
 	return authHandler.RenderView(c, orderView)
 
 }
@@ -210,7 +210,7 @@ func (ords *orderService) insertManyOrders(src multipart.File) error {
 
 	for fileScanner2.Scan() {
 		line := strings.Split(fileScanner2.Text(), ",")
-        log.Println("Line: ", line)
+        // log.Println("Line: ", line)
 
 		customerEmail := line[customerEmailIndex]
 		productName := strings.ToLower(line[productNameIndex])
@@ -257,7 +257,6 @@ func (ords *orderService) insertManyOrders(src multipart.File) error {
 
 	}
 
-    log.Println(orders)
     result := ords.DB.Create(&orders)
     if result.Error != nil {
         return result.Error
@@ -393,7 +392,7 @@ func (ords *orderService) CreateOrder(c echo.Context) error {
 		log.Printf("Failed to get the product data: %v", result.Error)
 	}
 
-	orderView := adminView.Orders(ordersData, "All", productsData, totalOrders, ordersString, limit, page)
+	orderView := adminView.Orders(ordersData, "all", productsData, totalOrders, ordersString, limit, page)
 	return authHandler.RenderView(c, orderView)
 }
 
@@ -420,7 +419,7 @@ func (ords *orderService) UpdateOrder(c echo.Context) error {
 		log.Printf("Failed to get the product data: %v", result.Error)
 	}
 
-	orderView := adminView.Orders(ordersData, "All", productsData, totalOrders, ordersString, limit, page)
+	orderView := adminView.Orders(ordersData, "all", productsData, totalOrders, ordersString, limit, page)
 	return authHandler.RenderView(c, orderView)
 }
 
@@ -448,6 +447,6 @@ func (ords *orderService) DeleteOrder(c echo.Context) error {
 		log.Printf("Failed to get the product data: %v", result.Error)
 	}
 
-	orderView := adminView.Orders(ordersData, "All", productsData, totalOrders, ordersString, limit, page)
+	orderView := adminView.Orders(ordersData, "all", productsData, totalOrders, ordersString, limit, page)
 	return authHandler.RenderView(c, orderView)
 }

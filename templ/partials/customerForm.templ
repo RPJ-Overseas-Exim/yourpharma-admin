@@ -239,6 +239,9 @@ templ CustomerTextFormField(label, placeholder, name, value, required string){
             class="text-left text-semibold text-lg"
         >
             {label}
+            if required == "true"{
+                *
+            }
         </label>
         <input
             class="px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0"
@@ -264,6 +267,9 @@ templ CustomerEmailFormField(label, placeholder, name, value string, required st
             class="text-left text-semibold text-lg"
         >
             {label}
+            if required == "true"{
+                *
+            }
         </label>
         <input
             class="px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0"
@@ -288,6 +294,9 @@ templ CustomerNumberFormField(label, placeholder, name string, value *int, requi
             class="text-left text-semibold text-lg"
         >
             {label}
+            if required == "true"{
+                *
+            }
         </label>
         <input
             class="px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0"
@@ -298,8 +307,8 @@ templ CustomerNumberFormField(label, placeholder, name string, value *int, requi
             if value != nil {
                 value={strconv.Itoa(*value)}
             }
-            pattern="[0-9]{10,12}"
             if required == "true" {
+                pattern="[0-9]{10,12}"
                 required
             }
         />

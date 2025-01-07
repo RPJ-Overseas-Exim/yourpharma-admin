@@ -67,4 +67,11 @@ func (h *handler) SetupHomeRoutes(e *echo.Echo) {
 	homeRoute.POST("", hs.Home)
 }
 
+func (h *handler) SetupUsersRoutes(e *echo.Echo){
+    us := adminHandler.NewUserService(h.DB)
+
+    usersRoute := e.Group("/users", authMiddleware.AuthMiddleware)
+    usersRoute.GET("", us.GetUserPage)
+}
+
 
