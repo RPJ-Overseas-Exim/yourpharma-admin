@@ -280,7 +280,7 @@ func (ords *orderService) AddOrderDetails(name, email, product string, number *i
 
 	result = ords.DB.Find(&productData, "name = ?", product)
 	if result.RowsAffected == 0 {
-		newProduct := models.NewProduct(product, price, quantity)
+		newProduct := models.NewProduct(product)
 		result = ords.DB.Create(newProduct)
 		productData.Id = newProduct.Id
 	}

@@ -32,7 +32,7 @@ func NewPriceQty(prodId string, price, qty int) *PriceQty {
 	}
 }
 
-func NewProduct(name string, price, quantity int) *Product {
+func NewProduct(name string) *Product {
 	id := nanoid.New()
 
 	return &Product{

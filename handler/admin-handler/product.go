@@ -101,17 +101,19 @@ func (ps *productService) AddPriceDetails(name string, qty, price int) error {
     utils.ErrorHandler(result.Error, "Failed to parse the product details")
     
     if  result.RowsAffected == 0 {
-        newProduct := models.NewProduct(name, price, qty)
+        newProduct := models.NewProduct(name)
         result = ps.DB.Create(&newProduct)
         if result.Error != nil {
             return result.Error
         }
-    }else{ 
-        newPrice = models.NewPriceQty(product.Id, price, qty)
-        result = ps.DB.Create(&newPrice)
-        if result.Error != nil {
-            return result.Error
-        }
+
+        product.Id = newProduct.Id
+    } 
+
+    newPrice = models.NewPriceQty(product.Id, price, qty)
+    result = ps.DB.Create(&newPrice)
+    if result.Error != nil {
+        return result.Error
     }
 
     return nil
