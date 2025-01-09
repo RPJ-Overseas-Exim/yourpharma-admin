@@ -17,8 +17,9 @@ type Product struct {
 
 type PriceQty struct {
 	Id,
-	ProductId string
-	Price, Qty int16
+	ProductId string `gorm:"uniqueIndex:product_price_idx"`
+    Qty int16 `gorm:"uniqueIndex:product_price_idx"`
+    Price int16
 }
 
 func NewPriceQty(prodId string, price, qty int) *PriceQty {

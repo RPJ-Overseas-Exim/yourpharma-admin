@@ -29,8 +29,8 @@ templ AddPriceForm(products []models.Product){
             @ProductSelectFormField(
                 "Product Name",
                 "Enter product name",
-                "name",
                 "true",
+                "name",
                 products,
             )
             @ProductNumberFormField(
@@ -170,7 +170,7 @@ templ ProductForm(product models.Product, priceQty models.PriceQty){
                     }
                 </div>
                 <div
-                    hx-delete={"/price/"+product.Id}
+                    hx-delete={"/price/" + priceQty.Id}
                     hx-trigger="click"
                     hx-target="#product-page"
                     hx-swap="outerHTML"

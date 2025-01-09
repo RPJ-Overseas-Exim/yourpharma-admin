@@ -153,9 +153,11 @@ func (ps *productService) DeleteProductDetails(id string) error {
 
 func (ps *productService) DeletePriceDetails(id string) error {
     var price models.PriceQty
-    result := ps.DB.Model(&models.PriceQty{}).Where("id like ?", id).Delete(&price)
+    result := ps.DB.Model(&models.PriceQty{}).Where("id = ?", id).Delete(&price)
 
-    utils.ErrorHandler(result.Error, "Failed to delete the price details")
+    if result.Error != nil {
+        return result.Error
+    }
     
     return nil
 }
@@ -182,6 +184,8 @@ func (ps *productService) CreatePrice(c echo.Context) error {
     if err != nil {
         return err
     }
+
+    log.Println(c.FormValue("name"))
 
     ps.AddPriceDetails(
         c.FormValue("name"),
