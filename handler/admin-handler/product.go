@@ -7,6 +7,7 @@ import (
 	adminView "RPJ-Overseas-Exim/yourpharma-admin/templ/admin-views"
 	"bytes"
 	"encoding/json"
+	"errors"
 	"log"
 	"strconv"
 	"strings"
@@ -72,7 +73,7 @@ func (ps *productService) GetProducts(limit, page int) ([]models.Product, int, s
     return productsData, len(priceData), dataBuffer.String(), nil
 }
 
-func (ps *productService) AddProductDetails(name string, price, quantity int) error {
+func (ps *productService) AddProductDetails(name string) error {
         var result *gorm.DB
         var product models.Product
         name = strings.ToLower(name)
@@ -80,17 +81,14 @@ func (ps *productService) AddProductDetails(name string, price, quantity int) er
         result = ps.DB.Find(&product, "name = ?", name)
 
         if result.RowsAffected == 0 {
-            newProduct := models.NewProduct(name, price, quantity)
+            newProduct := models.NewProduct(name)
             result = ps.DB.Create(&newProduct)
-        }else{
-            newPriceQty := models.NewPriceQty(product.Id, price, quantity)
-            result = ps.DB.Create(&newPriceQty)
         }
-
 
         if result.Error != nil {
             return result.Error
         }
+
         return nil
 }
 
@@ -194,20 +192,17 @@ func (ps *productService) CreatePrice(c echo.Context) error {
 }
 
 func (ps *productService) CreateProduct(c echo.Context) error {
-    price , err := strconv.Atoi(c.FormValue("price"))
-    if err != nil {
-        log.Printf("Please provide price: %v", err)
-        price = 290
-    }
-    quantity, err := strconv.Atoi(c.FormValue("quantity"))
-    if err != nil {
-        log.Printf("Please provide quantity: %v", err)
-        quantity = 90
+    productName := c.FormValue("name") 
+    if productName == "" {
+        c.Response().WriteHeader(400)
+        return errors.New("Product name should not be blank")
     }
 
-    err = ps.AddProductDetails(c.FormValue("name"), price, quantity)
+    err := ps.AddProductDetails(productName)
     if err != nil {
+        c.Response().WriteHeader(400)
         log.Printf("Failed to create the product: %v", err)
+        return err
     }
 
     productView := ps.ProductView(c)

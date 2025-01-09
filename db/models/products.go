@@ -34,13 +34,9 @@ func NewPriceQty(prodId string, price, qty int) *PriceQty {
 
 func NewProduct(name string, price, quantity int) *Product {
 	id := nanoid.New()
-	priceQty := NewPriceQty(id, price, quantity)
 
 	return &Product{
 		Id:   id,
 		Name: name,
-		PriceQty: []PriceQty{
-			*priceQty,
-		},
 	}
 }
