@@ -9,6 +9,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"mime/multipart"
@@ -267,23 +268,19 @@ func (ords *orderService) insertManyOrders(src multipart.File) error {
 }
 
 
-func (ords *orderService) AddOrderDetails(name, email, product string, number *int, quantity, price int, origin, address string) error {
+func (ords *orderService) AddOrderDetails(email, product string, quantity, price int, origin string) error {
 	var customerData models.Customer
 	var productData models.Product
 	var result *gorm.DB
 
 	result = ords.DB.Find(&customerData, "email = ?", email)
 	if result.RowsAffected == 0 {
-		newCustomer := models.NewCustomer(name, email, number, address)
-		result = ords.DB.Create(newCustomer)
-		customerData.Id = newCustomer.Id
+        return errors.New("")
 	}
 
 	result = ords.DB.Find(&productData, "name = ?", product)
 	if result.RowsAffected == 0 {
-		newProduct := models.NewProduct(product)
-		result = ords.DB.Create(newProduct)
-		productData.Id = newProduct.Id
+        return errors.New("")
 	}
 
 	newOrder := models.NewOrder(customerData.Id, productData.Id, origin, quantity, price)
@@ -292,7 +289,7 @@ func (ords *orderService) AddOrderDetails(name, email, product string, number *i
 		log.Printf("error in order create: %v", result.Error)
 	}
 
-	return nil
+	return result.Error
 }
 
 func (ords *orderService) UpdateOrderDetails(id string) error {
@@ -360,16 +357,12 @@ func (ords *orderService) Orders(c echo.Context) error {
 func (ords *orderService) CreateOrder(c echo.Context) error {
 	var err error
 	var productsData []types.Product
-	name := c.FormValue("name")
 	email := c.FormValue("email")
-	address := c.FormValue("address")
 	product := c.FormValue("product")
 	origin := "Dash"
 
-	log.Printf("name: %v, email: %v, address: %v, product: %v", name, email, address, product)
+	// log.Printf("name: %v, email: %v, address: %v, product: %v", name, email, address, product)
 
-	number, err := strconv.Atoi(c.FormValue("number"))
-    err = utils.ErrorHandler(err, "Number is not provided")
     if err!=nil{
         c.Response().WriteHeader(400)
         return err
@@ -389,7 +382,7 @@ func (ords *orderService) CreateOrder(c echo.Context) error {
         return err
     }
 
-	ords.AddOrderDetails(name, email, product, &number, quantity, price, origin, address)
+	ords.AddOrderDetails(email, product, quantity, price, origin)
 
 	limit, err := strconv.Atoi(c.QueryParam("limit"))
 	if err != nil {

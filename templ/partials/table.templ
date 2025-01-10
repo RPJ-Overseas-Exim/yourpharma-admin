@@ -6,6 +6,7 @@ import (
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 	"RPJ-Overseas-Exim/yourpharma-admin/db/models"
     "strings"
+    "fmt"
 )
 
 templ Table(tableStyle string){
@@ -119,21 +120,22 @@ templ OrderTableRows(orders []types.Order){
             @TableBodyCell(){{ order.Name }}
             @TableBodyCell(){{ order.Product }}
             @TableBodyCell(){
-                <div 
-                switch strings.ToLower(order.Status){
-                    case "active":
-                        class="px-2 lg:px-0 rounded-xl bg-green-600 text-white"
+                if strings.ToLower(order.Status) == "active"{
+                    @StatusCell(order.Status, "green-500")
+                } else if strings.ToLower(order.Status) == "delivered"{
+                    @StatusCell(order.Status, "zinc-500")
+                } else if strings.ToLower(order.Status) == "paid"{
+                    @StatusCell(order.Status, "teal-500")
+                } else if strings.ToLower(order.Status) == "shipped"{
+                    @StatusCell(order.Status, "blue-500")
                 }
-                >
-                    {order.Status}
-                </div>
             }
             @TableBodyCell(){
             <div 
                 if strings.ToLower(order.Origin) == "dash"{
-                    class="px-2 lg:px-0 rounded-md bg-sky-500 bg-opacity-20 text-sky-500"
+                    class="px-2 lg:px-0 rounded-md lowercase bg-sky-500 font-semibold border border-sky-500 bg-opacity-20 text-sky-500"
                 } else {
-                    class="px-2 lg:px-0 rounded-md bg-orange-500 bg-opacity-20 text-orange-500"
+                    class="px-2 lg:px-0 rounded-md lowercase bg-orange-500 font-semibold border border-orange-500 bg-opacity-20 text-orange-500"
                 }
             >
                     {order.Origin}
@@ -151,6 +153,13 @@ templ OrderTableRows(orders []types.Order){
             }
         </tr>
     }
+}
+templ StatusCell(status string, color string){
+    <div
+        class={fmt.Sprintf("px-2 lg:px-0 lowercase rounded-md lowercase font-semibold border bg-opacity-20 border-%[1]s text-%[1]s bg-%[1]s", color)}
+    >
+        {status}
+    </div>
 }
 
 // Home Table functions
@@ -171,12 +180,24 @@ templ HomeTableRows(orders []types.Order){
             @TableBodyCell(){{ order.Name }}
             @TableBodyCell(){{ order.Product }}
             @TableBodyCell(){
-                <div class="px-2 rounded-xl bg-green-600 text-white">
-                    {order.Status}
-                </div>
+                if strings.ToLower(order.Status) == "active"{
+                    @StatusCell(order.Status, "green-500")
+                } else if strings.ToLower(order.Status) == "delivered"{
+                    @StatusCell(order.Status, "zinc-500")
+                } else if strings.ToLower(order.Status) == "paid"{
+                    @StatusCell(order.Status, "teal-500")
+                } else if strings.ToLower(order.Status) == "shipped"{
+                    @StatusCell(order.Status, "blue-500")
+                }
             }
             @TableBodyCell(){
-                <div class="px-2 rounded-xl bg-green-800 text-white">
+            <div 
+                if strings.ToLower(order.Origin) == "dash"{
+                    class="px-2 lg:px-0 rounded-md lowercase bg-sky-500 font-semibold border border-sky-500 bg-opacity-20 text-sky-500"
+                } else {
+                    class="px-2 lg:px-0 rounded-md lowercase bg-orange-500 font-semibold border border-orange-500 bg-opacity-20 text-orange-500"
+                }
+            >
                     {order.Origin}
                 </div>
             }
