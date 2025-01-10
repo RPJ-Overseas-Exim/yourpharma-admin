@@ -3,6 +3,7 @@ package adminHandler
 import (
 	"RPJ-Overseas-Exim/yourpharma-admin/db/models"
 	authHandler "RPJ-Overseas-Exim/yourpharma-admin/handler/auth-handler"
+	"RPJ-Overseas-Exim/yourpharma-admin/pkg/utils"
 	adminView "RPJ-Overseas-Exim/yourpharma-admin/templ/admin-views"
 	"errors"
 
@@ -34,10 +35,12 @@ func (uh *userHandler) GetUserPage(c echo.Context) error {
 	}
 
 	userView := adminView.Users(usersData)
+    role := utils.GetRole(utils.GetAdmin(c))
 	return authHandler.RenderView(c, adminView.AdminIndex(
 		"Users",
 		true,
 		userView,
+        role,
 	))
 }
 
@@ -124,7 +127,7 @@ func (us *userService) deleteUser(id string) error {
 	var admin models.Admin
 
 	admin.Email = id
-	return us.dbConn.Where("id = ?", id).Delete(&admin).Error
+	return us.dbConn.Where("id = ? and role <> ?", id, "super_admin").Delete(&admin).Error
 }
 
 func NewUserHandler(us userServiceInt) *userHandler {

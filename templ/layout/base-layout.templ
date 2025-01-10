@@ -4,7 +4,7 @@ import "RPJ-Overseas-Exim/yourpharma-admin/templ/partials"
 
 var LayoutHandle = templ.NewOnceHandle()
 
-templ Base(title string, isLoggedIn bool){
+templ Base(title string, isLoggedIn bool, role string){
     <!DOCTYPE html>
 	<html lang="en">
 		<head>
@@ -27,7 +27,7 @@ templ Base(title string, isLoggedIn bool){
 		<body onload="getTheme()" class="light bg-background text-foreground sample-transition flex flex-col-reverse md:flex-row w-full h-[100dvh]">
             if isLoggedIn{
 			    <header class="w-full md:w-[200px] h-[60px] md:h-full">
-                    @partials.Navbar()                    
+                    @partials.Navbar(role)                    
 			    </header>
             }
 			<main class="w-full h-full overflow-auto">

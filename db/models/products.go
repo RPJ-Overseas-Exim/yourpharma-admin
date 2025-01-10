@@ -9,8 +9,8 @@ import (
 type Product struct {
 	Id       string
 	Name     string     `gorm:"uniqueIndex"`
-	PriceQty []PriceQty `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
-	Order    []Order    `gorm:"constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	PriceQty []PriceQty `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
+	Order    []Order    `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 	CreatedAt,
 	UpdatedAt time.Time
 }

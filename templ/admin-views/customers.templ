@@ -6,24 +6,25 @@ import (
 	"RPJ-Overseas-Exim/yourpharma-admin/templ/partials"
 )
 
-templ Customers(customersData []types.Customer, totalCustomers int, customersString string, page, limit int) {
+templ Customers(customersData []types.Customer, totalCustomers int, customersString string, page, limit int, role string) {
 	<section id="customer-page" class="w-full h-full p-2 flex flex-col">
 		<div>
 			<div class="flex items-center justify-between p-2">
 				<div class="font-semibold text-xl">Customers</div>
-				<div class="flex gap-x-2">
-					@ImportForm()
-
-					<div
-						id="download-button"
-						data-csv={ customersString }
-						onClick="downloadDataToCsv()"
-					>
-						@partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs") {
-							Download
-						}
+				if role=="super_admin" {
+					<div class="flex gap-x-2">
+						@ImportForm()
+						<div
+							id="download-button"
+							data-csv={ customersString }
+							onClick="downloadDataToCsv()"
+						>
+							@partials.Button("button", "bg-background hover:bg-background-muted py-2 px-4 border border-border-muted rounded flex items-center justify-center text-xs") {
+								Download
+							}
+						</div>
 					</div>
-				</div>
+				}
 			</div>
 			<div class="flex justify-end mb-3 px-2">
 				<button
@@ -59,7 +60,7 @@ templ ImportForm() {
 		hx-encoding="multipart/form-data"
 		hx-post="/customers/import"
 		hx-swap="outerHTML"
-        hx-target="#customer-page"
+		hx-target="#customer-page"
 		hx-indicator="#import-spinner"
 	>
 		@partials.Button("button", "bg-background hover:bg-background-muted border border-border-muted rounded flex items-center justify-center text-xs input-label") {
@@ -72,7 +73,7 @@ templ ImportForm() {
 				<p>
 					Upload
 				</p>
-                @partials.Spinner(templ.Attributes{"id": "import-spinner", "style": "height:1.1em;width:1.1em;"})
+				@partials.Spinner(templ.Attributes{"id": "import-spinner", "style": "height:1.1em;width:1.1em;"})
 			</div>
 		}
 		<input type="file" id="csv-file" name="csv-file" hidden/>

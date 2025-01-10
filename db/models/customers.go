@@ -12,7 +12,7 @@ type Customer struct{
     Email string `gorm:"uniqueIndex"`
     Number *int 
 	Address *string
-    Order []Order
+    Order []Order `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
     CreatedAt,
     UpdatedAt time.Time
 }

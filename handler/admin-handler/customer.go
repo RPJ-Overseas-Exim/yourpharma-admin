@@ -4,6 +4,7 @@ import (
 	"RPJ-Overseas-Exim/yourpharma-admin/db/models"
 	authHandler "RPJ-Overseas-Exim/yourpharma-admin/handler/auth-handler"
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
+	"RPJ-Overseas-Exim/yourpharma-admin/pkg/utils"
 	adminView "RPJ-Overseas-Exim/yourpharma-admin/templ/admin-views"
 	"bufio"
 	"bytes"
@@ -81,7 +82,8 @@ func (cs *customerService) ImportCustomers(c echo.Context) error {
 	}
 
     customersData, totalCustomers, customersString, err := cs.GetCustomers(page, limit)
-    customerView := adminView.Customers(customersData, totalCustomers, customersString, page, limit)
+    role := utils.GetRole(utils.GetAdmin(c))
+    customerView := adminView.Customers(customersData, totalCustomers, customersString, page, limit, role)
     return authHandler.RenderView(c, customerView)
 }
 
@@ -204,11 +206,13 @@ func (cs *customerService) Customers(c echo.Context) error {
         log.Printf("Error in customers Data: %v", err)
     }
 
-	customersView := adminView.Customers(customersData, totalCustomers, customersString, page, limit)
+    role := utils.GetRole(utils.GetAdmin(c))
+	customersView := adminView.Customers(customersData, totalCustomers, customersString, page, limit, role)
 	return authHandler.RenderView(c, adminView.AdminIndex(
 		"Customers",
 		true,
 		customersView,
+        role,
 	))
 }
 
@@ -231,7 +235,8 @@ func (cs *customerService) CreateCustomer(c echo.Context) error {
         log.Printf("Customers data is not fetched: %v", err)
     }
 
-    customersView := adminView.Customers(customersData, totalCustomers, customersString, page, limit)
+    role := utils.GetRole(utils.GetAdmin(c))
+    customersView := adminView.Customers(customersData, totalCustomers, customersString, page, limit, role)
     return authHandler.RenderView(c, customersView)
 }
 
@@ -260,7 +265,8 @@ func (cs *customerService) UpdateCustomer(c echo.Context) error {
 	}
 
     customersData, totalCustomers, customersString, err := cs.GetCustomers(page, limit)
-    customerView := adminView.Customers(customersData, totalCustomers, customersString, page, limit)
+    role := utils.GetRole(utils.GetAdmin(c))
+    customerView := adminView.Customers(customersData, totalCustomers, customersString, page, limit, role)
     return authHandler.RenderView(c, customerView)
 }
 
@@ -282,6 +288,7 @@ func (cs *customerService) DeleteCustomer(c echo.Context) error {
 	}
 
     customersData, totalCustomers, customersString, err := cs.GetCustomers(page, limit)
-    customerView := adminView.Customers(customersData, totalCustomers, customersString, page, limit)
+    role := utils.GetRole(utils.GetAdmin(c))
+    customerView := adminView.Customers(customersData, totalCustomers, customersString, page, limit, role)
     return authHandler.RenderView(c, customerView)
 }

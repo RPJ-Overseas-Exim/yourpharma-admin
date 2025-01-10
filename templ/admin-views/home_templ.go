@@ -184,7 +184,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 	})
 }
 
-func AdminIndex(title string, isLoggedIn bool, cmp templ.Component) templ.Component {
+func AdminIndex(title string, isLoggedIn bool, cmp templ.Component, role string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -223,7 +223,7 @@ func AdminIndex(title string, isLoggedIn bool, cmp templ.Component) templ.Compon
 			}
 			return templ_7745c5c3_Err
 		})
-		templ_7745c5c3_Err = layout.Base(title, isLoggedIn).Render(templ.WithChildren(ctx, templ_7745c5c3_Var9), templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = layout.Base(title, isLoggedIn, role).Render(templ.WithChildren(ctx, templ_7745c5c3_Var9), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

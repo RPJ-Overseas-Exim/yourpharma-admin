@@ -49,14 +49,16 @@ func IsSuperAdmin(next echo.HandlerFunc) echo.HandlerFunc{
        admin, ok:= adminRaw.(jwt.MapClaims)
 
        if !ok {
-           return c.Redirect(http.StatusSeeOther, "/")
+           c.Response().Header().Set("HX-Redirect", "/")
+           return c.String(401, "No admin found")
        }
 
        if role, ok1 := admin["role"]; ok1 && role=="super_admin"{
            return next(c)
        }
 
-       return c.Redirect(http.StatusSeeOther, "/")
+       c.Response().Header().Set("HX-Redirect", "/")
+       return c.String(401, "Unauthorized")
    }
 }
 

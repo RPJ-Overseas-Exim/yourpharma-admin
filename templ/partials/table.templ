@@ -5,6 +5,7 @@ import (
     "strconv"
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 	"RPJ-Overseas-Exim/yourpharma-admin/db/models"
+    "strings"
 )
 
 templ Table(tableStyle string){
@@ -118,12 +119,23 @@ templ OrderTableRows(orders []types.Order){
             @TableBodyCell(){{ order.Name }}
             @TableBodyCell(){{ order.Product }}
             @TableBodyCell(){
-                <div class="px-2 rounded-xl bg-green-600 text-white">
+                <div 
+                switch strings.ToLower(order.Status){
+                    case "active":
+                        class="px-2 lg:px-0 rounded-xl bg-green-600 text-white"
+                }
+                >
                     {order.Status}
                 </div>
             }
             @TableBodyCell(){
-                <div class="px-2 rounded-xl bg-green-800 text-white">
+            <div 
+                if strings.ToLower(order.Origin) == "dash"{
+                    class="px-2 lg:px-0 rounded-md bg-sky-500 bg-opacity-20 text-sky-500"
+                } else {
+                    class="px-2 lg:px-0 rounded-md bg-orange-500 bg-opacity-20 text-orange-500"
+                }
+            >
                     {order.Origin}
                 </div>
             }

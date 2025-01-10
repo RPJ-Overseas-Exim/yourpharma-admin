@@ -118,7 +118,8 @@ func (ords *orderService) ImportOrders(c echo.Context) error {
 		log.Printf("Failed to get the product data: %v", result.Error)
 	}
 
-	orderView := adminView.Orders(ordersData, "all", productsData, totalOrders, ordersString, limit, page)
+    role := utils.GetRole(utils.GetAdmin(c))
+	orderView := adminView.Orders(ordersData, "all", productsData, totalOrders, ordersString, limit, page, role)
 	return authHandler.RenderView(c, orderView)
 
 }
@@ -326,6 +327,7 @@ func (ords *orderService) DeleteOrderDetails(id string) error {
 func (ords *orderService) Orders(c echo.Context) error {
 	var err error
 	var productsData []types.Product
+    role := utils.GetRole(utils.GetAdmin(c))
 	limit, err := strconv.Atoi(c.QueryParam("limit"))
 	if err != nil {
 		limit = 10
@@ -345,12 +347,13 @@ func (ords *orderService) Orders(c echo.Context) error {
 	if result.Error != nil {
 		log.Printf("Failed to get the product data: %v", result.Error)
 	}
-	ordersView := adminView.Orders(ordersData, status, productsData, totalOrders, ordersString, limit, page)
+	ordersView := adminView.Orders(ordersData, status, productsData, totalOrders, ordersString, limit, page, role)
 
 	return authHandler.RenderView(c, adminView.AdminIndex(
 		"Orders",
 		true,
 		ordersView,
+        role,
 	))
 }
 
@@ -366,13 +369,25 @@ func (ords *orderService) CreateOrder(c echo.Context) error {
 	log.Printf("name: %v, email: %v, address: %v, product: %v", name, email, address, product)
 
 	number, err := strconv.Atoi(c.FormValue("number"))
-	utils.ErrorHandler(err, "Number is not provided")
+    err = utils.ErrorHandler(err, "Number is not provided")
+    if err!=nil{
+        c.Response().WriteHeader(400)
+        return err
+    }
 
 	quantity, err := strconv.Atoi(c.FormValue("quantity"))
-	utils.ErrorHandler(err, "Quantity is not provided")
+	err = utils.ErrorHandler(err, "Quantity is not provided")
+    if err!=nil{
+        c.Response().WriteHeader(400)
+        return err
+    }
 
 	price, err := strconv.Atoi(c.FormValue("price"))
-	utils.ErrorHandler(err, "Price is not provided")
+    err = utils.ErrorHandler(err, "Price is not provided")
+    if err!=nil{
+        c.Response().WriteHeader(400)
+        return err
+    }
 
 	ords.AddOrderDetails(name, email, product, &number, quantity, price, origin, address)
 
@@ -390,9 +405,12 @@ func (ords *orderService) CreateOrder(c echo.Context) error {
 	result := ords.DB.Model(&models.Product{}).Select("name as Name").Scan(&productsData)
 	if result.Error != nil {
 		log.Printf("Failed to get the product data: %v", result.Error)
+        c.Response().WriteHeader(400)
+        return result.Error
 	}
 
-	orderView := adminView.Orders(ordersData, "all", productsData, totalOrders, ordersString, limit, page)
+    role := utils.GetRole(utils.GetAdmin(c))
+	orderView := adminView.Orders(ordersData, "all", productsData, totalOrders, ordersString, limit, page, role)
 	return authHandler.RenderView(c, orderView)
 }
 
@@ -413,13 +431,21 @@ func (ords *orderService) UpdateOrder(c echo.Context) error {
 	}
 
 	ordersData, totalOrders, ordersString, err := ords.GetOrders("", limit, page)
-	utils.ErrorHandler(err, "Failed to get the order data")
+
+	err = utils.ErrorHandler(err, "Failed to update order")
+    if err !=nil{
+        c.Response().WriteHeader(400)
+        return err
+    }
 	result := ords.DB.Model(&models.Product{}).Select("name as Name").Scan(&productsData)
 	if result.Error != nil {
-		log.Printf("Failed to get the product data: %v", result.Error)
+		log.Printf("Failed to update order: %v", result.Error)
+        c.Response().WriteHeader(400)
+        return result.Error
 	}
 
-	orderView := adminView.Orders(ordersData, "all", productsData, totalOrders, ordersString, limit, page)
+    role := utils.GetRole(utils.GetAdmin(c))
+	orderView := adminView.Orders(ordersData, "all", productsData, totalOrders, ordersString, limit, page, role)
 	return authHandler.RenderView(c, orderView)
 }
 
@@ -441,12 +467,15 @@ func (ords *orderService) DeleteOrder(c echo.Context) error {
 	}
 
 	ordersData, totalOrders, ordersString, err := ords.GetOrders(status, limit, page)
-	utils.ErrorHandler(err, "Failed to get the order data")
+	utils.ErrorHandler(err, "Failed to delete order")
 	result := ords.DB.Model(&models.Product{}).Select("name as Name").Scan(&productsData)
 	if result.Error != nil {
-		log.Printf("Failed to get the product data: %v", result.Error)
+		log.Printf("Failed to delete order: %v", result.Error)
+        c.Response().WriteHeader(400)
+        return result.Error
 	}
 
-	orderView := adminView.Orders(ordersData, "all", productsData, totalOrders, ordersString, limit, page)
+    role := utils.GetRole(utils.GetAdmin(c))
+	orderView := adminView.Orders(ordersData, "all", productsData, totalOrders, ordersString, limit, page, role)
 	return authHandler.RenderView(c, orderView)
 }

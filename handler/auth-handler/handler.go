@@ -53,6 +53,7 @@ func (as *authService) LoginHandler(c echo.Context) error {
                 "Login",
                 false,
                 loginView,
+                "",
             ))
         }
 	}
@@ -62,6 +63,7 @@ func (as *authService) LoginHandler(c echo.Context) error {
 		"Login",
 		false,
 		loginView,
+        "",
 	))
 }
 

@@ -25,7 +25,7 @@ func (h *handler) SetupCustomerRoutes(e *echo.Echo) {
 	customerRoute.POST("", cs.CreateCustomer)
     customerRoute.PUT("/:id", cs.UpdateCustomer)
     customerRoute.DELETE("/:id", cs.DeleteCustomer)
-    customerRoute.POST("/import", cs.ImportCustomers)
+    customerRoute.POST("/import", cs.ImportCustomers, authMiddleware.IsSuperAdmin)
 }
 
 func (h *handler) SetupProductRoutes(e *echo.Echo){
@@ -50,7 +50,7 @@ func (h *handler) SetupOrderRoutes(e *echo.Echo) {
 	orderRoute.POST("", ords.CreateOrder)
     orderRoute.PUT("/:id", ords.UpdateOrder)
     orderRoute.DELETE("/:id", ords.DeleteOrder)
-    orderRoute.POST("/import", ords.ImportOrders)
+    orderRoute.POST("/import", ords.ImportOrders, authMiddleware.IsSuperAdmin)
 }
 
 func (h *handler) SetupAuthRoutes(e *echo.Echo) {

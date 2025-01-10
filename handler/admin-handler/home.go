@@ -4,6 +4,7 @@ import (
 	"RPJ-Overseas-Exim/yourpharma-admin/db/models"
 	"RPJ-Overseas-Exim/yourpharma-admin/handler/auth-handler"
 	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
+	"RPJ-Overseas-Exim/yourpharma-admin/pkg/utils"
 	"RPJ-Overseas-Exim/yourpharma-admin/templ/admin-views"
 	"log"
 
@@ -131,10 +132,12 @@ func (hs *homeService) Home(c echo.Context) error {
 
 	homeView := adminView.Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, totalCustomers, ordersData)
 
+    role := utils.GetRole(utils.GetAdmin(c))
 	return authHandler.RenderView(c, adminView.AdminIndex(
 		"Home",
 		true,
 		homeView,
+        role,
 	))
 }
 

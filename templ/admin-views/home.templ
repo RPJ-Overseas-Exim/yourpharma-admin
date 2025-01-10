@@ -82,8 +82,8 @@ templ Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, to
     </section>
 }
 
-templ AdminIndex(title string, isLoggedIn bool, cmp templ.Component){
-    @layout.Base(title, isLoggedIn){
+templ AdminIndex(title string, isLoggedIn bool, cmp templ.Component, role string){
+    @layout.Base(title, isLoggedIn, role){
         @cmp
     }
 }

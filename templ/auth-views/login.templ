@@ -21,17 +21,19 @@ templ Login(msg string){
                 @partials.FormField("Email", "email", "email", "Enter your email", "", "", "")
                 @partials.FormField("Password", "password", "password", "Enter your password", "", "", "")
 
-                @partials.Button("submit", ""){
-                    <span>Login</span>
-                }
+                <div class="text-red-600 text-sm font-semibold text-center">{msg}</div>
+                <div class="mb-4 *:w-full">
+                    @partials.Button("submit", ""){
+                        <span>Login</span>
+                    }
+                </div>
             </form>
-            <div class="text-red-600 text-lg font-semibold">{msg}</div>
         </div>
     </section>
 }
 
-templ LoginIndex(title string, isLoggedIn bool, cmp templ.Component){
-   @layout.Base(title, isLoggedIn){
+templ LoginIndex(title string, isLoggedIn bool, cmp templ.Component, role string){
+   @layout.Base(title, isLoggedIn, role){
         @cmp
    }
 }

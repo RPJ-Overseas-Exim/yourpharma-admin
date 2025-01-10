@@ -166,10 +166,12 @@ func (ps *productService) DeletePriceDetails(id string) error {
 // routes functions ========================================================
 func (ps *productService) Products(c echo.Context) error {
     productView := ps.ProductView(c) 
+    role := utils.GetRole(utils.GetAdmin(c))
    return authHandler.RenderView(c, adminView.AdminIndex(
         "Products",
         true,
         productView,
+        role,
     ))
 
 }
