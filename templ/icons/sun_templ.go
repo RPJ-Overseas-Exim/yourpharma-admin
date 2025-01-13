@@ -29,7 +29,7 @@ func Sun() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-sun\"><circle cx=\"12\" cy=\"12\" r=\"4\"></circle> <path d=\"M12 2v2\"></path> <path d=\"M12 20v2\"></path> <path d=\"m4.93 4.93 1.41 1.41\"></path> <path d=\"m17.66 17.66 1.41 1.41\"></path> <path d=\"M2 12h2\"></path> <path d=\"M20 12h2\"></path> <path d=\"m6.34 17.66-1.41 1.41\"></path> <path d=\"m19.07 4.93-1.41 1.41\"></path></svg>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

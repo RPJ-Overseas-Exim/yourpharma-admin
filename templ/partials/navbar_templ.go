@@ -32,7 +32,7 @@ func Navbar(role string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<nav class=\"w-full h-full flex md:flex-col gap-x-2 md:gap-x-0 md:gap-y-4 md:py-4 md:px-6 border-t md:border-t-0 md:border-r border-border-muted\"><div class=\"hidden md:flex items-center gap-x-4 justify-center\"><h2 class=\"text-lg text-green-600 font-semibold whitespace-nowrap\">Your Pharma</h2><div class=\"p-1 rounded hover:bg-background-muted\"><button onclick=\"LightTheme()\" class=\"hidden \" id=\"sun\" class=\"w-full h-full\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -40,7 +40,7 @@ func Navbar(role string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button> <button onclick=\"DarkTheme()\" class=\"\" id=\"moon\" class=\"w-full h-full\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -48,7 +48,7 @@ func Navbar(role string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button></div></div><div class=\"w-full h-full md:h-[max-content] flex md:flex-col md:gap-y-2\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -164,7 +164,7 @@ func Navbar(role string) templ.Component {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 4)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></nav>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -193,7 +193,7 @@ func NavbarOption(linkTo, label string) templ.Component {
 			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 5)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<a id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -206,7 +206,7 @@ func NavbarOption(linkTo, label string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 6)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" href=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -215,7 +215,7 @@ func NavbarOption(linkTo, label string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 7)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"text-foreground text-sm w-full h-full flex items-center justify-center md:justify-start md:p-2 rounded hover:bg-background-muted\"><div class=\"flex flex-col md:flex-row md:gap-y-2 md:gap-y md:gap-x-2 items-center\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -223,7 +223,7 @@ func NavbarOption(linkTo, label string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 8)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -236,7 +236,7 @@ func NavbarOption(linkTo, label string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 9)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></a>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

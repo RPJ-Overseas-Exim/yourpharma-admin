@@ -37,12 +37,12 @@ func Orders(ordersData []types.Order, status string, products []types.Product, t
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<section id=\"order-page\" class=\"w-full h-full p-2 flex flex-col\"><div><div class=\"flex items-center justify-between p-2\"><div class=\"font-semibold text-xl\">Orders</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if role == "super_admin" {
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex gap-x-2\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -50,7 +50,7 @@ func Orders(ordersData []types.Order, status string, products []types.Product, t
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div data-csv=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -63,7 +63,7 @@ func Orders(ordersData []types.Order, status string, products []types.Product, t
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 4)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" id=\"download-button\" onclick=\"downloadDataToCsv()\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -79,7 +79,7 @@ func Orders(ordersData []types.Order, status string, products []types.Product, t
 					}()
 				}
 				ctx = templ.InitializeContext(ctx)
-				templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 5)
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("Download")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -89,12 +89,12 @@ func Orders(ordersData []types.Order, status string, products []types.Product, t
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 6)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 7)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"flex justify-end mb-3 px-2\"><button type=\"button\" onclick=\"showForm(this)\" class=\"cursor-pointer px-2 py-1 text-white bg-green-600 rounded flex gap-x-1 items-center\"><span class=\"text-sm\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -102,7 +102,7 @@ func Orders(ordersData []types.Order, status string, products []types.Product, t
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 8)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</span> <span class=\"text-sm font-normal whitespace-nowrap\">Add Order</span></button>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -110,7 +110,7 @@ func Orders(ordersData []types.Order, status string, products []types.Product, t
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 9)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\"flex border-b border-border-muted items-center w-full justify-between gap-x-2 px-4\"><div class=\"flex overflow-auto\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -134,7 +134,7 @@ func Orders(ordersData []types.Order, status string, products []types.Product, t
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 10)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\"w-full h-full\"><div class=\"mt-3 w-full border border-border-muted border-b-0 rounded overflow-auto\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -154,7 +154,7 @@ func Orders(ordersData []types.Order, status string, products []types.Product, t
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 11)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -168,7 +168,7 @@ func Orders(ordersData []types.Order, status string, products []types.Product, t
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 12)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\"w-full\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -176,7 +176,7 @@ func Orders(ordersData []types.Order, status string, products []types.Product, t
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 13)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></section>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -205,22 +205,22 @@ func FilterButton(label string, status string) templ.Component {
 			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 14)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<a")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if status == strings.ToLower(label) || status == "" && label == "All" {
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 15)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" class=\"px-2 pb-2 border-b border-green-600\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		} else {
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 16)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" class=\"px-2 pb-2\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 17)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" href=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -229,7 +229,7 @@ func FilterButton(label string, status string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 18)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -242,7 +242,7 @@ func FilterButton(label string, status string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 19)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</a>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -271,7 +271,7 @@ func OrderImportForm() templ.Component {
 			templ_7745c5c3_Var8 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 20)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<form id=\"import-form\" hx-encoding=\"multipart/form-data\" hx-post=\"/orders/import\" hx-swap=\"outerHTML\" hx-target=\"#order-page\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -287,7 +287,7 @@ func OrderImportForm() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 21)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<label for=\"csv-file\" class=\"py-2 px-4 cursor-pointer\">Import</label>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -309,7 +309,7 @@ func OrderImportForm() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 22)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<p class=\"py-2 px-4\">Upload</p>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -319,7 +319,7 @@ func OrderImportForm() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 23)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input type=\"file\" id=\"csv-file\" name=\"csv-file\" hidden></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

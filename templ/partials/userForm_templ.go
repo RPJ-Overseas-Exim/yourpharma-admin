@@ -32,7 +32,7 @@ func AddUserForm() templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div onclick=\"hideFormFromFilter(this)\" id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -45,7 +45,7 @@ func AddUserForm() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10\"></div><form hx-post=\"/users\" hx-target=\"#users-page\" hx-swap=\"outerHTML\" hx-indicator=\"#add-user-btn\" class=\"hidden absolute md:w-1/3 h-full top-0 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border\"><button type=\"button\" onclick=\"hideFormFromContainer(this)\" class=\"text-green-600 font-semibold text-xl flex gap-x-2 items-center mb-3\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -53,7 +53,7 @@ func AddUserForm() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"whitespace-nowrap\">Add User Details</span></button><div class=\"space-y-3\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -77,7 +77,7 @@ func AddUserForm() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 4)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"w-full space-y-2 mt-5\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -93,7 +93,7 @@ func AddUserForm() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 5)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("Add User ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -122,7 +122,7 @@ func AddUserForm() templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 6)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("Reset")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -135,7 +135,7 @@ func AddUserForm() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 7)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -164,7 +164,7 @@ func UserDetails(user models.Admin) templ.Component {
 			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 8)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div onclick=\"hideFormFromFilter(this)\" id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -177,7 +177,7 @@ func UserDetails(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 9)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10\"></div><div id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -190,7 +190,7 @@ func UserDetails(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 10)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"hidden absolute h-full top-0 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border\"><button type=\"button\" onclick=\"hideFormFromContainer(this)\" class=\"text-green-600 font-semibold text-xl flex gap-x-2 items-center\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -198,7 +198,7 @@ func UserDetails(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 11)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"whitespace-nowrap\">Order Details</span></button><div class=\"w-full flex flex-col gap-y-2 mt-3\"><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">User Id:</div><div class=\"text-foreground-muted text-lg\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -211,7 +211,7 @@ func UserDetails(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 12)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Admin Email:</div><div onClick=\"copyText(this)\" class=\"flex gap-x-2\"><div class=\"text-foreground-muted text-lg copy text-sm w-[80%]\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -224,7 +224,7 @@ func UserDetails(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 13)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"w-4 text-foreground-muted cursor-pointer grow-0 shrink-0\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -232,7 +232,7 @@ func UserDetails(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 14)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Admin Password:</div><div onClick=\"copyText(this)\" class=\"flex gap-x-2\"><div class=\"text-foreground-muted text-lg copy text-sm w-[80%]\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -245,7 +245,7 @@ func UserDetails(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 15)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"w-4 text-foreground-muted cursor-pointer grow-0 shrink-0\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -253,7 +253,7 @@ func UserDetails(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 16)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div><div class=\"flex gap-x-2 items-center\"><div class=\"text-foreground text-lg font-semibold\">Admin Role:</div><div class=\"text-foreground-muted text-lg\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -266,7 +266,7 @@ func UserDetails(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 17)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div><div class=\"w-full space-y-2 mt-3\"><div onclick=\"showForm(this)\" class=\"\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -282,7 +282,7 @@ func UserDetails(user models.Admin) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 18)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("Edit Customer ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -292,7 +292,7 @@ func UserDetails(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 19)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -300,7 +300,7 @@ func UserDetails(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 20)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div hx-delete=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -313,7 +313,7 @@ func UserDetails(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 21)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-trigger=\"click\" hx-target=\"#users-page\" hx-swap=\"outerHTML\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -329,7 +329,7 @@ func UserDetails(user models.Admin) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 22)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("Delete User ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -339,7 +339,7 @@ func UserDetails(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 23)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></div></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -368,7 +368,7 @@ func EditUserForm(user models.Admin) templ.Component {
 			templ_7745c5c3_Var15 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 24)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div onclick=\"hideFormFromFilter(this)\" id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -381,7 +381,7 @@ func EditUserForm(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 25)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"hidden absolute w-full h-full top-0 left-0 bg-background-muted opacity-10\"></div><form hx-put=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -394,7 +394,7 @@ func EditUserForm(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 26)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-target=\"#users-page\" hx-indicator=\"#edit-user-btn\" hx-swap=\"outerHTML\" class=\"hidden absolute w-full h-full -top-2 right-0 bg-background rounded-tl-xl rounded-bl-xl px-4 py-2 border border-border\"><button type=\"button\" onclick=\"hideFormFromContainer(this)\" class=\"text-green-600 font-semibold text-xl flex gap-x-2 items-center mb-3\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -402,7 +402,7 @@ func EditUserForm(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 27)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<span class=\"whitespace-nowrap\">Edit User Details</span></button><div class=\"space-y-3\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -426,7 +426,7 @@ func EditUserForm(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 28)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"w-full space-y-2 mt-5\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -442,7 +442,7 @@ func EditUserForm(user models.Admin) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 29)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("Edit ")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -471,7 +471,7 @@ func EditUserForm(user models.Admin) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 30)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("Reset")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -484,7 +484,7 @@ func EditUserForm(user models.Admin) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 31)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></form>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -513,7 +513,7 @@ func UserTextFormField(label, placeholder, name, value, required string) templ.C
 			templ_7745c5c3_Var20 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 32)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex flex-col gap-y-2\"><label for=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -526,7 +526,7 @@ func UserTextFormField(label, placeholder, name, value, required string) templ.C
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 33)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"text-left text-semibold text-lg\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -539,17 +539,17 @@ func UserTextFormField(label, placeholder, name, value, required string) templ.C
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 34)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if required == "true" {
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 35)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("*")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 36)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</label> <input class=\"px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0\" type=\"text\" name=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -562,7 +562,7 @@ func UserTextFormField(label, placeholder, name, value, required string) templ.C
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 37)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -575,7 +575,7 @@ func UserTextFormField(label, placeholder, name, value, required string) templ.C
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 38)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" placeholder=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -588,12 +588,12 @@ func UserTextFormField(label, placeholder, name, value, required string) templ.C
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 39)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if len(value) != 0 {
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 40)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -606,18 +606,18 @@ func UserTextFormField(label, placeholder, name, value, required string) templ.C
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 41)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
 		if required == "true" {
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 42)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" minlength=\"3\" required")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 43)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -646,7 +646,7 @@ func UserEmailFormField(label, placeholder, name, value string, required string)
 			templ_7745c5c3_Var27 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 44)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex flex-col gap-y-2\"><label for=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -659,7 +659,7 @@ func UserEmailFormField(label, placeholder, name, value string, required string)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 45)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"text-left text-semibold text-lg\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -672,17 +672,17 @@ func UserEmailFormField(label, placeholder, name, value string, required string)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 46)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if required == "true" {
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 47)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("*")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 48)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</label> <input class=\"px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0\" type=\"email\" name=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -695,7 +695,7 @@ func UserEmailFormField(label, placeholder, name, value string, required string)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 49)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -708,7 +708,7 @@ func UserEmailFormField(label, placeholder, name, value string, required string)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 50)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" placeholder=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -721,12 +721,12 @@ func UserEmailFormField(label, placeholder, name, value string, required string)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 51)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if len(value) != 0 {
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 52)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -739,18 +739,18 @@ func UserEmailFormField(label, placeholder, name, value string, required string)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 53)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
 		if required == "true" {
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 54)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" required")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 55)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -779,7 +779,7 @@ func UserPasswordFormField(label, placeholder, name string, value, required stri
 			templ_7745c5c3_Var34 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 56)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex flex-col gap-y-2\"><label for=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -792,7 +792,7 @@ func UserPasswordFormField(label, placeholder, name string, value, required stri
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 57)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" class=\"text-left text-semibold text-lg\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -805,17 +805,17 @@ func UserPasswordFormField(label, placeholder, name string, value, required stri
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 58)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if required == "true" {
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 59)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("*")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 60)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</label> <input class=\"px-4 text-lg border-b border-border bg-transparent active:outline-none hover:outline-none py-0\" type=\"password\" name=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -828,7 +828,7 @@ func UserPasswordFormField(label, placeholder, name string, value, required stri
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 61)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -841,7 +841,7 @@ func UserPasswordFormField(label, placeholder, name string, value, required stri
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 62)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" placeholder=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -854,17 +854,17 @@ func UserPasswordFormField(label, placeholder, name string, value, required stri
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 63)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		if required == "true" {
-			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 64)
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" required")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 		}
-		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 65)
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("></div>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
