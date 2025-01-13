@@ -37,7 +37,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<section class=\"w-full h-full p-2\"><div class=\"w-full flex items-center justify-between px-4\"><h2 class=\"font-semibold\">Home</h2><button onclick=\"Logout()\" type=\"button\" class=\"text-sm px-4 py-2 border border-border-muted rounded hover:bg-green-600 hover:text-white\">Logout</button></div><div class=\"w-full py-2 flex flex-wrap justify-center gap-2\"><div class=\"flex-grow border min-w-[200px] border-muted rounded px-4 py-2 flex justify-between gap-x-2\"><div class=\"text-lg\">")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 1)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -45,7 +45,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"flex flex-col gap-y-2 justify-center\"><div class=\"text-right\">$ ")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 2)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -58,7 +58,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"text-right text-foreground-muted\">Total Sales</div></div></div><div class=\"flex-grow border min-w-[200px] border-muted rounded px-4 py-2 flex justify-between gap-x-2\"><div class=\"text-lg\">")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 3)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -66,7 +66,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"flex flex-col gap-y-2 justify-center\"><div class=\"text-right\">")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 4)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -79,7 +79,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"text-right text-foreground-muted\">Total Orders</div></div></div><div class=\"flex-grow border min-w-[200px] border-muted rounded px-4 py-2 flex justify-between gap-x-2\"><div class=\"text-lg\">")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 5)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -87,7 +87,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"flex flex-col gap-y-2 justify-center\"><div class=\"text-right\">")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 6)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -100,7 +100,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"text-right text-foreground-muted\">Orders in Process</div></div></div><div class=\"flex-grow border min-w-[200px] border-muted rounded px-4 py-2 flex justify-between gap-x-2\"><div class=\"text-xl\">")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 7)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -108,7 +108,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"flex flex-col gap-y-2 justify-center\"><div class=\"text-right\">")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 8)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -121,7 +121,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"text-right text-foreground-muted\">Orders delivered</div></div></div><div class=\"flex-grow border min-w-[200px] border-muted rounded px-4 py-2 flex justify-between gap-x-2\"><div class=\"text-xl\">")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 9)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -129,7 +129,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"flex flex-col gap-y-2 justify-center\"><div class=\"text-right\">")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 10)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -142,7 +142,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div class=\"text-right text-foreground-muted\">Total Customers</div></div></div></div><div class=\"mt-3 w-full border border-border-muted border-b-0 rounded overflow-auto\">")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 11)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -162,7 +162,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(" ")
+			templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 12)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -176,7 +176,7 @@ func Home(totalSales, totalOrders, totalOrderInProcess, totalOrderDelivered, tot
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div></section>")
+		templ_7745c5c3_Err = templ.WriteWatchModeString(templ_7745c5c3_Buffer, 13)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
