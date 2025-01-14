@@ -1,235 +1,305 @@
 package partials
 
 import (
-    "RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
-    "strconv"
-	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
 	"RPJ-Overseas-Exim/yourpharma-admin/db/models"
-    "strings"
-    "fmt"
+	"RPJ-Overseas-Exim/yourpharma-admin/pkg/types"
+	"RPJ-Overseas-Exim/yourpharma-admin/templ/icons"
+	"strconv"
+	"strings"
 )
 
-templ Table(tableStyle string){
-    <table
-        if len(tableStyle) == 0{
-            class="w-full table-auto shadow-md rounded"
-        }else{
-            class={tableStyle}
-        }
-    >
-        {children...}
-    </table>
+templ Table(tableStyle string) {
+	<table
+		if len(tableStyle) == 0 {
+			class="w-full table-auto shadow-md rounded"
+		} else {
+			class={ tableStyle }
+		}
+	>
+		{ children... }
+	</table>
 }
 
-templ TableHeadCell(){
-    <td class="text-center px-4 py-2 whitespace-nowrap">
-        {children...}
-    </td>
+templ TableHeadCell() {
+	<td class="text-center px-4 py-2 whitespace-nowrap">
+		{ children... }
+	</td>
 }
 
-templ TableBodyCell(){
-    <td
-        class="text-center px-4 py-2 whitespace-nowrap"
-    >
-        {children...}
-    </td>
+templ TableBodyCell() {
+	<td
+		class="text-center px-4 py-2 whitespace-nowrap"
+	>
+		{ children... }
+	</td>
 }
 
 // Product Table functions
-templ ProductTableHeader(){
-    <tr class="w-full text-foreground-muted border-b border-border-muted">
-        @TableHeadCell(){ Product Name }
-        @TableHeadCell(){ Product Quantity }
-        @TableHeadCell(){ Product price }
-        @TableHeadCell(){ Actions }
-    </tr>
+templ ProductTableHeader() {
+	<tr class="w-full text-foreground-muted border-b border-border-muted">
+		@TableHeadCell() {
+			Product Name 
+		}
+		@TableHeadCell() {
+			Product Quantity 
+		}
+		@TableHeadCell() {
+			Product price 
+		}
+		@TableHeadCell() {
+			Actions 
+		}
+	</tr>
 }
 
-templ ProductTableRows(products []models.Product){
-    for _, product := range(products) {
-        for _, priceQty := range(product.PriceQty){
-            <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
-                @TableBodyCell(){{ product.Name }}
-                @TableBodyCell(){{ strconv.Itoa(int(priceQty.Qty)) }}
-                @TableBodyCell(){{ strconv.Itoa(int(priceQty.Price)) }}
-                @TableBodyCell(){
-                    <div onclick="showForm(this)">
-                        @Button("button", "w-full flex text-foreground-muted hover:text-foreground items-center justify-center"){
-                            @icons.Options ()
-                        }
-                    </div>
-                    @ProductForm(product, priceQty)
-                }
-            </tr>
-        }
-    }
+templ ProductTableRows(products []models.Product) {
+	for _, product := range(products) {
+		for _, priceQty := range(product.PriceQty) {
+			<tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
+				@TableBodyCell() {
+					{ product.Name }
+				}
+				@TableBodyCell() {
+					{ strconv.Itoa(int(priceQty.Qty)) }
+				}
+				@TableBodyCell() {
+					{ strconv.Itoa(int(priceQty.Price)) }
+				}
+				@TableBodyCell() {
+					<div onclick="showForm(this)">
+						@Button("button", "w-full flex text-foreground-muted hover:text-foreground items-center justify-center") {
+							@icons.Options()
+						}
+					</div>
+					@ProductForm(product, priceQty)
+				}
+			</tr>
+		}
+	}
 }
-
 
 // Customer Table functions
-templ CustomerTableHeader(){
-    <tr class="w-full text-foreground-muted border-b border-border-muted">
-        @TableHeadCell(){ Name }
-        @TableHeadCell(){ Address }
-        @TableHeadCell(){ Number }
-        @TableHeadCell(){ Actions }
-    </tr>
+templ CustomerTableHeader() {
+	<tr class="w-full text-foreground-muted border-b border-border-muted">
+		@TableHeadCell() {
+			Name 
+		}
+		@TableHeadCell() {
+			Address 
+		}
+		@TableHeadCell() {
+			Number 
+		}
+		@TableHeadCell() {
+			Actions 
+		}
+	</tr>
 }
 
-templ CustomerTableRows(customers []types.Customer){
-    for _, customer := range(customers){
-        <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
-            @TableBodyCell(){{ customer.Name }}
-            if len(customer.Address)>=20{
-                @TableBodyCell(){{customer.Address[:20]}}
-            }else{
-                @TableBodyCell(){{customer.Address}}
-            }
-            @TableBodyCell(){{ strconv.Itoa(*customer.Number) }}
-            @TableBodyCell(){
-                <div
-                onclick="showForm(this)"
-                class="">
-                    @Button("button", "w-full flex text-foreground-muted hover:text-foreground items-center justify-center"){
-                        @icons.Options ()
-                    }
-                </div>
-                @CustomerForm(customer)
-            }
-        </tr>
-    }
+templ CustomerTableRows(customers []types.Customer) {
+	for _, customer := range(customers) {
+		<tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
+			@TableBodyCell() {
+				{ customer.Name }
+			}
+			if len(customer.Address)>=20 {
+				@TableBodyCell() {
+					{ customer.Address[:20] }
+				}
+			} else {
+				@TableBodyCell() {
+					{ customer.Address }
+				}
+			}
+			@TableBodyCell() {
+				{ strconv.Itoa(*customer.Number) }
+			}
+			@TableBodyCell() {
+				<div
+					onclick="showForm(this)"
+					class=""
+				>
+					@Button("button", "w-full flex text-foreground-muted hover:text-foreground items-center justify-center") {
+						@icons.Options()
+					}
+				</div>
+				@CustomerForm(customer)
+			}
+		</tr>
+	}
 }
-
 
 // Order Table functions
-templ OrderTableHeader(){
-    <tr class="w-full text-foreground-muted border-b border-border-muted">
-        @TableHeadCell(){ OrderId }
-        @TableHeadCell(){ Name }
-        @TableHeadCell(){ Product }
-        @TableHeadCell(){ Status }
-        @TableHeadCell(){ Origin }
-        @TableHeadCell(){ Actions }
-    </tr>
+templ OrderTableHeader() {
+	<tr class="w-full text-foreground-muted border-b border-border-muted">
+		@TableHeadCell() {
+			OrderId 
+		}
+		@TableHeadCell() {
+			Name 
+		}
+		@TableHeadCell() {
+			Product 
+		}
+		@TableHeadCell() {
+			Status 
+		}
+		@TableHeadCell() {
+			Origin 
+		}
+		@TableHeadCell() {
+			Actions 
+		}
+	</tr>
 }
 
-templ OrderTableRows(orders []types.Order){
-    for _, order := range(orders){
-        <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
-            @TableBodyCell(){{ order.Id }}
-            @TableBodyCell(){{ order.Name }}
-            @TableBodyCell(){{ order.Product }}
-            @TableBodyCell(){
-                if strings.ToLower(order.Status) == "active"{
-                    @StatusCell(order.Status, "green-500")
-                } else if strings.ToLower(order.Status) == "delivered"{
-                    @StatusCell(order.Status, "zinc-500")
-                } else if strings.ToLower(order.Status) == "paid"{
-                    @StatusCell(order.Status, "teal-500")
-                } else if strings.ToLower(order.Status) == "shipped"{
-                    @StatusCell(order.Status, "blue-500")
-                }
-            }
-            @TableBodyCell(){
-            <div 
-                if strings.ToLower(order.Origin) == "dash"{
-                    class="px-2 lg:px-0 rounded-md lowercase bg-sky-500 font-semibold border border-sky-500 bg-opacity-20 text-sky-500"
-                } else {
-                    class="px-2 lg:px-0 rounded-md lowercase bg-orange-500 font-semibold border border-orange-500 bg-opacity-20 text-orange-500"
-                }
-            >
-                    {order.Origin}
-                </div>
-            }
-            @TableBodyCell(){
-                <div
-                onclick="showForm(this)"
-                class="">
-                    @Button("button", "w-full flex text-foreground-muted hover:text-foreground items-center justify-center"){
-                        @icons.Options ()
-                    }
-                </div>
-                @OrderForm(order)
-            }
-        </tr>
-    }
+templ OrderTableRows(orders []types.Order) {
+	for _, order := range(orders) {
+		<tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
+			@TableBodyCell() {
+				{ order.Id }
+			}
+			@TableBodyCell() {
+				{ order.Name }
+			}
+			@TableBodyCell() {
+				{ order.Product }
+			}
+			@TableBodyCell() {
+                @GenerateStatusCell(strings.ToLower(order.Status))
+			}
+			@TableBodyCell() {
+				<div
+					if strings.ToLower(order.Origin) == "dash" {
+						class="px-2 lg:px-0 rounded-md lowercase bg-sky-500 font-semibold border border-sky-500 bg-opacity-20 text-sky-500"
+					} else {
+						class="px-2 lg:px-0 rounded-md lowercase bg-orange-500 font-semibold border border-orange-500 bg-opacity-20 text-orange-500"
+					}
+				>
+					{ order.Origin }
+				</div>
+			}
+			@TableBodyCell() {
+				<div
+					onclick="showForm(this)"
+					class=""
+				>
+					@Button("button", "w-full flex text-foreground-muted hover:text-foreground items-center justify-center") {
+						@icons.Options()
+					}
+				</div>
+				@OrderForm(order)
+			}
+		</tr>
+	}
 }
-templ StatusCell(status string, color string){
-    <div
-        class={fmt.Sprintf("px-2 lg:px-0 lowercase rounded-md lowercase font-semibold border bg-opacity-20 border-%[1]s text-%[1]s bg-%[1]s", color)}
-    >
-        {status}
-    </div>
+
+templ StatusCell(status string, color string) {
+	<div
+		class={ "px-2 lg:px-0 rounded-md lowercase font-semibold border bg-opacity-20 " + color }
+	>
+		{ status }
+	</div>
+}
+
+templ GenerateStatusCell(status string) {
+	if status == "active" {
+		@StatusCell(status, "bg-green-500 border-green-500 text-green-500")
+	} else if status == "delivered" {
+		@StatusCell(status, "bg-zinc-500 border-zinc-500 text-zinc-500")
+	} else if status == "paid" {
+		@StatusCell(status, "bg-teal-500 border-zinc-500 text-teal-500")
+	} else if status == "shipped" {
+		@StatusCell(status, "bg-blue-500 border-blue-500 text-blue-500")
+	}
 }
 
 // Home Table functions
-templ HomeTableHeader(){
-    <tr class="w-full text-foreground-muted border-b border-border-muted">
-        @TableHeadCell(){ OrderId }
-        @TableHeadCell(){ Name }
-        @TableHeadCell(){ Product }
-        @TableHeadCell(){ Status }
-        @TableHeadCell(){ Origin }
-    </tr>
+templ HomeTableHeader() {
+	<tr class="w-full text-foreground-muted border-b border-border-muted">
+		@TableHeadCell() {
+			OrderId 
+		}
+		@TableHeadCell() {
+			Name 
+		}
+		@TableHeadCell() {
+			Product 
+		}
+		@TableHeadCell() {
+			Status 
+		}
+		@TableHeadCell() {
+			Origin 
+		}
+	</tr>
 }
 
-templ HomeTableRows(orders []types.Order){
-    for _, order := range(orders){
-        <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
-            @TableBodyCell(){{ order.Id }}
-            @TableBodyCell(){{ order.Name }}
-            @TableBodyCell(){{ order.Product }}
-            @TableBodyCell(){
-                if strings.ToLower(order.Status) == "active"{
-                    @StatusCell(order.Status, "green-500")
-                } else if strings.ToLower(order.Status) == "delivered"{
-                    @StatusCell(order.Status, "zinc-500")
-                } else if strings.ToLower(order.Status) == "paid"{
-                    @StatusCell(order.Status, "teal-500")
-                } else if strings.ToLower(order.Status) == "shipped"{
-                    @StatusCell(order.Status, "blue-500")
-                }
-            }
-            @TableBodyCell(){
-            <div 
-                if strings.ToLower(order.Origin) == "dash"{
-                    class="px-2 lg:px-0 rounded-md lowercase bg-sky-500 font-semibold border border-sky-500 bg-opacity-20 text-sky-500"
-                } else {
-                    class="px-2 lg:px-0 rounded-md lowercase bg-orange-500 font-semibold border border-orange-500 bg-opacity-20 text-orange-500"
-                }
-            >
-                    {order.Origin}
-                </div>
-            }
-        </tr>
-    }
+templ HomeTableRows(orders []types.Order) {
+	for _, order := range(orders) {
+		<tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
+			@TableBodyCell() {
+				{ order.Id }
+			}
+			@TableBodyCell() {
+				{ order.Name }
+			}
+			@TableBodyCell() {
+				{ order.Product }
+			}
+			@TableBodyCell() {
+                @GenerateStatusCell(strings.ToLower(order.Status))
+			}
+			@TableBodyCell() {
+				<div
+					if strings.ToLower(order.Origin) == "dash" {
+						class="px-2 lg:px-0 rounded-md lowercase bg-sky-500 font-semibold border border-sky-500 bg-opacity-20 text-sky-500"
+					} else {
+						class="px-2 lg:px-0 rounded-md lowercase bg-orange-500 font-semibold border border-orange-500 bg-opacity-20 text-orange-500"
+					}
+				>
+					{ order.Origin }
+				</div>
+			}
+		</tr>
+	}
 }
-
 
 // User table functions
-templ UserTableHeader(){
-    <tr class="w-full text-foreground-muted border-b border-border-muted">
-        @TableHeadCell(){ Email }
-        @TableHeadCell(){ Role }
-        @TableHeadCell(){ Actions }
-    </tr>
+templ UserTableHeader() {
+	<tr class="w-full text-foreground-muted border-b border-border-muted">
+		@TableHeadCell() {
+			Email 
+		}
+		@TableHeadCell() {
+			Role 
+		}
+		@TableHeadCell() {
+			Actions 
+		}
+	</tr>
 }
 
-templ UserTableRows(users []models.Admin){
-    for _, user := range(users){
-        <tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
-            @TableBodyCell(){{ user.Email }}
-            @TableBodyCell(){{ user.Role }}
-            @TableBodyCell(){
-                <div
-                onclick="showForm(this)"
-                class="">
-                    @Button("button", "w-full flex text-foreground-muted hover:text-foreground items-center justify-center"){
-                        @icons.Options ()
-                    }
-                </div>
-                @UserDetails(user)
-            }
-        </tr>
-    }
+templ UserTableRows(users []models.Admin) {
+	for _, user := range(users) {
+		<tr class="w-full text-foreground border-b border-border-muted hover:bg-background-muted">
+			@TableBodyCell() {
+				{ user.Email }
+			}
+			@TableBodyCell() {
+				{ user.Role }
+			}
+			@TableBodyCell() {
+				<div
+					onclick="showForm(this)"
+					class=""
+				>
+					@Button("button", "w-full flex text-foreground-muted hover:text-foreground items-center justify-center") {
+						@icons.Options()
+					}
+				</div>
+				@UserDetails(user)
+			}
+		</tr>
+	}
 }
